@@ -1,0 +1,35 @@
+.demographic-indicators-page {
+  width: 100%;
+  /* background: #F7FAFA; */
+  --demographic-content-max: 1236px;
+  --demographic-inline-space: max(1.25rem, calc((100vw - var(--demographic-content-max)) / 2));
+  --about-content-max: var(--demographic-content-max);
+  --about-inline-space: var(--demographic-inline-space);
+}
+
+.demographic-indicators-page__content {
+  width: 100%;
+  max-width: var(--demographic-content-max);
+  margin: 0 auto;
+  padding: 3rem var(--demographic-inline-space) 2rem;
+  box-sizing: border-box;
+}
+
+.demographic-indicators-page__share-wrap {
+  width: 100%;
+  max-width: var(--demographic-content-max);
+  margin: 0 auto 4rem;
+  padding-inline: var(--demographic-inline-space);
+  direction: rtl;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .demographic-indicators-page__content {
+    padding-block: 2rem 1.5rem;
+  }
+
+  .demographic-indicators-page__share-wrap {
+    margin-bottom: 3rem;
+  }
+}

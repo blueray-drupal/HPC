@@ -1,0 +1,126 @@
+.search-page {
+  width: 100%;
+  min-height: 100%;
+  /* background: #F7FAFA; */
+  --search-content-max: 1236px;
+  --search-inline-space: max(1.25rem, calc((100vw - var(--search-content-max)) / 2));
+}
+
+.search-page__inner {
+  width: 100%;
+  /* max-width: var(--search-content-max); */
+  margin: 0 auto;
+  padding: 2.5rem var(--search-inline-space) 2rem;
+  box-sizing: border-box;
+}
+
+.search-page__form {
+  margin-bottom: 2rem;
+}
+
+.search-page__input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 64px;
+  padding: 8px 8px 8px 16px;
+  border: 1px solid #BEC8CF;
+  border-radius: 8px;
+  background: #FFF;
+  direction: rtl;
+  box-sizing: border-box;
+}
+
+.search-page__input-wrap svg {
+  flex-shrink: 0;
+}
+
+.search-page__input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #1A1A2E;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: right;
+}
+
+.search-page__input::placeholder {
+  color: #94A3B8;
+}
+
+.search-page__input:focus {
+  outline: none;
+}
+
+.search-page__submit {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  min-width: 96px;
+  height: 48px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 6px;
+  background: #008AA9;
+  color: #FFF;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.search-page__submit:hover {
+  background: #007a96;
+}
+
+.search-page__layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 320px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  direction: rtl;
+}
+
+.search-page__share-wrap {
+  width: 100%;
+  max-width: var(--search-content-max);
+  margin: 0 auto 4rem;
+  padding-inline: var(--search-inline-space);
+  direction: rtl;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1023px) {
+  .search-page__layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .search-page__inner {
+    padding-block: 1.5rem 1.25rem;
+  }
+
+  .search-page__input-wrap {
+    flex-wrap: wrap;
+    min-height: auto;
+    padding: 12px;
+  }
+
+  .search-page__submit {
+    width: 100%;
+  }
+
+  .search-page__share-wrap {
+    margin-bottom: 3rem;
+  }
+}

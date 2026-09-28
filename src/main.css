@@ -1,0 +1,112 @@
+@import "../assets/css/global.css";
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --spacing: 0.25rem;
+  --font-sans: Al-Jazeera-Arabic, system-ui, sans-serif;
+  --color-blue-14: #1A1A2E;
+  --color-hajj-dark: #1a2e13;
+  --color-hajj-green: #6c9a4e;
+  --color-hajj-light: #a3c988;
+  --color-hajj-gold: #d4a843;
+  --color-border: #e5e7eb;
+  --color-card: #ffffff;
+  --color-card-foreground: #111827;
+}
+
+@utility container {
+  width: 100%;
+  margin-inline: auto;
+
+  @media (width >= 40rem) {
+    max-width: 40rem;
+  }
+
+  @media (width >= 48rem) {
+    max-width: 48rem;
+  }
+
+  @media (width >= 64rem) {
+    max-width: 64rem;
+  }
+
+  @media (width >= 80rem) {
+    max-width: 80rem;
+  }
+
+  @media (width >= 96rem) {
+    max-width: 96rem;
+  }
+}
+
+.news-banner-mask {
+  mask-image: linear-gradient(to left, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to left, transparent, black 8%, black 92%, transparent);
+}
+
+@keyframes news-banner-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.news-banner-track {
+  animation: news-banner-scroll 40s linear infinite;
+}
+
+.news-banner-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news-banner-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 0.75rem;
+    white-space: normal;
+  }
+}
+
+.modal-backdrop {
+  transition: opacity 300ms ease, backdrop-filter 300ms ease;
+}
+
+.modal-backdrop-visible {
+  opacity: 1;
+}
+
+.modal-backdrop-hidden {
+  opacity: 0;
+}
+
+.modal-panel {
+  transition: opacity 300ms ease, transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-panel-visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.modal-panel-hidden {
+  opacity: 0;
+  transform: scale(0.95) translateY(1rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop,
+  .modal-panel {
+    transition: none;
+  }
+
+  .modal-panel-hidden {
+    transform: none;
+  }
+}

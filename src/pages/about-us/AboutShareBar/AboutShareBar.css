@@ -1,0 +1,37 @@
+.about-extended__share {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  direction: ltr;
+}
+
+.about-extended__share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 3.625px;
+}
+
+.about-extended__share-btn--blue {
+  background: #0078d4;
+}
+
+.about-extended__share-btn--orange {
+  background: #FF4800;
+}
+
+.about-extended__share-btn--linkedin {
+  background: #0a66c2;
+}
+
+.about-extended__share-btn--dark {
+  background: #111;
+}
+
+.about-extended__share-btn--facebook {
+  background: #1877f2;
+}

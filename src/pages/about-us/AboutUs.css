@@ -1,0 +1,6 @@
+.about-us-page {
+  width: 100%;
+  background: #fff;
+  --about-content-max: 1242px;
+  --about-inline-space: max(1.25rem, calc((100vw - var(--about-content-max)) / 2));
+}

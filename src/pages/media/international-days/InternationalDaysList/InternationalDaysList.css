@@ -1,0 +1,96 @@
+.international-days-list-page {
+  width: 100%;
+  background: #fff;
+  --media-content-max: 1242px;
+  --media-inline-space: max(1.25rem, calc((100vw - var(--media-content-max)) / 2));
+  --about-content-max: var(--media-content-max);
+  --about-inline-space: var(--media-inline-space);
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+}
+
+.international-days-list-page__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  width: 100%;
+  max-width: var(--media-content-max);
+  margin-inline: auto;
+ padding-block: 60px;
+  box-sizing: border-box;
+  direction: rtl;
+}
+
+.international-days-list-page__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.international-days-list-page__section-title {
+  margin: 0;
+  color: #006182;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: right;
+}
+
+.international-days-list-page__description {
+  margin: 0;
+  color: #64748b;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.75;
+  text-align: right;
+}
+
+.international-days-list-page__description--html p {
+  margin: 0;
+  color: #64748b;
+  font-size: 1rem;
+  line-height: 1.75;
+  text-align: right;
+}
+
+.international-days-list-page__images {
+  width: 100%;
+}
+
+.international-days-list-page__figure {
+  margin: 0;
+  width: 100%;
+}
+
+.international-days-list-page__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.international-days-list-page__share-wrap {
+  width: 100%;
+  max-width: var(--media-content-max);
+  margin: 0 auto 4rem;
+  /* padding-inline: var(--media-inline-space); */
+  direction: rtl;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .international-days-list-page__content {
+    padding-block: 2rem 3rem;
+  }
+
+  .international-days-list-page__section-title {
+    font-size: 1.125rem;
+  }
+
+  .international-days-list-page__share-wrap {
+    margin-bottom: 3rem;
+  }
+}

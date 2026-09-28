@@ -1,0 +1,166 @@
+.strategy-section {
+  width: 100%;
+  direction: rtl;
+}
+
+.strategy-section__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.strategy-goal {
+  display: flex;
+  padding: 32px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-self: stretch;
+  gap: 1.25rem;
+  border-radius: 16px;
+  border: 1px solid rgb(193 198 215 / 30%);
+  background: #f8f9fa;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+  box-sizing: border-box;
+}
+
+.strategy-goal__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+}
+
+.strategy-goal__main-icon {
+  display: flex;
+  width: 56px;
+  height: 56px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 12px;
+}
+
+.strategy-goal__main-icon--blue {
+  background: #aae2fe;
+}
+
+.strategy-goal__main-icon--orange {
+  background: #ffd9b0;
+}
+
+.strategy-goal__heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.strategy-goal__title {
+  margin: 0 0 0.5rem;
+  color: #006182;
+  text-align: right;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.strategy-goal__description {
+  margin: 0;
+  color: #3f484e;
+  text-align: right;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.strategy-goal__panel {
+  width: 100%;
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: 1px solid #bec8cf;
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 40%) 0%, rgb(255 255 255 / 0%) 100%),
+    rgb(241 244 246 / 80%);
+  box-sizing: border-box;
+}
+
+.strategy-goal__panel-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  color: #006182;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.strategy-goal__panel-label-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.strategy-goal__subgoals {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.strategy-sub-goal {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  direction: rtl;
+  padding: 0.875rem 1rem;
+  border-radius: 7.079px;
+  border: 0.885px solid rgb(255 255 255 / 40%);
+  background: rgb(255 255 255 / 80%);
+  box-shadow: 0 0.885px 1.77px 0 rgb(0 0 0 / 5%);
+  backdrop-filter: blur(5.30911922454834px);
+}
+
+.strategy-sub-goal__text {
+  flex: 1;
+  margin: 0;
+  color: #414754;
+  text-align: right;
+  font-family: Al-Jazeera-Arabic;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24.38px; /* 162.533% */
+}
+
+.strategy-sub-goal__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+}
+
+.strategy-section__share {
+  margin-top: 2.5rem;
+}
+
+@media (max-width: 1023px) {
+  .strategy-section__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .strategy-goal {
+    padding: 1.5rem;
+  }
+
+  .strategy-goal__panel {
+    padding: 1rem;
+  }
+}

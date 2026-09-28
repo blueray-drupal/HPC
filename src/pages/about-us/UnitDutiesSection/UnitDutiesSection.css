@@ -1,0 +1,164 @@
+.unit-duties-wrap {
+  width: 100%;
+  direction: rtl;
+}
+
+.unit-duties {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+  border-radius: 16.784px;
+  border: 1.049px solid rgb(225 227 228 / 50%);
+  background: #f7fafa;
+  box-shadow: 0 4.196px 20.98px 0 rgb(0 0 0 / 4%);
+  box-sizing: border-box;
+}
+
+.unit-duties__tabs {
+  display: flex;
+  width: 100%;
+  direction: rtl;
+  border-bottom: 1.049px solid #e1e3e4;
+  background: #f8f9fa;
+}
+
+.unit-duties__tab {
+  display: inline-flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: 72px;
+  padding: 1rem 1.25rem;
+  border: 0;
+  border-bottom: 2.098px solid transparent;
+  background: transparent;
+  color: #717786;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 29.372px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.unit-duties__tab:hover:not(.is-active) {
+  color: #6b4a3d;
+}
+
+.unit-duties__tab.is-active {
+  border-bottom-color: #6b4a3d;
+  background: rgb(254 211 199 / 20%);
+  color: #6b4a3d;
+}
+
+.unit-duties__panel {
+  position: relative;
+  width: 100%;
+  padding: 2.5rem 2.75rem 3rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.unit-duties__panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 134.27px;
+  height: 134.27px;
+  border-radius: 0 0 10488.815px 0;
+  background: rgb(0 89 187 / 5%);
+  pointer-events: none;
+}
+
+.unit-duties__panel-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.unit-duties__panel-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 10px;
+  background: rgb(254 211 199 / 20%);
+}
+
+.unit-duties__panel-title {
+  margin: 0;
+  color: #6b4a3d;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.unit-duties__panel-body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.unit-duties__paragraph,
+.unit-duties__html p {
+  margin: 0;
+  color: #4a5565;
+  text-align: right;
+  font-size: 1rem;
+  line-height: 2rem;
+}
+
+.unit-duties__html p + p {
+  margin-top: 1.25rem;
+}
+
+.unit-duties__share {
+  margin-top: 2.5rem;
+}
+
+@media (max-width: 1023px) {
+  .unit-duties__tab {
+    min-height: 64px;
+    padding: 0.875rem 0.75rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .unit-duties__panel {
+    padding: 2rem 1.5rem 2.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .unit-duties__tabs {
+    flex-direction: column;
+  }
+
+  .unit-duties__tab {
+    justify-content: flex-start;
+    min-height: 56px;
+    border-bottom: 1.049px solid #e1e3e4;
+  }
+
+  .unit-duties__tab.is-active {
+    border-bottom-color: #6b4a3d;
+  }
+
+  .unit-duties__panel-title {
+    font-size: 1.125rem;
+  }
+}

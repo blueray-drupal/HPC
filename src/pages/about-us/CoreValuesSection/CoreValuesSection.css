@@ -1,0 +1,138 @@
+.core-values-section {
+  width: 100%;
+  padding-block: 82px;
+  padding-inline: var(--about-inline-space);
+  background: #f7f8fa;
+  box-sizing: border-box;
+}
+
+.core-values-section__inner {
+  width: 100%;
+  max-width: var(--about-content-max);
+  margin-inline: auto;
+}
+
+.core-values-section__panel {
+  padding: 48px;
+  direction: rtl;
+  border-radius: 16px;
+  border: 1px solid #bec8cf;
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 40%) 0%, rgb(255 255 255 / 0%) 100%),
+    #f1f4f6;
+  box-sizing: border-box;
+}
+
+.core-values-section__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.core-values-section__accent {
+  flex-shrink: 0;
+  width: 4px;
+  height: 1.75rem;
+  border-radius: 2px;
+  background: #6b4a3d;
+}
+
+.core-values-section__title {
+  margin: 0;
+  color: #006182;
+  text-align: right;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.core-values-section__cards {
+  display: flex;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.core-values-section__card {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1.25rem 0.75rem;
+  border-radius: 7.079px;
+  border: 0.885px solid rgb(255 255 255 / 40%);
+  background: rgb(255 255 255 / 80%);
+  box-shadow: 0 0.885px 1.77px 0 rgb(0 0 0 / 5%);
+  backdrop-filter: blur(5.30911922454834px);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.core-values-section__icon {
+  display: flex;
+  width: 42.473px;
+  height: 42.473px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 10.618px;
+  background: rgb(0 97 130 / 10%);
+  color: #006182;
+  overflow: hidden;
+}
+
+.core-values-section__icon-image {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.core-values-section__label {
+  margin: 0;
+  color: #181C1E;
+  text-align: center;
+  font-family: Al-Jazeera-Arabic;
+  font-size: 14.158px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 17.697px; /* 125% */
+}
+
+.core-values-section__share {
+  margin-top: 2rem;
+}
+
+@media (max-width: 1023px) {
+  .core-values-section__cards {
+    flex-wrap: wrap;
+  }
+
+  .core-values-section__card {
+    flex: 1 1 calc(33.333% - 0.75rem);
+    min-width: 140px;
+  }
+}
+
+@media (max-width: 767px) {
+  .core-values-section {
+    padding-block: 2.5rem 3rem;
+  }
+
+  .core-values-section__panel {
+    padding: 1.5rem 1rem;
+  }
+
+  .core-values-section__cards {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .core-values-section__card {
+    flex: 0 0 150px;
+    min-width: 150px;
+  }
+}

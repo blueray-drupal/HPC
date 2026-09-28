@@ -1,0 +1,124 @@
+.program-content {
+  width: 100%;
+  padding: 2.5rem 2rem 3rem;
+  border: 1px solid rgb(255 255 255 / 50%);
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  box-sizing: border-box;
+  padding-inline: 29px;
+  border-radius: 0 0 14px 14px;
+  background: #F7FAFA;
+}
+
+.program-content__inner {
+  width: 100%;
+  direction: rtl;
+}
+
+.program-content__header {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4375rem;
+  margin-bottom: 2rem;
+}
+
+.program-content__header-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.program-content__title {
+  margin: 0;
+  color: #6b4a3d;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 52px;
+  text-align: right;
+}
+
+.program-content__header-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.program-content__header-icon svg {
+  display: block;
+  width: 57px;
+  height: 57px;
+}
+
+.program-content__header-icon-image {
+  display: block;
+  width: 57px;
+  height: 57px;
+  object-fit: contain;
+}
+
+.program-tab-icon__image {
+  display: block;
+  object-fit: contain;
+  opacity: 0.75;
+}
+
+.program-tab-icon__image.is-active {
+  opacity: 1;
+}
+
+.program-content__header-line {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #d6d6d6;
+}
+
+.program-content__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.program-content__html p {
+  margin: 0 0 1.25rem;
+  color: #3f484e;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.85;
+  text-align: justify;
+}
+
+.program-content__html p:last-child {
+  margin-bottom: 0;
+}
+
+.program-content__paragraph {
+  margin: 0;
+  color: #3f484e;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.85;
+  text-align: justify;
+}
+
+@media (max-width: 767px) {
+  .program-content {
+    padding: 1.75rem 1.25rem 2.5rem;
+    border-radius: 0 0 20px 20px;
+  }
+
+  .program-content__title {
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .program-content__paragraph {
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    text-align: right;
+  }
+}

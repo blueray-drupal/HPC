@@ -1,0 +1,152 @@
+.international-days-table-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+  max-width: 1237.087px;
+  direction: rtl;
+}
+
+.international-days-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-radius: 8.139px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4.069px 20.347px 0 rgb(0 0 0 / 5%);
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+}
+
+.international-days-table thead th {
+  padding: 1rem 1.25rem;
+  border: 1px solid rgb(255 255 255 / 12%);
+  background: #006182;
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.international-days-table__footnote,
+.international-days-table__activity-mark {
+  font-family: Arial, system-ui, sans-serif;
+  font-weight: 700;
+}
+
+.international-days-table__footnote {
+  margin-inline-start: 0.125rem;
+}
+
+.international-days-table__activity {
+  width: 160px;
+  color: #008aa9;
+  font-size: 1.125rem;
+  text-align: center;
+}
+
+.international-days-table thead th:first-child {
+  width: 72px;
+}
+
+.international-days-table__month-number {
+  width: 72px;
+  padding: 1rem 0.75rem;
+  border: 1.017px solid #BEC8CF;
+  background: rgba(190, 233, 255, 0.30);
+  color: #006182;
+  text-align: center;
+  font-family: Al-Jazeera-Arabic;
+  font-size: 18.312px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28.486px; /* 155.556% */
+  vertical-align: middle;
+}
+
+.international-days-table__month-label {
+  padding: 0.875rem 1.25rem;
+  border: 1px solid #dbe7ee;
+  background: #f7fbfd;
+  color: #006182;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.international-days-table__day-row td {
+  padding: 1rem 1.25rem;
+  border: 1px solid #dbe7ee;
+  background: #fff;
+  vertical-align: middle;
+}
+
+.international-days-table__day-text {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  color: #4a5565;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.75;
+  text-align: right;
+}
+
+.international-days-table__bullet {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: 0.5rem;
+  background: #22c55e;
+}
+
+
+.international-days-table__entity {
+  width: 180px;
+  color: #64748b;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.international-days-table__note-mark {
+  font-family: Arial, system-ui, sans-serif;
+  font-weight: 700;
+}
+
+.international-days-table__note {
+  margin: 0;
+  color: #64748b;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.75;
+  text-align: right;
+}
+
+@media (max-width: 1023px) {
+  .international-days-table-wrap {
+    overflow-x: auto;
+  }
+
+  .international-days-table {
+    min-width: 900px;
+  }
+}
+
+@media (max-width: 767px) {
+  .international-days-table thead th,
+  .international-days-table__day-row td,
+  .international-days-table__month-label {
+    padding: 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .international-days-table__month-number {
+    font-size: 1.375rem;
+  }
+}

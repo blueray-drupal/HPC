@@ -1,0 +1,162 @@
+.media-briefings {
+  width: 100%;
+  padding: 4rem 100px 5rem;
+  background: #F7F8FA;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+}
+
+.media-briefings__heading {
+  margin: 0 0 2rem;
+  color: var(--color-cyan-33, #008aa9);
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.media-briefings__card {
+  display: flex;
+  height: 450px;
+  min-height: 450px;
+  padding-left: 40px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 31px;
+  align-self: stretch;
+  border-radius: 27px;
+  background: #fff;
+  box-shadow: 0 4.5px 22.5px 0 rgb(0 0 0 / 4%);
+  direction: ltr;
+}
+
+.media-briefings__image-wrap {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 440px;
+  height: 318px;
+  border: 1px solid #e8ecef;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.media-briefings__image {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+}
+
+.media-briefings__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 0;
+  padding: 2rem 2.5rem 2rem 0;
+  direction: rtl;
+  max-width: 530px;
+}
+
+.media-briefings__date {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  color: #a9362d;
+  text-align: right;
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.media-briefings__title {
+  margin: 0 0 1rem;
+  color: #191c1d;
+  text-align: right;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 39.375px;
+}
+
+.media-briefings__description {
+  margin: 0 0 1.75rem;
+}
+
+.media-briefings__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--item-spacing-xs, 8px);
+  padding: 12px 24px;
+  border-radius: 10px;
+  background: var(--color-cyan-33, #008aa9);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  transition: background-color 0.2s ease;
+}
+
+.media-briefings__cta:hover {
+  background: #007694;
+}
+
+.media-briefings__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.75rem;
+}
+
+.media-briefings__dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #d1d5db;
+  transition: width 0.25s ease, background-color 0.25s ease;
+}
+
+.media-briefings__dot.is-active {
+  width: 1.75rem;
+  background: var(--color-cyan-33, #008aa9);
+}
+
+@media (max-width: 1023px) {
+  .media-briefings {
+    padding: 3rem 2rem 4rem;
+  }
+
+  .media-briefings__card {
+    flex-direction: column-reverse;
+    height: auto;
+    min-height: auto;
+    padding: 1.5rem;
+    gap: 1.5rem;
+    direction: rtl;
+  }
+
+  .media-briefings__content {
+    padding: 0;
+    align-items: flex-start;
+  }
+
+  .media-briefings__image-wrap {
+    width: 100%;
+    max-width: 280px;
+    height: 220px;
+  }
+
+  .media-briefings__title {
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .media-briefings {
+    padding: 2.5rem 1.25rem 3rem;
+  }
+}

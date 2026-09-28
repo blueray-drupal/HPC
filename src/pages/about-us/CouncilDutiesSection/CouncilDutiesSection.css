@@ -1,0 +1,123 @@
+.council-duties {
+  width: 100%;
+  direction: rtl;
+}
+
+.council-duties__intro {
+  margin: 0 0 2rem;
+  max-width: 920px;
+}
+
+.council-duties__grid {
+  --council-duty-gap: clamp(16px, 2vw, 24px);
+  --council-duty-max-width: 289.75px;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, var(--council-duty-max-width)));
+  justify-content: center;
+  gap: var(--council-duty-gap);
+  width: 100%;
+}
+
+.council-duty-card {
+  display: flex;
+  width: 100%;
+  max-width: var(--council-duty-max-width);
+  height: 434.5px;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1.125px solid #e1e3e4;
+  background: #f7fafa;
+  box-sizing: border-box;
+}
+
+.council-duty-card__header {
+  display: flex;
+  width: 100%;
+  min-height: 150px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.council-duty-card__header--blue {
+  background: linear-gradient(115deg, #0059bb 0%, #0070ea 100%);
+}
+
+.council-duty-card__header--brown {
+  background: linear-gradient(115deg, #77574d 0%, #5d4037 100%);
+}
+
+.council-duty-card__header--ochre {
+  background: linear-gradient(115deg, #874e00 0%, #aa6400 100%);
+}
+
+.council-duty-card__header-image {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.council-duty-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  padding: 27px;
+  box-sizing: border-box;
+}
+
+.council-duty-card__text {
+  margin: 0;
+  color: #3f484e;
+  text-align: right;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+.council-duty-card__number {
+  font-weight: 700;
+  color: #006182;
+}
+
+.council-duties__share {
+  margin-top: 2.5rem;
+}
+
+@media (max-width: 1240px) {
+  .council-duties__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .council-duty-card {
+    max-width: none;
+    height: auto;
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .council-duties__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 639px) {
+  .council-duties__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .council-duty-card {
+    min-height: 0;
+    height: auto;
+  }
+
+  .council-duty-card__body {
+    padding: 1.25rem;
+  }
+}

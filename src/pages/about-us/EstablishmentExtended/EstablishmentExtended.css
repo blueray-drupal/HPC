@@ -1,0 +1,103 @@
+.about-extended {
+  --about-extended-bg-position: -64px 444px !important;
+  --about-extended-bg-size: 113% !important;
+
+  position: relative;
+  width: 100%;
+  margin-top: 3rem;
+  padding-block: 3.5rem 4rem;
+  padding-inline: var(--about-inline-space);
+  background-color: #f7f8fa;
+  background-position: var(--about-extended-bg-position);
+  background-repeat: no-repeat;
+  background-size: var(--about-extended-bg-size);
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  box-sizing: border-box;
+}
+
+.about-extended__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--about-content-max);
+  margin-inline: auto;
+  direction: rtl;
+  text-align: right;
+}
+
+.about-extended__html p {
+  margin: 0 0 1.5rem;
+  color: #3f484e;
+  text-align: right;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+.about-extended__html p:last-child {
+  margin-bottom: 0;
+}
+
+.about-extended__html a {
+  color: #006182;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.about-extended__paragraph,
+.about-extended__council-intro {
+  margin: 0;
+}
+
+.about-extended__paragraph a {
+  color: var(--color-cyan-33, #008aa9);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.about-extended__paragraph a:hover {
+  opacity: 0.85;
+}
+
+.about-extended__council-title {
+  margin: 2rem 0 0.75rem;
+  color: #111;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.about-extended__members {
+  margin: 0 0 2.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.about-extended__members li {
+  position: relative;
+  margin: 0;
+  padding-inline-start: 1rem;
+}
+
+.about-extended__members li::before {
+  content: '';
+  position: absolute;
+  top: 0.95rem;
+  inset-inline-start: 0;
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: #111;
+}
+
+@media (max-width: 1023px) {
+  .about-extended {
+    padding-block: 3rem 3.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .about-extended {
+    margin-top: 2rem;
+    padding-block: 2.5rem 3rem;
+  }
+}

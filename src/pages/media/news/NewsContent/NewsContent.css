@@ -1,0 +1,50 @@
+.news-content {
+  width: 100%;
+  padding-block: 3rem 4rem;
+  background: #ffff;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  box-sizing: border-box;
+}
+
+.news-content__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  max-width: var(--media-content-max);
+  margin-inline: auto;
+  direction: rtl;
+}
+
+.news-content__header {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4375rem;
+}
+
+.news-content__header-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.news-content__title {
+  margin: 0;
+  color: #6b4a3d;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 52px;
+  text-align: right;
+}
+
+@media (max-width: 767px) {
+  .news-content {
+    padding-block: 2rem 3rem;
+  }
+
+  .news-content__title {
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+}

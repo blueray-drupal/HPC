@@ -1,0 +1,334 @@
+.contact-page {
+  width: 100%;
+  background: #fff;
+  --contact-content-max: 1245px;
+  --contact-inline-space: max(1.25rem, calc((100vw - var(--contact-content-max)) / 2));
+  --about-content-max: var(--contact-content-max);
+  --about-inline-space: var(--contact-inline-space);
+}
+
+.contact-page__body {
+  width: 100%;
+  padding: 3rem var(--contact-inline-space) 4rem;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.contact-page__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  max-width: var(--contact-content-max);
+  margin-inline: auto;
+  direction: rtl;
+  box-sizing: border-box;
+}
+
+.contact-page__main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 62px;
+  width: 100%;
+}
+
+.contact-page__info {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-info-card {
+  display: flex;
+  height: 132px;
+  padding: 37px 18.333px 37px 70px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 18.681px;
+  align-self: stretch;
+  direction: ltr;
+  border-radius: 16px;
+  background: rgb(255 255 255 / 80%);
+  box-shadow: 0 0 5px 0 rgb(0 0 0 / 15%);
+  backdrop-filter: blur(2px);
+  box-sizing: border-box;
+}
+
+.contact-info-card__icon-wrap {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  border-radius: 51px;
+  border: 1px solid #E7E7E7;
+  background: #F5F5F5;
+}
+
+.contact-info-card__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.375rem;
+  min-width: 0;
+  direction: rtl;
+}
+
+.contact-info-card__title {
+  margin: 0;
+  color: #6b4a3d;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: right;
+}
+
+.contact-info-card__value {
+  margin: 0;
+  color: #4a5565;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.75;
+  text-align: right;
+  text-decoration: none;
+}
+
+a.contact-info-card__value:hover {
+  color: #6b4a3d;
+}
+
+.contact-form {
+  position: relative;
+  display: flex;
+  width: 716px;
+  min-height: 576px;
+  max-width: 100%;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 1px solid #bec8cf;
+  border-radius: 8px;
+  background: #f7f7f7;
+  box-shadow: 0 4px 20px 0 rgb(0 0 0 / 5%);
+  box-sizing: border-box;
+}
+
+.contact-form__accent {
+  position: absolute;
+  top: 0;
+  inset-inline: 0;
+  height: 4px;
+  background: #6b4a3d;
+}
+
+.contact-form__inner {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.75rem 1.5rem 1.5rem;
+  box-sizing: border-box;
+}
+
+.contact-form__title {
+  margin: 0;
+  color: #111;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: right;
+}
+
+.contact-form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-form__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.contact-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contact-form__label {
+  color: #64748b;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: right;
+}
+
+.contact-form__input,
+.contact-form__textarea {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid rgb(231 231 231 / 60%);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+  backdrop-filter: blur(2px);
+  color: #111;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  text-align: right;
+  box-sizing: border-box;
+}
+
+.contact-form__textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.contact-form__input::placeholder,
+.contact-form__textarea::placeholder {
+  color: #94a3b8;
+}
+
+.contact-form__input:focus,
+.contact-form__textarea:focus {
+  outline: 2px solid rgb(107 74 61 / 20%);
+  border-color: #6b4a3d;
+}
+
+.contact-form__submit {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+  min-width: 120px;
+  height: 40px;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background: #6b4a3d;
+  color: #fff;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  direction: rtl;
+}
+
+.contact-form__submit:hover {
+  background: #5a3f34;
+}
+
+.contact-page__map {
+  display: flex;
+  width: 100%;
+  height: 400px;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  overflow: hidden;
+  border: 1px solid #bec8cf;
+  border-radius: 8px;
+  background: #ebeef0;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+  box-sizing: border-box;
+}
+
+.contact-page__map > * {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+}
+
+.contact-page__map p {
+  line-height: 0;
+}
+
+.contact-page__map-frame,
+.contact-page__map iframe {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none;
+  border: 0;
+}
+
+.contact-page__share-wrap {
+  width: 100%;
+  padding-inline: var(--contact-inline-space);
+  margin-bottom: 4rem;
+  direction: rtl;
+  box-sizing: border-box;
+}
+
+.contact-page__share-wrap .about-extended__share {
+  width: 100%;
+  max-width: var(--contact-content-max);
+  margin-inline: auto;
+}
+
+@media (max-width: 1279px) {
+  .contact-page__main {
+    flex-direction: column;
+  }
+
+  .contact-form {
+    width: 100%;
+    order: 2;
+  }
+
+  .contact-page__info {
+    order: 1;
+  }
+}
+
+@media (max-width: 1023px) {
+  .contact-info-card {
+    height: auto;
+    min-height: 132px;
+    padding: 1.25rem 1.5rem;
+    direction: rtl;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+  }
+
+  .contact-info-card__content {
+    flex: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .contact-page__body {
+    padding: 2rem var(--contact-inline-space) 3rem;
+  }
+
+  .contact-form__row {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-page__map {
+    height: 280px;
+  }
+
+  .contact-page__share-wrap {
+    margin-bottom: 3rem;
+  }
+}

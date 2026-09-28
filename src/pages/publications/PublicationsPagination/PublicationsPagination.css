@@ -1,0 +1,45 @@
+.publications-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  direction: rtl;
+}
+
+.publications-pagination__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid #d6d6d6;
+  border-radius: 999px;
+  background: #fff;
+  color: #3f484e;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.publications-pagination__btn:hover:not(:disabled):not(.is-active) {
+  border-color: #1a9ba8;
+  color: #1a9ba8;
+}
+
+.publications-pagination__btn.is-active {
+  border-color: #1a9ba8;
+  background: #1a9ba8;
+  color: #fff;
+}
+
+.publications-pagination__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.publications-pagination__btn--arrow {
+  min-width: 2.25rem;
+}

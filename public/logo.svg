@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="49'1 'DE,D3 'D#9DI DD3C'F">
+  <circle cx="64" cy="64" r="64" fill="#1A9BA8"/>
+  <g fill="#ffffff">
+    <circle cx="40" cy="46" r="8"/>
+    <path d="M28 86c0-13 5.5-22 12-22s12 9 12 22z"/>
+    <circle cx="64" cy="38" r="10"/>
+    <path d="M46 94c0-17 8-28 18-28s18 11 18 28z"/>
+    <circle cx="88" cy="46" r="8"/>
+    <path d="M76 86c0-13 5.5-22 12-22s12 9 12 22z"/>
+  </g>
+  <text x="64" y="116" text-anchor="middle" fill="#ffffff" font-family="Tajawal, Arial, sans-serif" font-size="11" font-weight="700">HPC</text>
+</svg>

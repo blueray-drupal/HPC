@@ -1,0 +1,23 @@
+.publications-page {
+  width: 100%;
+  background: #fff;
+  --publications-content-max: 1242px;
+  --publications-inline-space: max(1.25rem, calc((100vw - var(--publications-content-max)) / 2));
+  --about-content-max: var(--publications-content-max);
+  --about-inline-space: var(--publications-inline-space);
+}
+
+.publications-page__share-wrap {
+  width: 100%;
+  max-width: var(--publications-content-max);
+  margin: 0 auto 4rem;
+  padding-inline: var(--publications-inline-space);
+  direction: rtl;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .publications-page__share-wrap {
+    margin-bottom: 3rem;
+  }
+}

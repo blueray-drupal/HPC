@@ -1,0 +1,114 @@
+.about-tabs {
+  width: 100%;
+  padding-inline: var(--about-inline-space);
+  background: transparent;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  box-sizing: border-box;
+}
+
+.about-tabs__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--about-content-max);
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+.about-tabs__tabs-row {
+  width: 100%;
+}
+
+.about-tabs__inner {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 15px;
+  width: max-content;
+  margin-inline-start: 0;
+  margin-inline-end: auto;
+  direction: rtl;
+  padding-block-start: 92px;
+  box-sizing: border-box;
+}
+
+.about-tabs__line {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #d6d6d6;
+  flex-shrink: 0;
+}
+
+.about-tabs__tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0.625rem 1rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #3f484e;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 12.232px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 19.577px;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.about-tabs__tab:hover:not(.is-active) {
+  color: #6b4a3d;
+}
+
+.about-tabs__tab.is-active {
+  border-radius: 7.641px 7.641px 0 0;
+  background: #e8e2d8;
+  color: #6b4a3d;
+}
+
+.about-tabs__tab.is-active::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  z-index: 1;
+  height: 1.91px;
+  background: #6b4a3d;
+}
+
+.about-tabs__label {
+  position: relative;
+}
+
+.about-tab-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1200px) {
+  .about-tabs__tabs-row {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .about-tabs__tab {
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .about-tabs__tab {
+    padding-inline: 0.75rem;
+    font-size: 11px;
+    line-height: 18px;
+  }
+}

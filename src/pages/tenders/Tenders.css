@@ -1,0 +1,57 @@
+.tenders-page {
+  width: 100%;
+  background: #fff;
+  --tenders-content-max: 1240px;
+  --tenders-inline-space: max(1.25rem, calc((100vw - var(--tenders-content-max)) / 2));
+  --about-content-max: var(--tenders-content-max);
+  --about-inline-space: var(--tenders-inline-space);
+}
+
+.tenders-page__body {
+  width: 100%;
+  padding: 3rem var(--tenders-inline-space) 4rem;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.tenders-page__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2rem;
+  width: 100%;
+  max-width: var(--tenders-content-max);
+  margin-inline: auto;
+  direction: rtl;
+  box-sizing: border-box;
+}
+
+.tenders-page__inner .page-filters {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
+.tenders-page__share-wrap {
+  width: 100%;
+  padding-inline: var(--tenders-inline-space);
+  margin-bottom: 4rem;
+  direction: rtl;
+  box-sizing: border-box;
+}
+
+.tenders-page__share-wrap .about-extended__share {
+  width: 100%;
+  max-width: var(--tenders-content-max);
+  margin-inline: auto;
+}
+
+@media (max-width: 767px) {
+  .tenders-page__body {
+    padding: 2rem var(--tenders-inline-space) 3rem;
+  }
+
+  .tenders-page__share-wrap {
+    margin-bottom: 3rem;
+  }
+}

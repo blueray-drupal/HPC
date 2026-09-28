@@ -1,0 +1,139 @@
+.demographic-pdf-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.demographic-pdf-list__item {
+  width: 100%;
+}
+
+.demographic-pdf-card {
+  display: flex;
+  width: 100%;
+  max-width: 1236px;
+  min-height: 130.5px;
+  padding: 27px;
+  align-items: center;
+  gap: 18px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  border: 1.125px solid #BEC8CF;
+  background: #FFF;
+  direction: rtl;
+  box-sizing: border-box;
+}
+
+.demographic-pdf-card__icon-wrap {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 6px;
+  background: #FDF3F3;
+}
+
+.demographic-pdf-card__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.demographic-pdf-card__title {
+  margin: 0;
+  color: #414754;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: right;
+}
+
+.demographic-pdf-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.demographic-pdf-card__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748B;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.demographic-pdf-card__meta-item svg {
+  flex-shrink: 0;
+}
+
+.demographic-pdf-card__download {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 110px;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 6px;
+  background: #007BA4;
+  color: #FFF;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.demographic-pdf-card__download:hover {
+  background: #006182;
+}
+
+.demographic-pdf-list__empty {
+  margin: 0;
+  padding: 3rem 1rem;
+  border-radius: 9px;
+  border: 1.125px solid #BEC8CF;
+  background: #FFF;
+  color: #64748B;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .demographic-pdf-card {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: auto;
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+
+  .demographic-pdf-card__icon-wrap {
+    align-self: flex-start;
+  }
+
+  .demographic-pdf-card__title {
+    font-size: 1rem;
+  }
+
+  .demographic-pdf-card__download {
+    width: 100%;
+  }
+}

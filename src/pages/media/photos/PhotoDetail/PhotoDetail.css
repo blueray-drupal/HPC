@@ -1,0 +1,144 @@
+.photo-detail-page {
+  width: 100%;
+  background: #fff;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+}
+
+.photo-detail-page__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding: 3rem 0 4rem;
+  direction: rtl;
+  box-sizing: border-box;
+}
+
+.photo-detail__box {
+  display: flex;
+  width: 1240px;
+  max-width: 100%;
+  min-height: 901px;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2.5rem;
+  border: 1px solid #bec8cf;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+  direction: rtl;
+  box-sizing: border-box;
+}
+
+.photo-detail__header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+}
+
+.photo-detail__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  background: #007ba4;
+  color: #fff;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.photo-detail__title {
+  margin: 0;
+  color: #006182;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 51px;
+  letter-spacing: -0.32px;
+  text-align: right;
+}
+
+.photo-detail__back {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 176px;
+  height: 33px;
+  padding: 7px 10px 8px 11px;
+  border-radius: 2.987px;
+  background: #007ba4;
+  color: #f3f9ff;
+  font-family: 'Noto Kufi Arabic', Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 11.947px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 17.92px;
+  text-align: right;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+  box-sizing: border-box;
+  direction: ltr;
+}
+
+.photo-detail__back:hover {
+  background: #006182;
+}
+
+.photo-detail__back svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+.photo-detail-page__share-wrap {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto 4rem;
+  /* padding-inline: max(1.25rem, calc((100vw - 1240px) / 2)); */
+  direction: rtl;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1279px) {
+  .photo-detail-page__content {
+    padding-inline: 1.25rem;
+  }
+
+  .photo-detail__box {
+    min-height: auto;
+    padding: 1.75rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .photo-detail-page__content {
+    padding: 2rem 1.25rem 2.5rem;
+  }
+
+  .photo-detail-page__share-wrap {
+    margin-bottom: 3rem;
+    padding-inline: 1.25rem;
+  }
+
+  .photo-detail__box {
+    padding: 1.25rem;
+    gap: 1.5rem;
+  }
+
+  .photo-detail__title {
+    font-size: 1.375rem;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+}

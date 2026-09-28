@@ -1,0 +1,136 @@
+@font-face {
+  font-family: Al-Jazeera-Arabic;
+  src: url("/font/Al-Jazeera-Arabic-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Al-Jazeera-Arabic;
+  src: url("/font/Al-Jazeera-Arabic-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Al-Jazeera-Arabic;
+  src: url("/font/Al-Jazeera-Arabic-Bold-1.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+
+  --color-blue-14: #1A1A2E;
+  --color-hajj-dark: #1a2e13;
+  --color-hajj-green: #6c9a4e;
+  --color-hajj-light: #a3c988;
+  --color-hajj-gold: #d4a843;
+  --color-azure-34: #4A5565;
+  --hpc-figma-site-river-bed: #4A5565;
+  --font-size: 16px;
+  --font-size-32: 32px;
+}
+
+.hpc-paragraph,
+:is(
+  .about-content__paragraph,
+  .about-extended__paragraph,
+  .about-extended__council-intro,
+  .about-content__list li,
+  .about-extended__members li,
+  .secretary-message__body,
+  .media-briefings__description
+) {
+  color: var(--hpc-figma-site-river-bed, var(--color-azure-34, #4A5565));
+  text-align: right;
+  font-family: Al-Jazeera-Arabic;
+  font-size: var(--font-size, 16px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: var(--font-size-32, 32px);
+}
+
+html {
+  font-family: var(--font-family);
+  direction: rtl;
+  text-align: right;
+}
+
+body {
+  direction: rtl;
+  text-align: right;
+  font-family: var(--font-family);
+  background-color: #ffffff;
+  color: #1f2937;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#root {
+  direction: inherit;
+  text-align: inherit;
+  min-height: 100%;
+}
+
+/*
+  RTL buttons/links: icon first in markup → icon on the left, text on the right.
+*/
+html[dir="rtl"] :is(.hpc-icon-trailing, .secretary-message__cta, .hero-slider__cta, .media-briefings__cta, .demographic-section__banner-cta) {
+  flex-direction: row-reverse;
+
+}
+
+html[dir="ltr"] :is(.hpc-icon-trailing, .secretary-message__cta, .hero-slider__cta, .media-briefings__cta, .demographic-section__banner-cta) {
+  flex-direction: row;
+}
+
+html.dark body {
+  background-color: #111827;
+  color: #e5e7eb;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+main {
+  overflow-x: clip;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-slide-content {
+  animation: hero-fade-up 0.7s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide-content {
+    animation: none;
+  }
+}

@@ -1,0 +1,122 @@
+.international-days-content {
+  width: 100%;
+  padding-block: 3rem 4rem;
+  padding-inline: 0;
+  background: #fff;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  box-sizing: border-box;
+}
+
+.international-days-content__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  max-width: var(--media-content-max);
+  margin-inline: auto;
+  direction: rtl;
+}
+
+.international-days-content__header {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4375rem;
+}
+
+.international-days-content__header-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.international-days-content__title {
+  margin: 0;
+  color: #6b4a3d;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 52px;
+  text-align: right;
+}
+
+.international-days-content__header-line {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #d6d6d6;
+}
+
+.international-days-content__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  width: 100%;
+  padding: 2rem;
+  border-radius: 14px;
+  background: #f7fafa;
+  box-sizing: border-box;
+}
+
+.international-days-content__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.international-days-content__paragraph {
+  margin: 0;
+  color: #4a5565;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 32px;
+  text-align: right;
+}
+
+.international-days-content__read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-end;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  background: #1a9ba8;
+  color: #fff;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.international-days-content__read-more:hover {
+  background: #158a96;
+}
+
+.international-days-content__read-more svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+  .international-days-content {
+    padding-block: 2rem 3rem;
+  }
+
+  .international-days-content__title {
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .international-days-content__panel {
+    padding: 1.25rem;
+  }
+
+  .international-days-content__paragraph {
+    font-size: 0.9375rem;
+    line-height: 1.85;
+  }
+}
