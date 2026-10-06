@@ -65,7 +65,8 @@
 .publication-category__arrow {
   position: absolute;
   top: 1.25rem;
-  inset-inline-start: 1.25rem;
+  left: 1.25rem;
+  right: auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -78,7 +79,8 @@
 .publication-category__icon {
   position: absolute;
   top: 1.25rem;
-  inset-inline-end: 1.25rem;
+  right: 1.25rem;
+  left: auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -86,6 +88,13 @@
   height: 3.5rem;
   border-radius: 12px;
   background: rgb(255 255 255 / 18%);
+}
+
+.publication-category__icon-img {
+  display: block;
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
 }
 
 .publication-category__content {

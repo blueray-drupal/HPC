@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import AccessibilityWidget from './components/accessibility/AccessibilityWidget.jsx';
+import { AccessibilityProvider } from './context/AccessibilityProvider.jsx';
 import { LanguageProvider } from './context/LanguageProvider.jsx';
 import { useScrollToTop } from './hooks/useScrollToTop.js';
 import Header from './components/layout/Header.jsx';
@@ -65,13 +67,16 @@ function AppRoutes() {
 function App() {
   return (
     <LanguageProvider>
-      <Router>
-        <Header />
-        <main>
-          <AppRoutes />
-        </main>
-        <Footer />
-      </Router>
+      <AccessibilityProvider>
+        <Router>
+          <Header />
+          <main>
+            <AppRoutes />
+          </main>
+          <Footer />
+          <AccessibilityWidget />
+        </Router>
+      </AccessibilityProvider>
     </LanguageProvider>
   );
 }

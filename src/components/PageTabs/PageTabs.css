@@ -11,12 +11,15 @@
   flex-direction: column;
   width: 100%;
   max-width: var(--about-content-max);
+  min-width: 0;
   margin-inline: auto;
   box-sizing: border-box;
 }
 
 .about-tabs__tabs-row {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .about-tabs__inner {
@@ -90,12 +93,22 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
+  width: 21px;
+  height: 21px;
+}
+
+.about-tab-icon svg {
+  display: block;
+  width: 21px;
+  height: 21px;
+  flex-shrink: 0;
 }
 
 @media (max-width: 1200px) {
   .about-tabs__tabs-row {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
     scrollbar-width: thin;
   }
 
@@ -104,10 +117,33 @@
   }
 }
 
+@media (max-width: 1023px) {
+  .about-tabs__inner {
+    padding-block-start: 2rem;
+    gap: 10px;
+  }
+}
+
 @media (max-width: 767px) {
+  .about-tabs__inner {
+    padding-block-start: 0.75rem;
+    gap: 8px;
+  }
+
   .about-tabs__tab {
-    padding-inline: 0.75rem;
+    min-height: 44px;
+    padding: 0.5rem 0.75rem;
     font-size: 11px;
-    line-height: 18px;
+    line-height: 17px;
+  }
+
+  .about-tab-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .about-tab-icon svg {
+    width: 18px;
+    height: 18px;
   }
 }

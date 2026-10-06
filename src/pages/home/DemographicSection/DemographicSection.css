@@ -12,6 +12,7 @@
   align-items: stretch;
   width: 100%;
   max-width: 1440px;
+  min-height: 480px;
   margin-inline: auto;
   direction: ltr;
 }
@@ -20,7 +21,9 @@
   position: relative;
   display: flex;
   width: 405px;
-  padding: 24px;
+  height: 100%;
+  min-height: 100%;
+  padding: 10px 24px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -57,7 +60,7 @@
 .demographic-section__clock-title {
   position: relative;
   z-index: 1;
-  margin: 0 0 1.25rem;
+  margin: 0 0 0.75rem;
   font-size: 1.125rem;
   font-weight: 700;
   line-height: 1.5;
@@ -66,9 +69,9 @@
 .demographic-section__clock-image {
   position: relative;
   z-index: 1;
-  width: 88px;
-  height: 88px;
-  margin-bottom: 1.5rem;
+  width: 180px;
+  height: 180px;
+  margin-bottom: 0.75rem;
   object-fit: contain;
 }
 
@@ -95,7 +98,7 @@
 .demographic-section__population-note {
   position: relative;
   z-index: 1;
-  margin: 0 0 1.5rem;
+  margin: 0 0 0.75rem;
   font-size: 0.75rem;
   font-weight: 400;
   line-height: 1.4;
@@ -109,12 +112,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 198px;
+  height: 62px;
+  margin-bottom: 0;
   padding: 0.875rem 1rem;
   border-radius: 12px;
   background: rgb(255 255 255 / 8%);
-  width: 198px;
-height: 62px;
 }
 
 .demographic-section__daily-value {
@@ -196,6 +199,7 @@ height: 62px;
 
   .demographic-section__grid {
     grid-template-columns: 1fr;
+    min-height: 0;
   }
 
   .demographic-section__clock {
@@ -218,6 +222,11 @@ height: 62px;
   .demographic-section__banner {
     padding: 2rem 1.5rem;
     min-height: 220px;
+  }
+
+  .demographic-section__clock-image {
+    width: 120px;
+    height: 120px;
   }
 
   .demographic-section__population-value {

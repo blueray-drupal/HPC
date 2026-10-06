@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Briefcase, ChevronDown, Menu, Search, X } from 'lucide-react';
 import { FaFacebookF, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
+import { useHeaderScroll } from '@/hooks/useHeaderScroll.js';
 import { useLanguage } from '@/hooks/useLanguage.js';
 import { getHeaderNav } from '@/i18n/navigation.js';
 import { useTranslation } from '@/i18n/useTranslation.js';
@@ -62,7 +63,7 @@ function TopBar() {
 
           <span className="topbar-divider" aria-hidden="true" />
 
-          <div className="topbar-lang">
+          <div className={['topbar-lang', langOpen ? 'topbar-lang--open' : ''].filter(Boolean).join(' ')}>
             <button
               type="button"
               onClick={() => setLangOpen((open) => !open)}
@@ -266,7 +267,29 @@ function MobileMenu({ open, onClose, pathname }) {
 export default function Header() {
   const { pathname } = useLocation();
   const { t } = useTranslation();
+  const scrolled = useHeaderScroll();
+  const headerMainRef = useRef(null);
+  const [headerMainHeight, setHeaderMainHeight] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useLayoutEffect(() => {
+    const element = headerMainRef.current;
+    if (!element) return undefined;
+
+    const updateHeight = () => {
+      setHeaderMainHeight(element.getBoundingClientRect().height);
+    };
+
+    updateHeight();
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(element);
+    window.addEventListener('resize', updateHeight);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     setMenuOpen(false);
@@ -280,9 +303,9 @@ export default function Header() {
   }, [menuOpen]);
 
   return (
-    <header className="site-header">
+    <header className={['site-header', scrolled ? 'site-header--scrolled' : ''].filter(Boolean).join(' ')}>
       <TopBar />
-      <div className="header-main">
+      <div className="header-main" ref={headerMainRef}>
         <div className="header-inner">
           <div className="header-brand-row">
             <Logo />
@@ -299,6 +322,10 @@ export default function Header() {
           </button>
         </div>
       </div>
+
+      {scrolled && headerMainHeight ? (
+        <div className="header-main-spacer" style={{ height: headerMainHeight }} aria-hidden="true" />
+      ) : null}
 
       <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} pathname={pathname} />
     </header>
