@@ -32,8 +32,14 @@ function buildJsonApiParams({ limit, filters = {}, include = [], sort } = {}) {
 
 export async function getNodes(contentType, options = {}) {
   const path = buildJsonApiResourcePath(contentType, null, options.lang);
+  const filters = { ...(options.filters || {}) };
+
+  if (options.lang && !options.skipLangcodeFilter && filters['filter[langcode]'] == null) {
+    filters['filter[langcode]'] = options.lang;
+  }
+
   const { data } = await drupalApi.get(path, {
-    params: buildJsonApiParams(options),
+    params: buildJsonApiParams({ ...options, filters }),
   });
 
   return data;
@@ -69,7 +75,12 @@ export async function getTaxonomyTerms(vocabulary, options = {}) {
 
   if (options.limit != null) params['page[limit]'] = options.limit;
 
-  Object.assign(params, options.filters || {});
+  const filters = { ...(options.filters || {}) };
+  if (options.lang && filters['filter[langcode]'] == null) {
+    filters['filter[langcode]'] = options.lang;
+  }
+
+  Object.assign(params, filters);
 
   const { data } = await drupalApi.get(path, { params });
   return data;

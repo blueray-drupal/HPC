@@ -1,25 +1,35 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { getPartnerTabs } from '@/i18n/navigation.js';
+import { useTranslation } from '@/i18n/useTranslation.js';
 import { fetchPartnersSection } from '@/services/api/partnersSection.js';
-import { PARTNER_TABS, PARTNERS_BY_TAB_FALLBACK } from './partnersSectionData.js';
+import { PARTNERS_BY_TAB_FALLBACK } from './partnersSectionData.js';
 import './PartnersSection.css';
 
 const CARDS_PER_SLIDE = 4;
 
 async function fetchPartnersData(language) {
+  const tabs = getPartnerTabs(language);
+
   try {
-    return await fetchPartnersSection(language, PARTNER_TABS);
+    return await fetchPartnersSection(language, tabs);
   } catch {
-    return { tabs: PARTNER_TABS, partnersByTab: PARTNERS_BY_TAB_FALLBACK };
+    return { tabs, partnersByTab: PARTNERS_BY_TAB_FALLBACK };
   }
 }
 
 export default function PartnersSection() {
+  const { language } = useLanguage();
+  const { t } = useTranslation();
   const { data, loading } = useDrupalFetch(fetchPartnersData);
-  const tabs = data?.tabs ?? PARTNER_TABS;
+  const tabs = useMemo(
+    () => data?.tabs ?? getPartnerTabs(language),
+    [data?.tabs, language],
+  );
   const partnersByTab = data?.partnersByTab ?? PARTNERS_BY_TAB_FALLBACK;
-  const [activeTab, setActiveTab] = useState(PARTNER_TABS[0]?.id || 'institutions');
+  const [activeTab, setActiveTab] = useState('institutions');
   const [slideIndex, setSlideIndex] = useState(0);
 
   useEffect(() => {
@@ -61,9 +71,9 @@ export default function PartnersSection() {
   if (loading || !hasAnyPartners) return null;
 
   return (
-    <section className="partners-section" aria-label="الشركاء والمؤسسات ذات الصلة">
+    <section className="partners-section" aria-label={t('home.partners.sectionAria')}>
       <div className="partners-section__inner">
-        <div className="partners-section__tabs" role="tablist" aria-label="تصنيف الشركاء">
+        <div className="partners-section__tabs" role="tablist" aria-label={t('home.partners.tabsAria')}>
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -85,7 +95,7 @@ export default function PartnersSection() {
           <button
             type="button"
             className="partners-section__arrow"
-            aria-label="الشريحة السابقة"
+            aria-label={t('home.partners.prevSlide')}
             onClick={goToPrev}
             disabled={slidesCount <= 1}
           >
@@ -118,7 +128,7 @@ export default function PartnersSection() {
           <button
             type="button"
             className="partners-section__arrow"
-            aria-label="الشريحة التالية"
+            aria-label={t('home.partners.nextSlide')}
             onClick={goToNext}
             disabled={slidesCount <= 1}
           >
@@ -127,14 +137,14 @@ export default function PartnersSection() {
         </div>
 
         {slidesCount > 1 ? (
-          <div className="partners-section__dots" role="tablist" aria-label="شرائح الشركاء">
+          <div className="partners-section__dots" role="tablist" aria-label={t('home.partners.slidesAria')}>
             {Array.from({ length: slidesCount }, (_, index) => (
               <button
                 key={`${activeTab}-${index}`}
                 type="button"
                 role="tab"
                 aria-selected={index === slideIndex}
-                aria-label={`الشريحة ${index + 1}`}
+                aria-label={`${t('home.partners.slide')} ${index + 1}`}
                 className={['partners-section__dot', index === slideIndex ? 'is-active' : ''].join(' ')}
                 onClick={() => setSlideIndex(index)}
               />

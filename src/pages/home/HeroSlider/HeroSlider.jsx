@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useTranslation } from '@/i18n/useTranslation.js';
 import { fetchSliders } from '@/services/api/slider.js';
 import { HERO_SLIDES } from './heroSlides.js';
 import './HeroSlider.css';
@@ -31,24 +32,29 @@ function SlideCta({ slide }) {
   );
 }
 
-function mapSlides(items) {
+function mapSlides(items, readMoreLabel) {
   if (!items?.length) return HERO_SLIDES;
 
   return items.map((slide, index) => ({
     id: slide.id || index + 1,
     image: slide.image || HERO_SLIDES[index % HERO_SLIDES.length]?.image || HERO_SLIDES[0].image,
-    badge: slide.badge || HERO_SLIDES[0].badge,
+    badge: slide.badge || '',
     title: slide.title,
     description: slide.description,
-    ctaLabel: slide.ctaLabel || 'اقرأ المزيد',
-    ctaLink: slide.ctaLink || '/about',
+    ctaLabel: slide.ctaLabel || readMoreLabel,
+    ctaLink: slide.ctaLink && slide.ctaLink !== '#' ? slide.ctaLink : '/about',
     ctaExternal: slide.ctaExternal,
   }));
 }
 
 export default function HeroSlider() {
-  const { data, loading } = useDrupalFetch((lang) => fetchSliders(lang).catch(() => null));
-  const slides = useMemo(() => mapSlides(data), [data]);
+  const { t } = useTranslation();
+  const { data, loading } = useDrupalFetch((lang) => fetchSliders(lang));
+  const slides = useMemo(() => {
+    if (data?.length) return mapSlides(data, t('common.readMore'));
+    if (!loading) return HERO_SLIDES;
+    return [];
+  }, [data, loading, t]);
   const [activeIndex, setActiveIndex] = useState(0);
   const totalSlides = slides.length;
 

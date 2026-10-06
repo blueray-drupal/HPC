@@ -16,7 +16,6 @@
   max-width: 1440px;
   margin-inline: auto;
   padding: 0.875rem 100px;
-  direction: rtl;
 }
 
 .footer-topbar__nav {
@@ -109,13 +108,12 @@
   max-width: 1440px;
   margin-inline: auto;
   padding: 2.5rem 100px;
-  direction: rtl;
 }
 
 .footer-contact__line {
   margin: 0 0 0.75rem;
   color: var(--hpc-figma-site-cod-gray, var(--color-grey-6, #101010));
-  text-align: right;
+  text-align: start;
   font-family: Al-Jazeera-Arabic;
   font-size: 14.2px;
   font-style: normal;
@@ -129,6 +127,12 @@
   color: inherit;
   text-decoration: none;
   transition: color 0.2s ease;
+}
+
+.footer-contact__value--ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
 }
 
 .footer-contact__line a:hover {
@@ -175,7 +179,7 @@
   font-size: 0.8125rem;
   line-height: 1.7;
   color: var(--hpc-figma-site-cod-gray, var(--color-grey-6, #101010));
-text-align: right;
+text-align: start;
 font-family: Al-Jazeera-Arabic;
 font-size: 14.2px;
 font-style: normal;
@@ -231,7 +235,6 @@ line-height: var(--line-height-30, 30px); /* 211.268% */
   max-width: 1440px;
   margin-inline: auto;
   padding: 1rem 100px;
-  direction: rtl;
 }
 
 .footer-bottom__legal {

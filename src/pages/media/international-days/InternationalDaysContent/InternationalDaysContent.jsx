@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { getMediaSectionTitle } from '@/i18n/navigation.js';
 import { MediaSectionHeaderIcon } from '../../MediaTabs/MediaTabIcons.jsx';
 import NewsFilters from '../../news/NewsFilters/NewsFilters.jsx';
 import { INTERNATIONAL_DAYS_INTRO } from '../internationalDaysData.js';
@@ -14,6 +16,8 @@ function ReadMoreArrow() {
 }
 
 export default function InternationalDaysContent() {
+  const { language } = useLanguage();
+  const sectionTitle = getMediaSectionTitle(language, 'international-days');
   const [category, setCategory] = useState('');
   const [year, setYear] = useState('');
   const [query, setQuery] = useState('');
@@ -29,7 +33,7 @@ export default function InternationalDaysContent() {
           <div className="international-days-content__header-row">
             <MediaSectionHeaderIcon name="internationalDays" />
             <h2 id="international-days-title" className="international-days-content__title">
-              {INTERNATIONAL_DAYS_INTRO.title}
+              {sectionTitle}
             </h2>
           </div>
           <span className="international-days-content__header-line" aria-hidden="true" />

@@ -23,7 +23,6 @@
   border-radius: 9px;
   border: 1.125px solid #BEC8CF;
   background: #FFF;
-  direction: rtl;
   box-sizing: border-box;
 }
 
@@ -54,7 +53,7 @@
   font-size: 18px;
   font-weight: 700;
   line-height: 1.5;
-  text-align: right;
+  text-align: start;
 }
 
 .demographic-pdf-card__meta {

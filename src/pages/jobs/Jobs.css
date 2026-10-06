@@ -22,7 +22,6 @@
   width: 100%;
   max-width: var(--jobs-content-max);
   margin-inline: auto;
-  direction: rtl;
   box-sizing: border-box;
 }
 
@@ -35,7 +34,6 @@
   width: 100%;
   padding-inline: var(--jobs-inline-space);
   margin-bottom: 4rem;
-  direction: rtl;
   box-sizing: border-box;
 }
 

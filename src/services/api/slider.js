@@ -21,10 +21,28 @@ export function mapSliderNode(node, included = []) {
   };
 }
 
+async function requestSliders(language, options = {}) {
+  try {
+    return await getNodes('slider', {
+      lang: language,
+      ...options,
+    });
+  } catch (error) {
+    if (options.include?.length) {
+      return getNodes('slider', {
+        lang: language,
+        ...options,
+        include: [],
+      });
+    }
+    throw error;
+  }
+}
+
 export async function fetchSliders(language) {
   const baseOptions = {
     include: SLIDER_INCLUDE,
-    sort: 'created',
+    sort: '-changed',
     limit: 20,
   };
 
@@ -35,19 +53,18 @@ export async function fetchSliders(language) {
   };
 
   if (language) {
-    const localized = await getNodes('slider', {
+    const localized = await requestSliders(language, {
       ...baseOptions,
-      lang: language,
       filters: { 'filter[langcode]': language },
     });
     const localizedSlides = mapResponse(localized);
     if (localizedSlides.length) return localizedSlides;
   }
 
-  const response = await getNodes('slider', {
+  const withoutLangFilter = await requestSliders(language, {
     ...baseOptions,
-    lang: language,
+    skipLangcodeFilter: true,
   });
 
-  return mapResponse(response);
+  return mapResponse(withoutLangFilter);
 }

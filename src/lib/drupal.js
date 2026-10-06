@@ -1,4 +1,4 @@
-import { getDrupalBaseUrl, normalizeSiteLanguage } from './env.js';
+import { getDrupalBaseUrl, normalizeSiteLanguage, useDrupalApiProxy } from './env.js';
 
 export function normalizeDrupalUrl(url) {
   if (!url) return null;
@@ -7,7 +7,7 @@ export function normalizeDrupalUrl(url) {
 
 function toProxiedDrupalPath(path) {
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  return import.meta.env.DEV ? `/api${normalizedPath}` : normalizedPath;
+  return useDrupalApiProxy() ? `/api${normalizedPath}` : normalizedPath;
 }
 
 export function resolveDrupalFileUrl(relativeOrAbsoluteUrl) {
@@ -17,13 +17,13 @@ export function resolveDrupalFileUrl(relativeOrAbsoluteUrl) {
 
   if (/^https?:\/\//i.test(url)) {
     const base = getDrupalBaseUrl();
-    if (import.meta.env.DEV && base && url.startsWith(base)) {
+    if (useDrupalApiProxy() && base && url.startsWith(base)) {
       return toProxiedDrupalPath(url.slice(base.length));
     }
     return url;
   }
 
-  if (import.meta.env.DEV) {
+  if (useDrupalApiProxy()) {
     return toProxiedDrupalPath(url);
   }
 

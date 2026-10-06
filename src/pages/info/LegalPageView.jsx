@@ -1,4 +1,7 @@
+import { useMemo } from 'react';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { getInfoPageHeroMeta } from '@/i18n/innerHero.js';
 
 import { fetchLegalPageContent } from '@/services/api/legalPages.js';
 
@@ -9,6 +12,11 @@ import LegalContent from './LegalContent.jsx';
 
 
 export default function LegalPageView({ pageKey, pageMeta, fallback }) {
+  const { language } = useLanguage();
+  const hero = useMemo(
+    () => getInfoPageHeroMeta(language, pageMeta),
+    [language, pageMeta],
+  );
 
   const { data, loading } = useDrupalFetch(
 
@@ -26,11 +34,11 @@ export default function LegalPageView({ pageKey, pageMeta, fallback }) {
 
     <InfoPageLayout
 
-      title={pageMeta.title}
+      title={hero.title}
 
-      breadcrumbs={pageMeta.breadcrumbs}
+      breadcrumbs={hero.breadcrumbs}
 
-      shareUrl={pageMeta.shareUrl}
+      shareUrl={hero.shareUrl}
 
     >
 

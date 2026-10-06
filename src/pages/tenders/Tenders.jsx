@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { getSimpleInnerHeroMeta } from '@/i18n/innerHero.js';
 
 import { fetchTenders } from '@/services/api/tenders.js';
 
@@ -12,13 +14,15 @@ import TendersFilters from './TendersFilters/TendersFilters.jsx';
 
 import TendersGrid from './TendersGrid/TendersGrid.jsx';
 
-import { filterTenders, TENDERS_ITEMS, TENDERS_PAGE } from './tendersData.js';
+import { filterTenders, TENDERS_ITEMS } from './tendersData.js';
 
 import './Tenders.css';
 
 
 
 export default function Tenders() {
+  const { language } = useLanguage();
+  const hero = useMemo(() => getSimpleInnerHeroMeta(language, 'nav.tenders'), [language]);
 
   const { data, loading } = useDrupalFetch((lang) => fetchTenders(lang, TENDERS_ITEMS));
 
@@ -61,13 +65,9 @@ export default function Tenders() {
     <div className="tenders-page">
 
       <InnerHero
-
-        title={TENDERS_PAGE.title}
-
-        breadcrumbs={TENDERS_PAGE.breadcrumbs}
-
-        backgroundImage={TENDERS_PAGE.heroImage}
-
+        title={hero.title}
+        breadcrumbs={hero.breadcrumbs}
+        backgroundImage={hero.heroImage}
       />
 
 

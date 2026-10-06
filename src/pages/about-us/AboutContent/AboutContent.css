@@ -11,7 +11,6 @@
   width: 100%;
   max-width: var(--about-content-max);
   margin-inline: auto;
-  direction: rtl;
 }
 
 .about-content__header {
@@ -31,7 +30,7 @@
 .about-content__title {
   margin: 0;
   color: #6B4A3D;
-  text-align: right;
+  text-align: start;
   font-family: Al-Jazeera-Arabic;
   font-size: 22px;
   font-style: normal;
@@ -88,7 +87,6 @@
 } */
 
 .about-content__text {
-  direction: rtl;
 }
 
 .about-content__text--full {
@@ -110,7 +108,7 @@
 .about-content__html p {
   margin: 0 0 1.5rem;
   color: #3f484e;
-  text-align: right;
+  text-align: start;
   font-size: 0.9375rem;
   line-height: 1.75;
 }
@@ -123,7 +121,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  direction: rtl;
 }
 
 .about-content__media-image {

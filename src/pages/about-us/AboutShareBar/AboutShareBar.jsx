@@ -1,5 +1,6 @@
 import { FaFacebookF, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6';
 import { Plus } from 'lucide-react';
+import { useTranslation } from '@/i18n/useTranslation.js';
 import './AboutShareBar.css';
 
 function PrintIcon() {
@@ -13,11 +14,12 @@ function PrintIcon() {
   );
 }
 
-const SHARE_ACTIONS = [
-  { id: 'share', label: 'مشاركة', icon: Plus, theme: 'blue' },
-  { id: 'print', label: 'طباعة', icon: PrintIcon, theme: 'orange', isCustomIcon: true },
+const SHARE_ACTION_IDS = [
+  { id: 'share', labelKey: 'share.share', icon: Plus, theme: 'blue' },
+  { id: 'print', labelKey: 'share.print', icon: PrintIcon, theme: 'orange', isCustomIcon: true },
   {
     id: 'linkedin',
+    labelKey: null,
     label: 'LinkedIn',
     href: 'https://www.linkedin.com/sharing/share-offsite/?url=',
     icon: FaLinkedinIn,
@@ -26,6 +28,7 @@ const SHARE_ACTIONS = [
   },
   {
     id: 'x',
+    labelKey: null,
     label: 'X',
     href: 'https://twitter.com/intent/tweet?url=',
     icon: FaXTwitter,
@@ -34,6 +37,7 @@ const SHARE_ACTIONS = [
   },
   {
     id: 'facebook',
+    labelKey: null,
     label: 'Facebook',
     href: 'https://www.facebook.com/sharer/sharer.php?u=',
     icon: FaFacebookF,
@@ -54,7 +58,9 @@ function getShareHref(item, shareUrl) {
   return item.href;
 }
 
-export default function AboutShareBar({ className = '', shareUrl = '', ariaLabel = 'مشاركة الصفحة' }) {
+export default function AboutShareBar({ className = '', shareUrl = '', ariaLabel }) {
+  const { t } = useTranslation();
+  const resolvedAriaLabel = ariaLabel ?? t('share.pageAria');
   const handleShareAction = async (event, item) => {
     if (item.id === 'print') {
       event.preventDefault();
@@ -77,17 +83,18 @@ export default function AboutShareBar({ className = '', shareUrl = '', ariaLabel
   };
 
   return (
-    <div className={['about-extended__share', className].filter(Boolean).join(' ')} aria-label={ariaLabel}>
-      {SHARE_ACTIONS.map((item) => {
+    <div className={['about-extended__share', className].filter(Boolean).join(' ')} aria-label={resolvedAriaLabel}>
+      {SHARE_ACTION_IDS.map((item) => {
         const Icon = item.icon;
         const href = getShareHref(item, shareUrl);
+        const actionLabel = item.labelKey ? t(item.labelKey) : item.label;
 
         return (
           <a
             key={item.id}
             href={href}
             className={['about-extended__share-btn', `about-extended__share-btn--${item.theme}`].join(' ')}
-            aria-label={item.label}
+            aria-label={actionLabel}
             target={item.usesShareUrl && shareUrl ? '_blank' : item.href ? '_blank' : undefined}
             rel={item.usesShareUrl && shareUrl ? 'noopener noreferrer' : item.href ? 'noopener noreferrer' : undefined}
             onClick={(event) => {

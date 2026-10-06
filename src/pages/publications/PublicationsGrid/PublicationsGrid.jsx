@@ -1,3 +1,4 @@
+import { useTranslation } from '@/i18n/useTranslation.js';
 import './PublicationsGrid.css';
 
 const YEAR_BADGE_STYLES = {
@@ -20,10 +21,12 @@ function DownloadIcon() {  return (
 }
 
 export default function PublicationsGrid({ items }) {
+  const { t } = useTranslation();
+
   if (!items.length) {
     return (
       <div className="publications-grid__empty" role="status">
-        لا توجد إصدارات مطابقة لمعايير البحث.
+        {t('publications.emptyResults')}
       </div>
     );
   }
@@ -42,13 +45,13 @@ export default function PublicationsGrid({ items }) {
                 className="publication-card__year"
                 style={YEAR_BADGE_STYLES[item.year] ?? undefined}
               >
-                إصدار {item.year}
+                {t('publications.editionLabel')} {item.year}
               </p>
 
               <h3 className="publication-card__title">{item.title}</h3>
 
               <a href={item.downloadUrl} className="publication-card__download" download>
-                <span>تحميل الملف</span>
+                <span>{t('publications.downloadFile')}</span>
                 <DownloadIcon />
               </a>
             </div>

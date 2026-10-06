@@ -20,8 +20,7 @@
   border: 1px solid #bec8cf;
   background: #f1f4f6;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
-  direction: rtl;
-  text-align: right;
+  text-align: start;
   box-sizing: border-box;
 }
 
@@ -47,7 +46,7 @@
 .vision-section__html p {
   margin: 0;
   color: #3f484e;
-  text-align: right;
+  text-align: start;
   font-family: Al-Jazeera-Arabic;
   font-size: 16px;
   font-weight: 400;
@@ -57,7 +56,7 @@
 .vision-section__title {
   margin: 0;
   color: #006182;
-  text-align: right;
+  text-align: start;
   font-family: Al-Jazeera-Arabic;
   font-size: 20px;
   font-style: normal;
@@ -69,7 +68,7 @@
   margin: 0;
   width: 100%;
   color: #3F484E;
-text-align: right;
+text-align: start;
 font-family: Al-Jazeera-Arabic;
 font-size: 16px;
 font-style: normal;

@@ -1,4 +1,6 @@
+import { useLanguage } from '@/hooks/useLanguage.js';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { getMediaSectionTitle } from '@/i18n/navigation.js';
 import { fetchPhotoGallery } from '@/services/api/photoVideoGallery.js';
 import { MediaSectionHeaderIcon } from '../../MediaTabs/MediaTabIcons.jsx';
 import PhotoGalleryGrid from '../PhotoGalleryGrid/PhotoGalleryGrid.jsx';
@@ -6,6 +8,8 @@ import { PHOTO_GALLERY_ITEMS } from '../photosListData.js';
 import './PhotosContent.css';
 
 export default function PhotosContent() {
+  const { language } = useLanguage();
+  const sectionTitle = getMediaSectionTitle(language, 'photos');
   const { data, loading } = useDrupalFetch((lang) => fetchPhotoGallery(lang, PHOTO_GALLERY_ITEMS));
   const items = data ?? PHOTO_GALLERY_ITEMS;
 
@@ -16,7 +20,7 @@ export default function PhotosContent() {
           <div className="photos-content__header-row">
             <MediaSectionHeaderIcon name="photos" />
             <h2 id="photos-section-title" className="photos-content__title">
-              معرض الصور
+              {sectionTitle}
             </h2>
           </div>
           <span className="photos-content__header-line" aria-hidden="true" />

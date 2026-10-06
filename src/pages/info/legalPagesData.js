@@ -1,5 +1,6 @@
 export const PRIVACY_PAGE = {
   title: 'سياسة الخصوصية',
+  titleKey: 'footer.privacy',
   shareUrl: '/privacy',
   breadcrumbs: [
     { label: 'الرئيسية', to: '/' },
@@ -18,6 +19,7 @@ export const PRIVACY_PAGE = {
 
 export const TERMS_PAGE = {
   title: 'شروط الاستخدام',
+  titleKey: 'footer.terms',
   shareUrl: '/terms',
   breadcrumbs: [
     { label: 'الرئيسية', to: '/' },
@@ -36,6 +38,7 @@ export const TERMS_PAGE = {
 
 export const DISCLAIMER_PAGE = {
   title: 'إخلاء المسؤولية',
+  titleKey: 'footer.disclaimer',
   shareUrl: '/disclaimer',
   breadcrumbs: [
     { label: 'الرئيسية', to: '/' },
@@ -52,6 +55,7 @@ export const DISCLAIMER_PAGE = {
 
 export const COPYRIGHT_PAGE = {
   title: 'حقوق النشر',
+  titleKey: 'footer.copyrightPage',
   shareUrl: '/copyright',
   breadcrumbs: [
     { label: 'الرئيسية', to: '/' },

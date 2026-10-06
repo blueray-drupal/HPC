@@ -1,10 +1,4 @@
-export const PUBLICATION_TABS = [
-  'training-manuals',
-  'reports',
-  'plans-strategies',
-  'studies-research',
-  'policy-briefs',
-];
+export { PUBLICATION_TABS, getPublicationCategories, getPublicationCategoryBySlug, getPublicationsPageMeta } from './publicationsI18n.js';
 
 export const PUBLICATIONS_PAGE = {
   title: 'الإصدارات',
@@ -62,7 +56,3 @@ export const PUBLICATION_CATEGORIES = [
     to: '/publications/studies-research',
   },
 ];
-
-export function getPublicationCategoryBySlug(slug) {
-  return PUBLICATION_CATEGORIES.find((category) => category.id === slug) ?? null;
-}

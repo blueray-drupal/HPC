@@ -9,6 +9,12 @@ export function getDrupalBaseUrl() {
   return trimTrailingSlash(import.meta.env.VITE_DRUPAL_URL || DEFAULT_DRUPAL_URL);
 }
 
+/** Same-origin /api proxy (Vite dev server or Apache on production). Avoids browser CORS to Drupal. */
+export function useDrupalApiProxy() {
+  if (import.meta.env.DEV) return true;
+  return import.meta.env.VITE_DRUPAL_USE_PROXY === 'true';
+}
+
 export function getDrupalDefaultLanguage() {
   return (
     import.meta.env.VITE_DRUPAL_DEFAULT_LANG ||
@@ -41,15 +47,15 @@ export function getLanguageDirection(lang) {
 }
 
 /** Base URL for custom Drupal REST endpoints (e.g. /membership-result). */
-export function getApiBaseUrl() {
-  if (import.meta.env.DEV) {
-    const lang = getDrupalDefaultLanguage();
-    return `/api/${lang}`;
+export function getApiBaseUrl(lang) {
+  const language = normalizeSiteLanguage(lang);
+
+  if (useDrupalApiProxy()) {
+    return `/api/${language}`;
   }
 
   const configured = trimTrailingSlash(import.meta.env.VITE_API_BASE_URL);
   if (configured) return configured;
 
-  const lang = getDrupalDefaultLanguage();
-  return `${getDrupalBaseUrl()}/${lang}`;
+  return `${getDrupalBaseUrl()}/${language}`;
 }

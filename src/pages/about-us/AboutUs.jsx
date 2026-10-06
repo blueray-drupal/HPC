@@ -1,10 +1,12 @@
+import { useMemo } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
 import { fetchAboutUsSections } from '@/services/api/aboutUs.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { getAboutTabs } from '@/i18n/navigation.js';
+import { getSimpleInnerHeroMeta } from '@/i18n/innerHero.js';
 import {
-  ABOUT_PAGE,
   ABOUT_SECTIONS,
-  ABOUT_TABS,
   DEFAULT_ABOUT_SECTION,
 } from './aboutUsData.js';
 import InnerHero from './InnerHero/InnerHero.jsx';
@@ -14,9 +16,12 @@ import './AboutUs.css';
 
 export default function AboutUs() {
   const { section = DEFAULT_ABOUT_SECTION } = useParams();
+  const { language } = useLanguage();
+  const hero = useMemo(() => getSimpleInnerHeroMeta(language, 'about.pageTitle'), [language]);
+  const aboutTabs = getAboutTabs(language);
   const { data, loading } = useDrupalFetch((lang) => fetchAboutUsSections(lang, ABOUT_SECTIONS));
   const sections = data ?? ABOUT_SECTIONS;
-  const isValidSection = ABOUT_TABS.some((tab) => tab.id === section);
+  const isValidSection = aboutTabs.some((tab) => tab.id === section);
 
   if (!isValidSection) {
     return <Navigate to={`/about/${DEFAULT_ABOUT_SECTION}`} replace />;
@@ -27,12 +32,12 @@ export default function AboutUs() {
   return (
     <div className="about-us-page">
       <InnerHero
-        title={ABOUT_PAGE.title}
-        breadcrumbs={ABOUT_PAGE.breadcrumbs}
-        backgroundImage={ABOUT_PAGE.heroImage}
+        title={hero.title}
+        breadcrumbs={hero.breadcrumbs}
+        backgroundImage={hero.heroImage}
       />
       <AboutTabs />
-      {!loading ? <AboutContent section={activeSection} /> : null}
+      {!loading ? <AboutContent section={activeSection} sectionId={section} /> : null}
     </div>
   );
 }

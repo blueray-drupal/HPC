@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { getSimpleInnerHeroMeta } from '@/i18n/innerHero.js';
 
 import { fetchCareers } from '@/services/api/careers.js';
 
@@ -12,13 +14,15 @@ import JobsFilters from './JobsFilters/JobsFilters.jsx';
 
 import JobsGrid from './JobsGrid/JobsGrid.jsx';
 
-import { filterJobs, JOBS_ITEMS, JOBS_PAGE } from './jobsData.js';
+import { filterJobs, JOBS_ITEMS } from './jobsData.js';
 
 import './Jobs.css';
 
 
 
 export default function Jobs() {
+  const { language } = useLanguage();
+  const hero = useMemo(() => getSimpleInnerHeroMeta(language, 'common.jobs'), [language]);
 
   const { data, loading } = useDrupalFetch((lang) => fetchCareers(lang, JOBS_ITEMS));
 
@@ -55,13 +59,9 @@ export default function Jobs() {
     <div className="jobs-page">
 
       <InnerHero
-
-        title={JOBS_PAGE.title}
-
-        breadcrumbs={JOBS_PAGE.breadcrumbs}
-
-        backgroundImage={JOBS_PAGE.heroImage}
-
+        title={hero.title}
+        breadcrumbs={hero.breadcrumbs}
+        backgroundImage={hero.heroImage}
       />
 
 

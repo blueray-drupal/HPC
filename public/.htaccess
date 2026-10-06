@@ -1,0 +1,18 @@
+Options -MultiViews
+RewriteEngine On
+
+# Handle Authorization Header
+RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# Proxy JSON:API and Drupal paths to backend (same origin — no CORS in browser).
+# Requires mod_proxy + mod_proxy_http. If [P] fails on hosting, enable CORS on Drupal instead.
+RewriteRule ^api/?(.*)$ http://backend.hpc.com.dedi8785.your-server.de/$1 [P,L]
+
+RewriteRule ^webform-file-upload/?(.*)$ http://backend.hpc.com.dedi8785.your-server.de/webform-file-upload/$1 [P,L]
+
+# Static files
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# SPA fallback (React Router)
+RewriteRule ^ index.html [QSA,L]

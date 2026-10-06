@@ -1,3 +1,4 @@
+import { getContactFieldLabels } from '@/i18n/navigation.js';
 import { getNodes } from './drupalApi.js';
 
 const CONTENT_TYPE = 'contact_us';
@@ -18,36 +19,37 @@ function buildEmailHref(email) {
   return `mailto:${String(email).trim()}`;
 }
 
-export function mapContactUsNode(node) {
+export function mapContactUsNode(node, language = 'ar') {
   const address = node.attributes?.field_address || '';
   const phone = node.attributes?.field_phone_number || '';
   const fax = node.attributes?.field_fax || '';
   const email = node.attributes?.field_email || '';
   const mapHtml = getProcessedHtml(node.attributes?.field_body);
+  const labels = getContactFieldLabels(language);
 
   const infoItems = [
     {
       id: 'address',
-      title: 'العنوان',
+      title: labels.address,
       value: address,
       icon: 'location',
     },
     {
       id: 'phone',
-      title: 'الهاتف',
+      title: labels.phone,
       value: phone,
       href: buildPhoneHref(phone),
       icon: 'phone',
     },
     {
       id: 'fax',
-      title: 'الفاكس',
+      title: labels.fax,
       value: fax,
       icon: 'fax',
     },
     {
       id: 'email',
-      title: 'البريد الإلكتروني',
+      title: labels.email,
       value: email,
       href: buildEmailHref(email),
       icon: 'email',
@@ -98,7 +100,7 @@ export async function fetchContactUs(language, fallback = null) {
     const nodes = await fetchContactNodes(language);
     if (!nodes.length) return fallback;
 
-    const mapped = mapContactUsNode(nodes[0]);
+    const mapped = mapContactUsNode(nodes[0], language);
     if (!mapped.infoItems.length && !mapped.mapHtml) return fallback;
 
     return {

@@ -1,6 +1,5 @@
 .structure-section-wrap {
   width: 100%;
-  direction: rtl;
 }
 
 .structure-section {
@@ -18,7 +17,6 @@
   border: 1px solid rgb(193 198 215 / 30%);
   background: #fff;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
-  direction: rtl;
   box-sizing: border-box;
 }
 

@@ -5,12 +5,15 @@ import { Navigate, useParams } from 'react-router-dom';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
 
 import { fetchCareerItem } from '@/services/api/careers.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { buildHeroBreadcrumbs, INNER_HERO_BACKGROUND } from '@/i18n/innerHero.js';
+import { translate } from '@/i18n/useTranslation.js';
 
 import AboutShareBar from '../../about-us/AboutShareBar/AboutShareBar.jsx';
 
 import InnerHero from '../../about-us/InnerHero/InnerHero.jsx';
 
-import { getJobById, JOB_TYPES, JOBS_PAGE } from '../jobsData.js';
+import { getJobById, JOB_TYPES } from '../jobsData.js';
 
 import './JobDetail.css';
 
@@ -245,30 +248,31 @@ function DetailFact({ icon, label, value }) {
 
 
 export default function JobDetail() {
-
   const { id } = useParams();
-
+  const { language } = useLanguage();
   const fallbackJob = useMemo(() => getJobById(id), [id]);
-
   const { data: drupalJob, loading } = useDrupalFetch(
-
     (lang) => fetchCareerItem(lang, id, fallbackJob),
-
     [id],
-
   );
 
-
+  const resolvedJob = drupalJob ?? fallbackJob;
+  const heroTitle = translate(language, 'common.jobs');
+  const heroBreadcrumbs = useMemo(
+    () =>
+      resolvedJob
+        ? buildHeroBreadcrumbs(language, [
+            { key: 'common.home', to: '/' },
+            { key: 'common.jobs', to: '/jobs' },
+            { label: resolvedJob.title },
+          ])
+        : [],
+    [language, resolvedJob],
+  );
 
   if (loading) {
-
     return null;
-
   }
-
-
-
-  const resolvedJob = drupalJob ?? fallbackJob;
 
 
 
@@ -303,21 +307,9 @@ export default function JobDetail() {
     <div className="job-detail-page">
 
       <InnerHero
-
-        title={JOBS_PAGE.title}
-
-        breadcrumbs={[
-
-          { label: 'الرئيسية', to: '/' },
-
-          { label: JOBS_PAGE.title, to: '/jobs' },
-
-          { label: resolvedJob.title },
-
-        ]}
-
-        backgroundImage={JOBS_PAGE.heroImage}
-
+        title={heroTitle}
+        breadcrumbs={heroBreadcrumbs}
+        backgroundImage={INNER_HERO_BACKGROUND}
       />
 
 

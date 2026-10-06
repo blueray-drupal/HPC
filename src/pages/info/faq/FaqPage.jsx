@@ -1,4 +1,7 @@
+import { useMemo } from 'react';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { getInfoPageHeroMeta } from '@/i18n/innerHero.js';
 
 import { fetchFaqItems } from '@/services/api/faq.js';
 
@@ -11,6 +14,8 @@ import { FAQ_PAGE } from './faqData.js';
 
 
 export default function FaqPage() {
+  const { language } = useLanguage();
+  const hero = useMemo(() => getInfoPageHeroMeta(language, FAQ_PAGE), [language]);
 
   const { data, loading } = useDrupalFetch((lang) => fetchFaqItems(lang, FAQ_PAGE.items));
 
@@ -22,11 +27,11 @@ export default function FaqPage() {
 
     <InfoPageLayout
 
-      title={FAQ_PAGE.title}
+      title={hero.title}
 
-      breadcrumbs={FAQ_PAGE.breadcrumbs}
+      breadcrumbs={hero.breadcrumbs}
 
-      shareUrl={FAQ_PAGE.shareUrl}
+      shareUrl={hero.shareUrl}
 
     >
 

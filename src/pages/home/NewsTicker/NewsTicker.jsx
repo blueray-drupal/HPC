@@ -1,7 +1,17 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { useTranslation } from '@/i18n/useTranslation.js';
+import { fetchNews } from '@/services/api/news.js';
 import { NEWS_TICKER_ITEMS } from './newsTickerData.js';
 import './NewsTicker.css';
+
+const TICKER_NEWS_LIMIT = 4;
+
+/** Half-loop duration at 4 headlines × 4 repeats (matches original static ticker feel). */
+const TICKER_BASE_DURATION_SEC = 150;
+const TICKER_BASE_ITEM_COUNT = 4;
 
 function IconChevronRight() {
   return (
@@ -55,7 +65,8 @@ function IconPause() {
 function stepAnimation(track, direction) {
   const animation = track?.getAnimations?.()[0];
   if (!animation) return;
-  animation.currentTime = Math.max(0, animation.currentTime + direction * 1800);
+  const stepMs = Math.max(1200, (animation.effect?.getTiming?.()?.duration || 150000) * 0.012);
+  animation.currentTime = Math.max(0, animation.currentTime + direction * stepMs);
 }
 
 const TICKER_SEGMENT_REPEAT = 4;
@@ -65,27 +76,64 @@ function buildLoopItems(items) {
   return [...segment, ...segment];
 }
 
+function mapNewsToTickerItems(newsItems) {
+  return newsItems.slice(0, TICKER_NEWS_LIMIT).map((item) => ({
+    id: item.id,
+    title: item.title,
+    link: item.link || '/media/news',
+  }));
+}
+
 export default function NewsTicker() {
+  const { language } = useLanguage();
+  const { t } = useTranslation();
   const trackRef = useRef(null);
   const [paused, setPaused] = useState(false);
-  const loopItems = buildLoopItems(NEWS_TICKER_ITEMS);
+
+  const { data, loading } = useDrupalFetch((lang) => fetchNews(lang).catch(() => null));
+
+  const tickerItems = useMemo(() => {
+    if (data?.length) {
+      return mapNewsToTickerItems(data);
+    }
+    if (loading) {
+      return [];
+    }
+    return language === 'ar' ? NEWS_TICKER_ITEMS : [];
+  }, [data, loading, language]);
+
+  const loopItems = useMemo(() => {
+    if (!tickerItems.length) return [];
+    return buildLoopItems(tickerItems);
+  }, [tickerItems]);
+
   const segmentLength = loopItems.length / 2;
+
+  const scrollDurationSec =
+    (TICKER_BASE_DURATION_SEC / TICKER_BASE_ITEM_COUNT) *
+    Math.max(tickerItems.length, 1) *
+    TICKER_SEGMENT_REPEAT;
 
   const handlePrev = () => stepAnimation(trackRef.current, 1);
   const handleNext = () => stepAnimation(trackRef.current, -1);
   const togglePause = () => setPaused((current) => !current);
 
+  if (!loopItems.length) {
+    return null;
+  }
+
   return (
-    <section className="news-ticker" aria-label="شريط آخر الأخبار">
+    <section className="news-ticker" aria-label={t('home.newsTicker.sectionAria')}>
       <div className="news-ticker__label">
         <span className="news-ticker__label-dot" aria-hidden="true" />
-        <span>آخر الأخبار</span>
+        <span>{t('home.newsTicker.label')}</span>
       </div>
 
       <div className="news-ticker__viewport">
         <div
           ref={trackRef}
           className={['news-ticker__track', paused ? 'is-paused' : ''].filter(Boolean).join(' ')}
+          style={{ '--news-ticker-duration': `${scrollDurationSec}s` }}
         >
           {loopItems.map((item, index) => (
             <span
@@ -103,7 +151,12 @@ export default function NewsTicker() {
       </div>
 
       <div className="news-ticker__controls">
-        <button type="button" className="news-ticker__control-btn" onClick={handleNext} aria-label="الخبر التالي">
+        <button
+          type="button"
+          className="news-ticker__control-btn"
+          onClick={handleNext}
+          aria-label={t('home.newsTicker.next')}
+        >
           <IconChevronRight />
         </button>
 
@@ -111,12 +164,17 @@ export default function NewsTicker() {
           type="button"
           className="news-ticker__control-btn"
           onClick={togglePause}
-          aria-label={paused ? 'تشغيل شريط الأخبار' : 'إيقاف شريط الأخبار'}
+          aria-label={paused ? t('home.newsTicker.play') : t('home.newsTicker.pause')}
         >
           <IconPause />
         </button>
 
-        <button type="button" className="news-ticker__control-btn" onClick={handlePrev} aria-label="الخبر السابق">
+        <button
+          type="button"
+          className="news-ticker__control-btn"
+          onClick={handlePrev}
+          aria-label={t('home.newsTicker.prev')}
+        >
           <IconChevronLeft />
         </button>
       </div>

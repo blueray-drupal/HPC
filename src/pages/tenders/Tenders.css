@@ -22,7 +22,6 @@
   width: 100%;
   max-width: var(--tenders-content-max);
   margin-inline: auto;
-  direction: rtl;
   box-sizing: border-box;
 }
 
@@ -36,7 +35,6 @@
   width: 100%;
   padding-inline: var(--tenders-inline-space);
   margin-bottom: 4rem;
-  direction: rtl;
   box-sizing: border-box;
 }
 

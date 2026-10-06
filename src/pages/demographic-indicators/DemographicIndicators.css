@@ -20,7 +20,6 @@
   max-width: var(--demographic-content-max);
   margin: 0 auto 4rem;
   padding-inline: var(--demographic-inline-space);
-  direction: rtl;
   box-sizing: border-box;
 }
 

@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
 import { fetchContactUs } from '@/services/api/contactUs.js';
 import AboutShareBar from '../about-us/AboutShareBar/AboutShareBar.jsx';
 import InnerHero from '../about-us/InnerHero/InnerHero.jsx';
-import { CONTACT_FALLBACK, CONTACT_PAGE } from './contactData.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { useTranslation } from '@/i18n/useTranslation.js';
+import { getContactFallback, getContactPageMeta } from './contactData.js';
 import './Contact.css';
 
 function SubmitArrowIcon() {
@@ -61,9 +63,43 @@ function ContactInfoIcon({ type }) {
   );
 }
 
+function contactValueClassName(icon) {
+  const base = 'contact-info-card__value';
+  return icon === 'location' ? base : `${base} contact-info-card__value--ltr`;
+}
+
 export default function Contact() {
-  const { data, loading } = useDrupalFetch((lang) => fetchContactUs(lang, CONTACT_FALLBACK));
-  const contactContent = data ?? CONTACT_FALLBACK;
+  const { language } = useLanguage();
+  const { t } = useTranslation();
+  const contactPage = getContactPageMeta(language);
+  const contactFallback = getContactFallback(language);
+  const { data, loading } = useDrupalFetch((lang) => fetchContactUs(lang, getContactFallback(lang)));
+  const contactContent = data ?? contactFallback;
+
+  const contactInfoItems = useMemo(() => {
+    const labelKeys = {
+      address: 'contact.address',
+      phone: 'contact.phone',
+      fax: 'contact.fax',
+      email: 'contact.email',
+    };
+
+    return contactContent.infoItems.map((item) => {
+      const titleKey = labelKeys[item.id];
+      const title = titleKey ? t(titleKey) : item.title;
+      let value = item.value;
+
+      if (item.id === 'address') {
+        value =
+          language === 'en'
+            ? t('contact.addressValue')
+            : item.value || t('contact.addressValue');
+      }
+
+      return { ...item, title, value };
+    });
+  }, [contactContent.infoItems, language, t]);
+
   const [form, setForm] = useState({
     name: '',
     phone: '',
@@ -83,9 +119,9 @@ export default function Contact() {
   return (
     <div className="contact-page">
       <InnerHero
-        title={CONTACT_PAGE.title}
-        breadcrumbs={CONTACT_PAGE.breadcrumbs}
-        backgroundImage={CONTACT_PAGE.heroImage}
+        title={contactPage.title}
+        breadcrumbs={contactPage.breadcrumbs}
+        backgroundImage={contactPage.heroImage}
       />
 
       <div className="contact-page__body">
@@ -93,16 +129,16 @@ export default function Contact() {
           <div className="contact-page__main">
             {!loading ? (
               <div className="contact-page__info">
-              {contactContent.infoItems.map((item) => (
+              {contactInfoItems.map((item) => (
                 <article key={item.id} className="contact-info-card">
                   <div className="contact-info-card__content">
                     <h3 className="contact-info-card__title">{item.title}</h3>
                     {item.href ? (
-                      <a href={item.href} className="contact-info-card__value">
+                      <a href={item.href} className={contactValueClassName(item.icon)}>
                         {item.value}
                       </a>
                     ) : (
-                      <p className="contact-info-card__value">{item.value}</p>
+                      <p className={contactValueClassName(item.icon)}>{item.value}</p>
                     )}
                   </div>
                   <div className="contact-info-card__icon-wrap">
@@ -117,20 +153,20 @@ export default function Contact() {
               <span className="contact-form__accent" aria-hidden="true" />
               <div className="contact-form__inner">
                 <h2 id="contact-form-title" className="contact-form__title">
-                  أرسل لنا رسالة
+                  {t('contact.formTitle')}
                 </h2>
 
                 <form className="contact-form__fields" onSubmit={handleSubmit}>
                   <div className="contact-form__field">
                     <label className="contact-form__label" htmlFor="contact-name">
-                      الاسم
+                      {t('contact.formNameLabel')}
                     </label>
                     <input
                       id="contact-name"
                       name="name"
                       type="text"
                       className="contact-form__input"
-                      placeholder="الاسم الكامل"
+                      placeholder={t('contact.formNamePlaceholder')}
                       value={form.name}
                       onChange={handleChange}
                       required
@@ -140,14 +176,14 @@ export default function Contact() {
                   <div className="contact-form__row">
                     <div className="contact-form__field">
                       <label className="contact-form__label" htmlFor="contact-phone">
-                        رقم الهاتف
+                        {t('contact.formPhoneLabel')}
                       </label>
                       <input
                         id="contact-phone"
                         name="phone"
                         type="tel"
                         className="contact-form__input"
-                        placeholder="ادخل رقم الهاتف"
+                        placeholder={t('contact.formPhonePlaceholder')}
                         value={form.phone}
                         onChange={handleChange}
                         required
@@ -156,14 +192,14 @@ export default function Contact() {
 
                     <div className="contact-form__field">
                       <label className="contact-form__label" htmlFor="contact-email">
-                        البريد الإلكتروني
+                        {t('contact.email')}
                       </label>
                       <input
                         id="contact-email"
                         name="email"
                         type="email"
                         className="contact-form__input"
-                        placeholder="ادخل بريدك الالكتروني"
+                        placeholder={t('contact.formEmailPlaceholder')}
                         value={form.email}
                         onChange={handleChange}
                         required
@@ -173,13 +209,13 @@ export default function Contact() {
 
                   <div className="contact-form__field">
                     <label className="contact-form__label" htmlFor="contact-message">
-                      الرسالة
+                      {t('contact.formMessageLabel')}
                     </label>
                     <textarea
                       id="contact-message"
                       name="message"
                       className="contact-form__textarea"
-                      placeholder="ادخل رسالتك"
+                      placeholder={t('contact.formMessagePlaceholder')}
                       rows={5}
                       value={form.message}
                       onChange={handleChange}
@@ -188,7 +224,7 @@ export default function Contact() {
                   </div>
 
                   <button type="submit" className="contact-form__submit">
-                    <span>إرسال</span>
+                    <span>{t('common.submit')}</span>
                     <SubmitArrowIcon />
                   </button>
                 </form>

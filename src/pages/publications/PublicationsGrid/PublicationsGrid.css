@@ -63,8 +63,7 @@
   flex-direction: column;
   align-items: stretch;
   padding-top: calc(286px - var(--publication-cover-overlap) + 1rem);
-  direction: rtl;
-  text-align: right;
+  text-align: start;
 }
 
 .publication-card__year {

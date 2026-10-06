@@ -1,4 +1,5 @@
 import { Search } from 'lucide-react';
+import { useTranslation } from '@/i18n/useTranslation.js';
 import '../../../components/PageFilters/PageFilters.css';
 
 export default function TendersFilters({
@@ -8,11 +9,13 @@ export default function TendersFilters({
   onNumberChange,
   onSubmit,
 }) {
+  const { t } = useTranslation();
+
   return (
-    <form className="page-filters" onSubmit={onSubmit} aria-label="تصفية العطاءات">
+    <form className="page-filters" onSubmit={onSubmit} aria-label={t('tenders.filtersAria')}>
       <div className="page-filters__field page-filters__field--grow">
         <label className="page-filters__label" htmlFor="tender-name">
-          اسم العطاء
+          {t('tenders.filterName')}
         </label>
         <input
           id="tender-name"
@@ -20,13 +23,13 @@ export default function TendersFilters({
           className="page-filters__input"
           value={name}
           onChange={(event) => onNameChange(event.target.value)}
-          placeholder="...اكتب للبحث"
+          placeholder={t('common.searchPlaceholder')}
         />
       </div>
 
       <div className="page-filters__field page-filters__field--grow">
         <label className="page-filters__label" htmlFor="tender-number">
-          رقم العطاء
+          {t('tenders.filterNumber')}
         </label>
         <input
           id="tender-number"
@@ -34,13 +37,13 @@ export default function TendersFilters({
           className="page-filters__input"
           value={number}
           onChange={(event) => onNumberChange(event.target.value)}
-          placeholder="...اكتب للبحث"
+          placeholder={t('common.searchPlaceholder')}
         />
       </div>
 
       <button type="submit" className="page-filters__submit">
         <Search size={16} aria-hidden="true" />
-        <span>بحث</span>
+        <span>{t('common.search')}</span>
       </button>
     </form>
   );

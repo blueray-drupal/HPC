@@ -1,4 +1,5 @@
 import { Search } from 'lucide-react';
+import { useTranslation } from '@/i18n/useTranslation.js';
 import '../../../components/PageFilters/PageFilters.css';
 import { PUBLICATION_YEARS } from '../publicationsListData.js';
 
@@ -11,11 +12,13 @@ export default function PublicationFilters({
   onQueryChange,
   onSubmit,
 }) {
+  const { t } = useTranslation();
+
   return (
-    <form className="page-filters" onSubmit={onSubmit} aria-label="تصفية الإصدارات">
+    <form className="page-filters" onSubmit={onSubmit} aria-label={t('publications.filtersAria')}>
       <div className="page-filters__field">
         <label className="page-filters__label" htmlFor="publication-classification">
-          التصنيف
+          {t('publications.filterClassification')}
         </label>
         <select
           id="publication-classification"
@@ -23,13 +26,13 @@ export default function PublicationFilters({
           value={classification}
           onChange={(event) => onClassificationChange(event.target.value)}
         >
-          <option value="">- الكل -</option>
+          <option value="">{t('common.filterAll')}</option>
         </select>
       </div>
 
       <div className="page-filters__field">
         <label className="page-filters__label" htmlFor="publication-year">
-          سنة الإصدار
+          {t('publications.filterYear')}
         </label>
         <select
           id="publication-year"
@@ -37,7 +40,7 @@ export default function PublicationFilters({
           value={year}
           onChange={(event) => onYearChange(event.target.value)}
         >
-          <option value="">- الكل -</option>
+          <option value="">{t('common.filterAll')}</option>
           {PUBLICATION_YEARS.map((item) => (
             <option key={item} value={item}>
               {item}
@@ -48,7 +51,7 @@ export default function PublicationFilters({
 
       <div className="page-filters__field page-filters__field--grow">
         <label className="page-filters__label" htmlFor="publication-search">
-          البحث عن عنوان
+          {t('publications.filterSearchTitle')}
         </label>
         <input
           id="publication-search"
@@ -56,13 +59,13 @@ export default function PublicationFilters({
           className="page-filters__input"
           value={query}
           onChange={(event) => onQueryChange(event.target.value)}
-          placeholder="...اكتب للبحث"
+          placeholder={t('common.searchPlaceholder')}
         />
       </div>
 
       <button type="submit" className="page-filters__submit">
         <Search size={16} aria-hidden="true" />
-        <span>بحث</span>
+        <span>{t('common.search')}</span>
       </button>
     </form>
   );

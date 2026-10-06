@@ -1,8 +1,20 @@
+import { useTranslation } from '@/i18n/useTranslation.js';
 import { ProgramSectionHeaderIcon } from '../ProgramTabs/ProgramTabIcons.jsx';
 import './ProgramContent.css';
 
-export default function ProgramContent({ section }) {
+const SECTION_TITLE_KEYS = {
+  'population-development': 'nav.programPopulation',
+  'reproductive-health': 'nav.programReproductiveHealth',
+  advocacy: 'nav.programAdvocacy',
+};
+
+export default function ProgramContent({ section, sectionId }) {
+  const { t } = useTranslation();
+
   if (!section) return null;
+
+  const titleKey = sectionId ? SECTION_TITLE_KEYS[sectionId] : null;
+  const sectionTitle = titleKey ? t(titleKey) : section.title;
 
   return (
     <section className="program-content" aria-labelledby="program-section-title">
@@ -11,7 +23,7 @@ export default function ProgramContent({ section }) {
           <div className="program-content__header-row">
             <ProgramSectionHeaderIcon name={section.icon} image={section.image} />
             <h2 id="program-section-title" className="program-content__title">
-              {section.title}
+              {sectionTitle}
             </h2>
           </div>
           <span className="program-content__header-line" aria-hidden="true" />

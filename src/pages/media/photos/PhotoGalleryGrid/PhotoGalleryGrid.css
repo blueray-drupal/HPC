@@ -1,17 +1,18 @@
 .photo-gallery-grid {
   display: grid;
-  grid-template-columns: repeat(4, 293.75px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1.375rem;
-  justify-content: space-between;
   width: 100%;
-  direction: rtl;
+  align-items: stretch;
 }
 
 .photo-gallery-grid__card {
   display: flex;
-  width: 293.75px;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   overflow: hidden;
   border: 1px solid #bec8cf;
   border-radius: 8px;
@@ -22,7 +23,9 @@
 .photo-gallery-grid__image-wrap {
   width: 100%;
   aspect-ratio: 1 / 1;
+  flex-shrink: 0;
   overflow: hidden;
+  background: #e5e7eb;
 }
 
 .photo-gallery-grid__image {
@@ -34,38 +37,43 @@
 
 .photo-gallery-grid__body {
   display: flex;
-  width: 100%;
+  flex: 1 1 auto;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 1rem;
+  min-height: 0;
   padding: 1rem 1rem 1.125rem;
   box-sizing: border-box;
   background: #f3f4f6;
 }
 
 .photo-gallery-grid__title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
   margin: 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
   color: #6b4a3d;
   font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 700;
-  line-height: 32px;
+  line-height: 1.75;
   text-align: center;
 }
 
 .photo-gallery-grid__read-more {
   display: flex;
+  margin-top: auto;
+  flex-shrink: 0;
   width: 100%;
   padding: 8px 16px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex: 1 0 0;
   box-sizing: border-box;
   border-radius: 6px;
   background: #6b4a3d;
@@ -101,19 +109,19 @@
 
 @media (max-width: 1279px) {
   .photo-gallery-grid {
-    grid-template-columns: repeat(2, 293.75px);
-    justify-content: center;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.25rem;
   }
 }
 
 @media (max-width: 767px) {
   .photo-gallery-grid {
-    grid-template-columns: minmax(0, 293.75px);
-    justify-content: center;
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .photo-gallery-grid__card {
-    width: 100%;
+  .photo-gallery-grid__title {
+    font-size: 1rem;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
   }
 }

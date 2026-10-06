@@ -2,7 +2,6 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.5rem;
-  direction: rtl;
 }
 
 .news-grid__card {
@@ -59,7 +58,7 @@
   margin: 0;
   overflow: hidden;
   color: #006182;
-  text-align: right;
+  text-align: start;
   font-family: Al-Jazeera-Arabic;
   font-size: 18px;
   font-style: normal;
@@ -76,7 +75,7 @@
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.7;
-  text-align: right;
+  text-align: start;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
@@ -91,7 +90,6 @@
   padding: 17px 0.34px 0 0;
   border-top: 1px solid #e1e3e4;
   color: #6b4a3d;
-  direction: rtl;
 }
 
 .news-grid__share {
@@ -119,7 +117,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 24px;
-  text-align: right;
+  text-align: start;
   text-decoration: none;
   transition: opacity 0.2s ease;
   direction: ltr;

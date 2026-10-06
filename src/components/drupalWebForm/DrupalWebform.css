@@ -485,7 +485,7 @@
   font-size: 14px;
   font-weight: 500;
   color: #333333;
-  text-align: right;
+  text-align: start;
 }
 
 .dwf-theme-contact .dwf-field {
@@ -500,7 +500,7 @@
   border-color: #a4a4a4;
   border-radius: 5px;
   background: #ffffff;
-  text-align: right;
+  text-align: start;
 }
 
 .dwf-theme-contact .dwf-textarea {
@@ -509,7 +509,7 @@
   border-color: #a4a4a4;
   border-radius: 5px;
   background: #ffffff;
-  text-align: right;
+  text-align: start;
   resize: none;
 }
 

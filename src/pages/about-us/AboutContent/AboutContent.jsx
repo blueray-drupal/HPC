@@ -1,3 +1,4 @@
+import { useTranslation } from '@/i18n/useTranslation.js';
 import { AboutSectionHeaderIcon } from '../AboutTabs/AboutTabIcons.jsx';
 import EstablishmentExtended from '../EstablishmentExtended/EstablishmentExtended.jsx';
 import CoreValuesSection from '../CoreValuesSection/CoreValuesSection.jsx';
@@ -7,6 +8,15 @@ import StructureSection from '../StructureSection/StructureSection.jsx';
 import UnitDutiesSection from '../UnitDutiesSection/UnitDutiesSection.jsx';
 import VisionSection from '../VisionSection/VisionSection.jsx';
 import './AboutContent.css';
+
+const SECTION_TITLE_KEYS = {
+  establishment: 'about.tabEstablishment',
+  vision: 'about.tabVision',
+  strategy: 'about.tabStrategy',
+  structure: 'about.tabStructure',
+  'council-duties': 'about.tabCouncilDuties',
+  'unit-duties': 'about.tabUnitDuties',
+};
 
 function EstablishmentSection({ section }) {
   return (
@@ -55,8 +65,13 @@ function ListSection({ section }) {
   );
 }
 
-export default function AboutContent({ section }) {
+export default function AboutContent({ section, sectionId }) {
+  const { t } = useTranslation();
+
   if (!section) return null;
+
+  const titleKey = sectionId ? SECTION_TITLE_KEYS[sectionId] : null;
+  const sectionTitle = titleKey ? t(titleKey) : section.title;
 
   return (
     <>
@@ -66,7 +81,7 @@ export default function AboutContent({ section }) {
             <div className="about-content__header-row">
               <AboutSectionHeaderIcon name={section.icon} />
               <h2 id="about-section-title" className="about-content__title">
-                {section.title}
+                {sectionTitle}
               </h2>
             </div>
             <span className="about-content__header-line" aria-hidden="true" />

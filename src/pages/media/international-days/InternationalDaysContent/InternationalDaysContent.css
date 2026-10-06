@@ -14,7 +14,6 @@
   width: 100%;
   max-width: var(--media-content-max);
   margin-inline: auto;
-  direction: rtl;
 }
 
 .international-days-content__header {
@@ -36,7 +35,7 @@
   font-size: 22px;
   font-weight: 700;
   line-height: 52px;
-  text-align: right;
+  text-align: start;
 }
 
 .international-days-content__header-line {
@@ -72,7 +71,7 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 32px;
-  text-align: right;
+  text-align: start;
 }
 
 .international-days-content__read-more {

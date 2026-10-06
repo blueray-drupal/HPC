@@ -21,7 +21,6 @@
   width: 100%;
   max-width: var(--contact-content-max);
   margin-inline: auto;
-  direction: rtl;
   box-sizing: border-box;
 }
 
@@ -44,12 +43,12 @@
 .contact-info-card {
   display: flex;
   height: 132px;
-  padding: 37px 18.333px 37px 70px;
-  justify-content: flex-end;
+  padding-block: 37px;
+  padding-inline: 1.125rem 1.5rem;
+  justify-content: flex-start;
   align-items: center;
   gap: 18.681px;
   align-self: stretch;
-  direction: ltr;
   border-radius: 16px;
   background: rgb(255 255 255 / 80%);
   box-shadow: 0 0 5px 0 rgb(0 0 0 / 15%);
@@ -70,13 +69,22 @@
   background: #F5F5F5;
 }
 
+[dir='ltr'] .contact-info-card {
+  flex-direction: row;
+}
+
+[dir='rtl'] .contact-info-card {
+  flex-direction: row-reverse;
+}
+
 .contact-info-card__content {
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
   gap: 0.375rem;
   min-width: 0;
-  direction: rtl;
 }
 
 .contact-info-card__title {
@@ -86,7 +94,7 @@
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.5;
-  text-align: right;
+  text-align: start;
 }
 
 .contact-info-card__value {
@@ -96,8 +104,14 @@
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.75;
-  text-align: right;
+  text-align: start;
   text-decoration: none;
+}
+
+.contact-info-card__value--ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: start;
 }
 
 a.contact-info-card__value:hover {
@@ -143,7 +157,7 @@ a.contact-info-card__value:hover {
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.5;
-  text-align: right;
+  text-align: start;
 }
 
 .contact-form__fields {
@@ -171,7 +185,7 @@ a.contact-info-card__value:hover {
   font-style: normal;
   font-weight: 700;
   line-height: 20px;
-  text-align: right;
+  text-align: start;
 }
 
 .contact-form__input,
@@ -187,7 +201,7 @@ a.contact-info-card__value:hover {
   font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
   font-size: 0.875rem;
   line-height: 1.5;
-  text-align: right;
+  text-align: start;
   box-sizing: border-box;
 }
 
@@ -227,7 +241,6 @@ a.contact-info-card__value:hover {
   line-height: 1.4;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  direction: rtl;
 }
 
 .contact-form__submit:hover {
@@ -275,7 +288,6 @@ a.contact-info-card__value:hover {
   width: 100%;
   padding-inline: var(--contact-inline-space);
   margin-bottom: 4rem;
-  direction: rtl;
   box-sizing: border-box;
 }
 
@@ -305,13 +317,6 @@ a.contact-info-card__value:hover {
     height: auto;
     min-height: 132px;
     padding: 1.25rem 1.5rem;
-    direction: rtl;
-    justify-content: flex-start;
-    flex-direction: row-reverse;
-  }
-
-  .contact-info-card__content {
-    flex: 1;
   }
 }
 
