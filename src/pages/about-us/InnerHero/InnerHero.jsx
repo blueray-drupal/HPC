@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from '@/i18n/useTranslation.js';
 import './InnerHero.css';
 
 export default function InnerHero({ title, breadcrumbs, backgroundImage }) {
+  const { t } = useTranslation();
   return (
     <section className="inner-hero" aria-labelledby="inner-hero-title">
       <img
@@ -18,9 +20,9 @@ export default function InnerHero({ title, breadcrumbs, backgroundImage }) {
           {title}
         </h1>
 
-        <nav className="inner-hero__breadcrumbs" aria-label="مسار التصفح">
+        <nav className="inner-hero__breadcrumbs" aria-label={t('common.breadcrumbsAria')}>
           {breadcrumbs.map((item, index) => (
-            <span key={item.label} className="inner-hero__breadcrumb-item">
+            <span key={`${index}-${item.to ?? 'current'}`} className="inner-hero__breadcrumb-item">
               {item.to ? (
                 <Link to={item.to} className="inner-hero__breadcrumb-link">
                   {item.label}

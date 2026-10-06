@@ -14,7 +14,6 @@
 
 .core-values-section__panel {
   padding: 48px;
-  direction: rtl;
   border-radius: 16px;
   border: 1px solid #bec8cf;
   background:
@@ -41,7 +40,7 @@
 .core-values-section__title {
   margin: 0;
   color: #006182;
-  text-align: right;
+  text-align: start;
   font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
   font-size: 1.25rem;
   font-weight: 700;

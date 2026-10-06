@@ -1,3 +1,6 @@
+import { translate } from '@/i18n/useTranslation.js';
+import { getContactFieldLabels } from '@/i18n/navigation.js';
+
 export const CONTACT_PAGE = {
   title: 'اتصل بنا',
   heroImage: '/inner-hero-image.png',
@@ -6,6 +9,17 @@ export const CONTACT_PAGE = {
     { label: 'اتصل بنا' },
   ],
 };
+
+export function getContactPageMeta(lang) {
+  return {
+    title: translate(lang, 'contact.pageTitle'),
+    heroImage: '/inner-hero-image.png',
+    breadcrumbs: [
+      { label: translate(lang, 'common.home'), to: '/' },
+      { label: translate(lang, 'contact.pageTitle') },
+    ],
+  };
+}
 
 export const CONTACT_INFO_ITEMS = [
   {
@@ -43,3 +57,17 @@ export const CONTACT_FALLBACK = {
   infoItems: CONTACT_INFO_ITEMS,
   mapHtml: `<iframe title="موقع المجلس الأعلى للسكان على الخريطة" src="${CONTACT_MAP_EMBED_URL}" class="contact-page__map-frame" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>`,
 };
+
+export function getContactFallback(lang) {
+  const labels = getContactFieldLabels(lang);
+  const mapTitle = translate(lang, 'contact.mapTitle');
+
+  return {
+    infoItems: CONTACT_INFO_ITEMS.map((item) => ({
+      ...item,
+      title: labels[item.id] || item.title,
+      value: item.id === 'address' ? translate(lang, 'contact.addressValue') : item.value,
+    })),
+    mapHtml: `<iframe title="${mapTitle}" src="${CONTACT_MAP_EMBED_URL}" class="contact-page__map-frame" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>`,
+  };
+}

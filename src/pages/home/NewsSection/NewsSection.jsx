@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useTranslation } from '@/i18n/useTranslation.js';
 import { fetchNews } from '@/services/api/news.js';
-import { NEWS_ITEMS as NEWS_ITEMS_FALLBACK, NEWS_SECTION } from './newsSectionData.js';
+import { NEWS_ITEMS as NEWS_ITEMS_FALLBACK } from './newsSectionData.js';
 import './NewsSection.css';
 
 function CalendarIcon() {
@@ -17,8 +18,10 @@ function CalendarIcon() {
 }
 
 const LATEST_NEWS_COUNT = 4;
+const NEWS_LIST_PATH = '/media/news';
 
 export default function NewsSection() {
+  const { t } = useTranslation();
   const { data, loading } = useDrupalFetch((lang) =>
     fetchNews(lang).catch(() => NEWS_ITEMS_FALLBACK),
   );
@@ -37,16 +40,16 @@ export default function NewsSection() {
           <div className="news-section__intro">
             <div className="news-section__eyebrow">
               <span className="news-section__eyebrow-line" aria-hidden="true" />
-              <span>{NEWS_SECTION.eyebrow}</span>
+              <span>{t('home.newsSection.eyebrow')}</span>
             </div>
             <h2 id="news-section-title" className="news-section__title">
-              {NEWS_SECTION.title}
+              {t('home.newsSection.title')}
             </h2>
           </div>
 
-          <Link to={NEWS_SECTION.viewAllLink} className="news-section__view-all hpc-icon-trailing">
+          <Link to={NEWS_LIST_PATH} className="news-section__view-all hpc-icon-trailing">
             <ChevronLeft size={18} aria-hidden="true" />
-            <span>{NEWS_SECTION.viewAllLabel}</span>
+            <span>{t('home.newsSection.viewAll')}</span>
           </Link>
         </header>
 
@@ -68,7 +71,7 @@ export default function NewsSection() {
 
                 <Link to={item.link} className="news-section__read-more hpc-icon-trailing">
                   <ChevronLeft size={16} aria-hidden="true" />
-                  <span>اقرأ المزيد</span>
+                  <span>{t('common.readMore')}</span>
                 </Link>
               </div>
             </article>

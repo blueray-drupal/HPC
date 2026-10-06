@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from '@/i18n/useTranslation.js';
 import { PublicationArrowIcon, PublicationCategoryIcon } from '../PublicationCategoryIcons.jsx';
 import './PublicationsCategories.css';
 
 export default function PublicationsCategories({ categories }) {
+  const { t } = useTranslation();
+
   if (!categories?.length) return null;
 
   return (
-    <section className="publications-categories" aria-label="فئات الإصدارات">
+    <section className="publications-categories" aria-label={t('publications.categoriesAria')}>
       <div className="publications-categories__grid">
         {categories.map((category) => (
           <Link

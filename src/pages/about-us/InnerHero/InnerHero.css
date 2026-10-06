@@ -2,6 +2,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   width: 100%;
   min-height: 156px;
   padding-block: 2rem;
@@ -35,8 +36,7 @@
   width: 100%;
   max-width: var(--about-content-max, 1242px);
   margin-inline: auto;
-  direction: rtl;
-  text-align: right;
+  text-align: start;
   /* padding-inline-start: 97px; */
 }
 

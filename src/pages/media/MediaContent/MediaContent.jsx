@@ -26,5 +26,5 @@ export default function MediaContent({ sectionId }) {
 
   if (!section) return null;
 
-  return <MediaSection section={section} />;
+  return <MediaSection section={section} sectionId={sectionId} />;
 }

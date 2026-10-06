@@ -1,10 +1,12 @@
 import { useMemo } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { buildHeroBreadcrumbs, INNER_HERO_BACKGROUND } from '@/i18n/innerHero.js';
+import { translate } from '@/i18n/useTranslation.js';
 import { fetchPhotoGalleryItem } from '@/services/api/photoVideoGallery.js';
 import AboutShareBar from '../../../about-us/AboutShareBar/AboutShareBar.jsx';
 import InnerHero from '../../../about-us/InnerHero/InnerHero.jsx';
-import { MEDIA_PAGE } from '../../mediaData.js';
 import PhotoGalleryViewer from '../PhotoGalleryViewer/PhotoGalleryViewer.jsx';
 import { getPhotoById } from '../photosListData.js';
 import './PhotoDetail.css';
@@ -22,17 +24,31 @@ function BackArrowIcon() {
 
 export default function PhotoDetail() {
   const { id } = useParams();
+  const { language } = useLanguage();
   const fallbackAlbum = useMemo(() => getPhotoById(id), [id]);
   const { data: album, loading } = useDrupalFetch(
     (lang) => fetchPhotoGalleryItem(lang, id, fallbackAlbum),
     [id],
   );
 
+  const resolvedAlbum = album ?? fallbackAlbum;
+  const heroTitle = translate(language, 'nav.media');
+  const heroBreadcrumbs = useMemo(
+    () =>
+      resolvedAlbum
+        ? buildHeroBreadcrumbs(language, [
+            { key: 'common.home', to: '/' },
+            { key: 'nav.media', to: '/media/photos' },
+            { key: 'nav.mediaPhotos', to: '/media/photos' },
+            { label: resolvedAlbum.title },
+          ])
+        : [],
+    [language, resolvedAlbum],
+  );
+
   if (loading) {
     return null;
   }
-
-  const resolvedAlbum = album ?? fallbackAlbum;
 
   if (!resolvedAlbum) {
     return <Navigate to="/media/photos" replace />;
@@ -41,14 +57,9 @@ export default function PhotoDetail() {
   return (
     <div className="photo-detail-page">
       <InnerHero
-        title={MEDIA_PAGE.title}
-        breadcrumbs={[
-          { label: 'الرئيسية', to: '/' },
-          { label: MEDIA_PAGE.title, to: '/media/photos' },
-          { label: 'معرض الصور', to: '/media/photos' },
-          { label: resolvedAlbum.title },
-        ]}
-        backgroundImage={MEDIA_PAGE.heroImage}
+        title={heroTitle}
+        breadcrumbs={heroBreadcrumbs}
+        backgroundImage={INNER_HERO_BACKGROUND}
       />
 
       <div className="photo-detail-page__content">

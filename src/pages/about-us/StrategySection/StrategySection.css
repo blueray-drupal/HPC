@@ -1,6 +1,5 @@
 .strategy-section {
   width: 100%;
-  direction: rtl;
 }
 
 .strategy-section__grid {
@@ -56,7 +55,7 @@
 .strategy-goal__title {
   margin: 0 0 0.5rem;
   color: #006182;
-  text-align: right;
+  text-align: start;
   font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
   font-size: 1rem;
   font-weight: 700;
@@ -66,7 +65,7 @@
 .strategy-goal__description {
   margin: 0;
   color: #3f484e;
-  text-align: right;
+  text-align: start;
   font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
   font-size: 0.9375rem;
   font-weight: 400;
@@ -116,7 +115,6 @@
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  direction: rtl;
   padding: 0.875rem 1rem;
   border-radius: 7.079px;
   border: 0.885px solid rgb(255 255 255 / 40%);
@@ -129,7 +127,7 @@
   flex: 1;
   margin: 0;
   color: #414754;
-  text-align: right;
+  text-align: start;
   font-family: Al-Jazeera-Arabic;
   font-size: 15px;
   font-style: normal;
@@ -140,9 +138,28 @@
 .strategy-sub-goal__icon {
   display: inline-flex;
   flex-shrink: 0;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   width: 2rem;
+  min-height: 20px;
+  padding-top: 0.125rem;
+}
+
+.strategy-sub-goal__icon svg,
+.strategy-goal__panel-label-icon svg {
+  display: block;
+  height: 20px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.strategy-sub-goal__icon-img,
+.strategy-goal__panel-label-icon .strategy-sub-goal__icon-img {
+  display: block;
+  height: 20px;
+  width: auto;
+  max-width: 24px;
+  object-fit: contain;
 }
 
 .strategy-section__share {

@@ -13,7 +13,6 @@
   max-width: 1240px;
   margin-inline: auto;
   padding: 3rem 0 4rem;
-  direction: rtl;
   box-sizing: border-box;
 }
 
@@ -31,7 +30,6 @@
   border-radius: 8px;
   background: #fff;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
-  direction: rtl;
   box-sizing: border-box;
 }
 
@@ -65,7 +63,7 @@
   font-weight: 700;
   line-height: 51px;
   letter-spacing: -0.32px;
-  text-align: right;
+  text-align: start;
 }
 
 .photo-detail__back {
@@ -85,7 +83,7 @@
   font-style: normal;
   font-weight: 700;
   line-height: 17.92px;
-  text-align: right;
+  text-align: start;
   text-decoration: none;
   transition: background-color 0.2s ease;
   box-sizing: border-box;
@@ -106,7 +104,6 @@
   max-width: 1240px;
   margin: 0 auto 4rem;
   /* padding-inline: max(1.25rem, calc((100vw - 1240px) / 2)); */
-  direction: rtl;
   box-sizing: border-box;
 }
 

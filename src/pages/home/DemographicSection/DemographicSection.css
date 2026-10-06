@@ -33,7 +33,6 @@
   box-shadow: 0 20px 60px 0 rgb(0 138 169 / 35%);
   color: #fff;
   text-align: center;
-  direction: rtl;
 }
 
 .demographic-section__circle {
@@ -161,14 +160,13 @@ height: 62px;
   flex-direction: column;
   align-items: flex-start;
   max-width: 28rem;
-  direction: rtl;
-  text-align: right;
+  text-align: start;
 }
 
 .demographic-section__banner-title {
   margin: 0 0 1rem;
   color: #FFF;
-  text-align: right;
+  text-align: start;
   font-family: Al-Jazeera-Arabic;
   font-size: 32px;
   font-style: normal;

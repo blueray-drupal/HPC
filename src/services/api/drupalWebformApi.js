@@ -1,20 +1,20 @@
 import { getApiBaseUrl } from '@/lib/env.js';
 import { drupalApi } from './axios.config.js';
 
-export async function fetchWebformElements(webformId) {
-  const { data } = await drupalApi.get(`${getApiBaseUrl()}/webform_rest/${webformId}/elements`);
+export async function fetchWebformElements(webformId, lang) {
+  const { data } = await drupalApi.get(`${getApiBaseUrl(lang)}/webform_rest/${webformId}/elements`);
   return data;
 }
 
-export async function submitWebform(webformId, payload) {
-  const { data } = await drupalApi.post(`${getApiBaseUrl()}/webform_rest/submit`, {
+export async function submitWebform(webformId, payload, lang) {
+  const { data } = await drupalApi.post(`${getApiBaseUrl(lang)}/webform_rest/submit`, {
     webform_id: webformId,
     ...payload,
   });
   return data;
 }
 
-export async function submitWebformWithFile(webformId, payload, fileData) {
+export async function submitWebformWithFile(webformId, payload, fileData, lang) {
   const formData = new FormData();
   formData.append('webform_id', webformId);
 
@@ -26,7 +26,7 @@ export async function submitWebformWithFile(webformId, payload, fileData) {
     formData.append(fileData.field, fileData.file);
   }
 
-  const { data } = await drupalApi.post(`${getApiBaseUrl()}/webform_rest/submit`, formData, {
+  const { data } = await drupalApi.post(`${getApiBaseUrl(lang)}/webform_rest/submit`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 

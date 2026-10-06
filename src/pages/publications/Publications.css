@@ -12,7 +12,6 @@
   max-width: var(--publications-content-max);
   margin: 0 auto 4rem;
   padding-inline: var(--publications-inline-space);
-  direction: rtl;
   box-sizing: border-box;
 }
 

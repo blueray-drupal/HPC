@@ -1,16 +1,22 @@
+import { useMemo } from 'react';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { useTranslation } from '@/i18n/useTranslation.js';
 import PageTabs from '../../../components/PageTabs/PageTabs.jsx';
-import { PUBLICATION_CATEGORIES, PUBLICATION_TABS } from '../publicationsData.js';
+import { getPublicationCategories, PUBLICATION_TABS } from '../publicationsData.js';
 import { PublicationTabIcon } from './PublicationTabIcons.jsx';
 
 export default function PublicationTabs() {
-  const tabs = PUBLICATION_TABS.map((id) => PUBLICATION_CATEGORIES.find((category) => category.id === id)).filter(
-    Boolean,
-  );
+  const { language } = useLanguage();
+  const { t } = useTranslation();
+  const tabs = useMemo(() => {
+    const categories = getPublicationCategories(language);
+    return PUBLICATION_TABS.map((id) => categories.find((category) => category.id === id)).filter(Boolean);
+  }, [language]);
 
   return (
     <PageTabs
       tabs={tabs}
-      ariaLabel="فئات الإصدارات"
+      ariaLabel={t('publications.categoriesAria')}
       getLabel={(tab) => tab.title}
       renderIcon={(tab, isActive) => <PublicationTabIcon name={tab.icon} isActive={isActive} />}
     />

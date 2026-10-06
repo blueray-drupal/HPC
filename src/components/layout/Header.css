@@ -97,7 +97,7 @@
 .topbar-lang-menu {
   position: absolute;
   top: 100%;
-  left: 0;
+  inset-inline-start: 0;
   z-index: 50;
   min-width: 6rem;
   margin-top: 0.25rem;
@@ -117,7 +117,7 @@
   background: none;
   color: #1f2937;
   font-size: 0.875rem;
-  text-align: right;
+  text-align: start;
 }
 
 .topbar-lang-option:hover,
@@ -194,8 +194,8 @@
   align-items: center;
   gap: 1.5rem;
   color: #364153;
-text-align: right;
-font-family: Al-Jazeera-Arabic;
+  text-align: start;
+  font-family: Al-Jazeera-Arabic;
 font-size: var(--font-size-14, 14px);
 font-style: normal;
 font-weight: 700;
@@ -236,7 +236,7 @@ line-height: var(--line-height-20, 20px); /* 142.857% */
 .header-dropdown-panel {
   position: absolute;
   top: 100%;
-  right: 0;
+  inset-inline-end: 0;
   z-index: 50;
   min-width: 16rem;
   padding-top: 0.5rem;
@@ -263,7 +263,7 @@ line-height: var(--line-height-20, 20px); /* 142.857% */
   padding: 0.625rem 1.25rem;
   color: #1f2937;
   font-size: 0.875rem;
-  text-align: right;
+  text-align: start;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
@@ -306,7 +306,8 @@ line-height: var(--line-height-20, 20px); /* 142.857% */
 .mobile-menu-panel {
   position: absolute;
   inset-block: 0;
-  right: 0;
+  inset-inline-end: 0;
+  inset-inline-start: auto;
   display: flex;
   flex-direction: column;
   width: min(22rem, 90vw);
@@ -361,7 +362,7 @@ line-height: var(--line-height-20, 20px); /* 142.857% */
   width: 100%;
   border: 0;
   background: none;
-  text-align: right;
+  text-align: start;
 }
 
 .mobile-nav-link:hover,
@@ -394,8 +395,8 @@ line-height: var(--line-height-20, 20px); /* 142.857% */
   display: flex;
   flex-direction: column;
   margin-top: 0.25rem;
-  margin-right: 0.75rem;
-  border-right: 1px solid #e5e7eb;
+  margin-inline-start: 0.75rem;
+  border-inline-start: 1px solid #e5e7eb;
 }
 
 .mobile-subnav-link {
@@ -411,6 +412,11 @@ line-height: var(--line-height-20, 20px); /* 142.857% */
 
 .mobile-subnav-link.is-active {
   font-weight: 700;
+}
+
+html[dir='ltr'] .mobile-menu-panel {
+  inset-inline-start: 0;
+  inset-inline-end: auto;
 }
 
 @media (min-width: 1024px) {

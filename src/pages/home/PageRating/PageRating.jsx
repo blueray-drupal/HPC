@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { Star } from 'lucide-react';
+import { useTranslation } from '@/i18n/useTranslation.js';
 import './PageRating.css';
 
-const RATING_LABELS = {
-  1: 'ضعيف',
-  2: 'مقبول',
-  3: 'جيد',
-  4: 'جيد جداً',
-  5: 'ممتاز',
+const RATING_LEVEL_KEYS = {
+  1: 'home.pageRating.level1',
+  2: 'home.pageRating.level2',
+  3: 'home.pageRating.level3',
+  4: 'home.pageRating.level4',
+  5: 'home.pageRating.level5',
 };
 
 export default function PageRating() {
+  const { t } = useTranslation();
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
 
@@ -20,22 +22,21 @@ export default function PageRating() {
     <section className="page-rating" aria-labelledby="page-rating-title">
       <div className="page-rating__inner">
         <h2 id="page-rating-title" className="page-rating__title">
-          تقييم محتوى الصفحة
+          {t('home.pageRating.title')}
         </h2>
 
-        <p className="page-rating__question">
-          هل كانت المعلومات المقدمة في هذه الصفحة مفيدة؟
-        </p>
+        <p className="page-rating__question">{t('home.pageRating.question')}</p>
 
         <div
           className="page-rating__stars"
           role="radiogroup"
-          aria-label="تقييم محتوى الصفحة"
+          aria-label={t('home.pageRating.groupAria')}
           onMouseLeave={() => setHoverRating(0)}
         >
           {Array.from({ length: 5 }, (_, index) => {
             const value = index + 1;
             const isActive = value <= activeRating;
+            const levelLabel = t(RATING_LEVEL_KEYS[value]);
 
             return (
               <button
@@ -43,7 +44,7 @@ export default function PageRating() {
                 type="button"
                 role="radio"
                 aria-checked={rating === value}
-                aria-label={`${value} من 5 - ${RATING_LABELS[value]}`}
+                aria-label={`${value} ${t('home.pageRating.ofFive')} - ${levelLabel}`}
                 className={['page-rating__star', isActive ? 'is-active' : ''].join(' ')}
                 onMouseEnter={() => setHoverRating(value)}
                 onFocus={() => setHoverRating(value)}
@@ -61,9 +62,7 @@ export default function PageRating() {
           })}
         </div>
 
-        <p className="page-rating__hint">
-          اضغط على النجوم للتقييم (1=ضعيف، 5=ممتاز)
-        </p>
+        <p className="page-rating__hint">{t('home.pageRating.hint')}</p>
       </div>
     </section>
   );

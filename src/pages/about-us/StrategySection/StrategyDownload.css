@@ -11,7 +11,6 @@
   border: 1px solid rgb(193 198 215 / 30%);
   background: #fff;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
-  direction: rtl;
   box-sizing: border-box;
 }
 
@@ -29,7 +28,7 @@
 .strategy-download__title {
   margin: 0;
   color: #6b4a3d;
-  text-align: right;
+  text-align: start;
   font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
   font-size: 1rem;
   font-weight: 700;
@@ -56,7 +55,7 @@
 }
 
 .strategy-download__th--attachment {
-  text-align: right;
+  text-align: start;
 }
 
 .strategy-download__th--size {
@@ -82,7 +81,7 @@
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.5;
-  text-align: right;
+  text-align: start;
   text-decoration: none;
   transition: opacity 0.2s ease;
 }

@@ -47,7 +47,7 @@
   .media-briefings__description
 ) {
   color: var(--hpc-figma-site-river-bed, var(--color-azure-34, #4A5565));
-  text-align: right;
+  text-align: start;
   font-family: Al-Jazeera-Arabic;
   font-size: var(--font-size, 16px);
   font-style: normal;
@@ -57,13 +57,19 @@
 
 html {
   font-family: var(--font-family);
+}
+
+html[dir='rtl'] {
   direction: rtl;
-  text-align: right;
+}
+
+html[dir='ltr'] {
+  direction: ltr;
 }
 
 body {
-  direction: rtl;
-  text-align: right;
+  direction: inherit;
+  text-align: start;
   font-family: var(--font-family);
   background-color: #ffffff;
   color: #1f2937;
@@ -74,6 +80,13 @@ body {
   direction: inherit;
   text-align: inherit;
   min-height: 100%;
+}
+
+.site-header,
+.site-footer,
+main {
+  direction: inherit;
+  text-align: inherit;
 }
 
 /*

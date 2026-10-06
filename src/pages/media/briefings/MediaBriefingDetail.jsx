@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import AboutShareBar from '../../about-us/AboutShareBar/AboutShareBar.jsx';
 import InnerHero from '../../about-us/InnerHero/InnerHero.jsx';
 import { useLanguage } from '@/hooks/useLanguage.js';
 import { fetchMediaBriefingById } from '@/services/api/mediaBriefings.js';
-import { MEDIA_PAGE } from '../mediaData.js';
+import { buildHeroBreadcrumbs, INNER_HERO_BACKGROUND } from '@/i18n/innerHero.js';
 import { getBriefingBody, getBriefingById } from './briefingsData.js';
 import '../news/NewsDetail/NewsDetail.css';
 
@@ -47,6 +47,18 @@ export default function MediaBriefingDetail() {
     };
   }, [id, language]);
 
+  const heroBreadcrumbs = useMemo(
+    () =>
+      briefing
+        ? buildHeroBreadcrumbs(language, [
+            { key: 'common.home', to: '/' },
+            { key: 'pages.mediaBriefings' },
+            { label: briefing.title },
+          ])
+        : [],
+    [language, briefing],
+  );
+
   if (loading) {
     return null;
   }
@@ -61,12 +73,8 @@ export default function MediaBriefingDetail() {
     <div className="news-detail-page news-detail-page--briefing">
       <InnerHero
         title={briefing.title}
-        breadcrumbs={[
-          { label: 'الرئيسية', to: '/' },
-          { label: 'إحاطات إعلامية' },
-          { label: briefing.title },
-        ]}
-        backgroundImage={MEDIA_PAGE.heroImage}
+        breadcrumbs={heroBreadcrumbs}
+        backgroundImage={INNER_HERO_BACKGROUND}
       />
 
       <div className="news-detail-page__content">

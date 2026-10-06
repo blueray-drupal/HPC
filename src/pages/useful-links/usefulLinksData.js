@@ -1,5 +1,6 @@
 export const USEFUL_LINKS_PAGE = {
   title: 'روابط مفيدة',
+  titleKey: 'footer.usefulLinks',
   shareUrl: '/useful-links',
   breadcrumbs: [
     { label: 'الرئيسية', to: '/' },

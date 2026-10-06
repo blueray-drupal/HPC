@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import AboutShareBar from '../../../about-us/AboutShareBar/AboutShareBar.jsx';
 import InnerHero from '../../../about-us/InnerHero/InnerHero.jsx';
 import { useLanguage } from '@/hooks/useLanguage.js';
 import { fetchNewsById } from '@/services/api/news.js';
-import { MEDIA_PAGE } from '../../mediaData.js';
+import { buildHeroBreadcrumbs, INNER_HERO_BACKGROUND } from '@/i18n/innerHero.js';
+import { translate, useTranslation } from '@/i18n/useTranslation.js';
 import { getNewsBody, getNewsById } from '../newsListData.js';
 import './NewsDetail.css';
 
@@ -22,6 +23,7 @@ function BackArrowIcon() {
 export default function NewsDetail() {
   const { id } = useParams();
   const { language } = useLanguage();
+  const { t } = useTranslation();
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -47,6 +49,20 @@ export default function NewsDetail() {
     };
   }, [id, language]);
 
+  const heroTitle = translate(language, 'nav.media');
+  const heroBreadcrumbs = useMemo(
+    () =>
+      article
+        ? buildHeroBreadcrumbs(language, [
+            { key: 'common.home', to: '/' },
+            { key: 'nav.media', to: '/media/news' },
+            { key: 'nav.mediaNews', to: '/media/news' },
+            { label: article.title },
+          ])
+        : [],
+    [language, article],
+  );
+
   if (loading) {
     return null;
   }
@@ -56,19 +72,15 @@ export default function NewsDetail() {
   }
 
   const paragraphs = getNewsBody(article);
-  const categoryLabel = article.categoryLabel ?? article.category ?? 'أخبار المجلس';
+  const categoryLabel =
+    article.categoryLabel ?? article.category ?? t('news.defaultCategory');
 
   return (
     <div className="news-detail-page">
       <InnerHero
-        title={MEDIA_PAGE.title}
-        breadcrumbs={[
-          { label: 'الرئيسية', to: '/' },
-          { label: MEDIA_PAGE.title, to: '/media/news' },
-          { label: 'الأخبار', to: '/media/news' },
-          { label: article.title },
-        ]}
-        backgroundImage={MEDIA_PAGE.heroImage}
+        title={heroTitle}
+        breadcrumbs={heroBreadcrumbs}
+        backgroundImage={INNER_HERO_BACKGROUND}
       />
 
       <div className="news-detail-page__content">
@@ -86,7 +98,7 @@ export default function NewsDetail() {
             <AboutShareBar
               className="news-detail__share"
               shareUrl={article.link}
-              ariaLabel="مشاركة الخبر"
+              ariaLabel={t('share.newsArticle')}
             />
           </header>
 
@@ -112,7 +124,7 @@ export default function NewsDetail() {
 
         <Link to="/media/news" className="news-detail__back">
           <BackArrowIcon />
-          <span>الرجوع الى صفحة الاخبار</span>
+          <span>{t('news.backToNews')}</span>
         </Link>
       </div>
     </div>

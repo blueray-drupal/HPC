@@ -50,6 +50,11 @@ export function LanguageProvider({ children }) {
     const dir = getLanguageDirection(language);
     document.documentElement.lang = language;
     document.documentElement.dir = dir;
+
+    const contentLanguageMeta = document.querySelector('meta[http-equiv="content-language"]');
+    if (contentLanguageMeta) {
+      contentLanguageMeta.setAttribute('content', language);
+    }
   }, [language]);
 
   const value = useMemo(

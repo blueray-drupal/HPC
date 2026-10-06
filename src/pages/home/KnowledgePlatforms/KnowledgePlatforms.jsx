@@ -1,10 +1,12 @@
 import { ExternalLink } from 'lucide-react';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useTranslation } from '@/i18n/useTranslation.js';
 import { fetchKnowledgePlatforms } from '@/services/api/knowledgePlatforms.js';
 import { KNOWLEDGE_PLATFORMS_FALLBACK } from './knowledgePlatformsData.js';
 import './KnowledgePlatforms.css';
 
 export default function KnowledgePlatforms() {
+  const { t } = useTranslation();
   const { data, loading } = useDrupalFetch((lang) =>
     fetchKnowledgePlatforms(lang).catch(() => KNOWLEDGE_PLATFORMS_FALLBACK),
   );
@@ -17,7 +19,7 @@ export default function KnowledgePlatforms() {
       <div className="knowledge-platforms__inner">
         <h2 id="knowledge-platforms-title" className="knowledge-platforms__heading">
           <span className="knowledge-platforms__heading-line" aria-hidden="true" />
-          <span className="knowledge-platforms__heading-text">منصات معرفية</span>
+          <span className="knowledge-platforms__heading-text">{t('home.knowledgePlatforms.title')}</span>
           <span className="knowledge-platforms__heading-line" aria-hidden="true" />
         </h2>
 

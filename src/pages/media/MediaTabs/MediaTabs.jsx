@@ -1,12 +1,19 @@
+import { useMemo } from 'react';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { getMediaTabs } from '@/i18n/navigation.js';
+import { useTranslation } from '@/i18n/useTranslation.js';
 import PageTabs from '../../../components/PageTabs/PageTabs.jsx';
-import { MEDIA_TABS } from '../mediaData.js';
 import { MediaTabIcon } from './MediaTabIcons.jsx';
 
 export default function MediaTabs() {
+  const { language } = useLanguage();
+  const { t } = useTranslation();
+  const tabs = useMemo(() => getMediaTabs(language), [language]);
+
   return (
     <PageTabs
-      tabs={MEDIA_TABS}
-      ariaLabel="أقسام المركز الإعلامي"
+      tabs={tabs}
+      ariaLabel={t('media.tabsAria')}
       renderIcon={(tab, isActive) => <MediaTabIcon name={tab.icon} isActive={isActive} />}
     />
   );

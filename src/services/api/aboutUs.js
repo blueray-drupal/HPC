@@ -203,7 +203,19 @@ function mapStrategySection(node, included) {
   const goals = resolveParagraphs(node, 'field_plan_and_objectives_paragr', included)
     .map((paragraph, index) => {
       const subGoals = resolveParagraphs(paragraph, 'field_sub_objectives', included)
-        .map((subGoal) => subGoal.attributes?.field_title || stripHtml(getProcessedHtml(subGoal.attributes?.field_body)))
+        .map((subGoal) => {
+          const text =
+            subGoal.attributes?.field_title ||
+            stripHtml(getProcessedHtml(subGoal.attributes?.field_body));
+
+          if (!text) return null;
+
+          return {
+            id: subGoal.id,
+            text,
+            iconUrl: resolveParagraphImage(subGoal, included) || undefined,
+          };
+        })
         .filter(Boolean);
 
       return {

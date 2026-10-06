@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useLanguage } from '@/hooks/useLanguage.js';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { getMediaSectionTitle } from '@/i18n/navigation.js';
 import { fetchNews, fetchNewsCategories } from '@/services/api/news.js';
 import PublicationsPagination from '../../../publications/PublicationsPagination/PublicationsPagination.jsx';
 import { MediaSectionHeaderIcon } from '../../MediaTabs/MediaTabIcons.jsx';
@@ -43,6 +45,8 @@ async function fetchNewsPageData(language) {
 }
 
 export default function NewsContent() {
+  const { language } = useLanguage();
+  const sectionTitle = getMediaSectionTitle(language, 'news');
   const { data, loading } = useDrupalFetch(fetchNewsPageData);
   const newsItems = data?.items ?? NEWS_ITEMS_FALLBACK;
   const categories = data?.categories ?? buildFallbackCategories();
@@ -92,7 +96,7 @@ export default function NewsContent() {
           <div className="news-content__header-row">
             <MediaSectionHeaderIcon name="news" />
             <h2 id="news-section-title" className="news-content__title">
-              الأخبار
+              {sectionTitle}
             </h2>
           </div>
           <span className="news-content__header-line" aria-hidden="true" />

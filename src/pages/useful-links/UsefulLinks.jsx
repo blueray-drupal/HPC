@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { getInfoPageHeroMeta } from '@/i18n/innerHero.js';
 
 import { fetchUsefulLinks } from '@/services/api/usefulLinks.js';
 
@@ -25,6 +27,8 @@ import './UsefulLinks.css';
 
 
 export default function UsefulLinks() {
+  const { language } = useLanguage();
+  const hero = useMemo(() => getInfoPageHeroMeta(language, USEFUL_LINKS_PAGE), [language]);
 
   const { data, loading } = useDrupalFetch((lang) => fetchUsefulLinks(lang, USEFUL_LINKS_ITEMS));
 
@@ -60,11 +64,11 @@ export default function UsefulLinks() {
 
     <InfoPageLayout
 
-      title={USEFUL_LINKS_PAGE.title}
+      title={hero.title}
 
-      breadcrumbs={USEFUL_LINKS_PAGE.breadcrumbs}
+      breadcrumbs={hero.breadcrumbs}
 
-      shareUrl={USEFUL_LINKS_PAGE.shareUrl}
+      shareUrl={hero.shareUrl}
 
     >
 

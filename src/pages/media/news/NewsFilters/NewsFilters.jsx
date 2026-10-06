@@ -1,4 +1,5 @@
 import { Search } from 'lucide-react';
+import { useTranslation } from '@/i18n/useTranslation.js';
 import '../../../../components/PageFilters/PageFilters.css';
 
 export default function NewsFilters({
@@ -12,11 +13,13 @@ export default function NewsFilters({
   onQueryChange,
   onSubmit,
 }) {
+  const { t } = useTranslation();
+
   return (
-    <form className="page-filters" onSubmit={onSubmit} aria-label="تصفية الأخبار">
+    <form className="page-filters" onSubmit={onSubmit} aria-label={t('news.filtersAria')}>
       <div className="page-filters__field">
         <label className="page-filters__label" htmlFor="news-category">
-          التصنيف
+          {t('news.filterCategory')}
         </label>
         <select
           id="news-category"
@@ -24,7 +27,7 @@ export default function NewsFilters({
           value={category}
           onChange={(event) => onCategoryChange(event.target.value)}
         >
-          <option value="">- الكل -</option>
+          <option value="">{t('common.filterAll')}</option>
           {categories.map((item) => (
             <option key={item.id} value={item.id}>
               {item.name}
@@ -35,7 +38,7 @@ export default function NewsFilters({
 
       <div className="page-filters__field">
         <label className="page-filters__label" htmlFor="news-year">
-          سنة الإصدار
+          {t('news.filterYear')}
         </label>
         <select
           id="news-year"
@@ -43,7 +46,7 @@ export default function NewsFilters({
           value={year}
           onChange={(event) => onYearChange(event.target.value)}
         >
-          <option value="">- الكل -</option>
+          <option value="">{t('common.filterAll')}</option>
           {years.map((item) => (
             <option key={item} value={item}>
               {item}
@@ -54,7 +57,7 @@ export default function NewsFilters({
 
       <div className="page-filters__field page-filters__field--grow">
         <label className="page-filters__label" htmlFor="news-search">
-          البحث عن عنوان
+          {t('news.filterSearchTitle')}
         </label>
         <input
           id="news-search"
@@ -62,13 +65,13 @@ export default function NewsFilters({
           className="page-filters__input"
           value={query}
           onChange={(event) => onQueryChange(event.target.value)}
-          placeholder="...اكتب للبحث"
+          placeholder={t('common.searchPlaceholder')}
         />
       </div>
 
       <button type="submit" className="page-filters__submit">
         <Search size={16} aria-hidden="true" />
-        <span>بحث</span>
+        <span>{t('common.search')}</span>
       </button>
     </form>
   );

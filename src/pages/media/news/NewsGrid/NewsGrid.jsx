@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from '@/i18n/useTranslation.js';
 import AboutShareBar from '../../../about-us/AboutShareBar/AboutShareBar.jsx';
 import './NewsGrid.css';
 
@@ -24,8 +25,10 @@ function CalendarIcon() {
 }
 
 export default function NewsGrid({ items }) {
+  const { t } = useTranslation();
+
   if (!items.length) {
-    return <p className="news-grid__empty">لا توجد أخبار مطابقة لمعايير البحث.</p>;
+    return <p className="news-grid__empty">{t('news.emptyResults')}</p>;
   }
 
   return (
@@ -47,11 +50,12 @@ export default function NewsGrid({ items }) {
             <div className="news-grid__footer">
               <Link to={item.link} className="news-grid__read-more">
                 <ReadMoreArrow />
-                <span>اقرأ المزيد</span>
-              </Link>              <AboutShareBar
+                <span>{t('common.readMore')}</span>
+              </Link>
+              <AboutShareBar
                 className="news-grid__share"
                 shareUrl={item.link}
-                ariaLabel="مشاركة الخبر"
+                ariaLabel={t('share.newsArticle')}
               />
             </div>
           </div>

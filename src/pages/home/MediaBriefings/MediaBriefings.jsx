@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useTranslation } from '@/i18n/useTranslation.js';
 import { fetchMediaBriefings } from '@/services/api/mediaBriefings.js';
 import { MEDIA_BRIEFINGS_FALLBACK } from '@/pages/media/briefings/briefingsData.js';
 import './MediaBriefings.css';
@@ -20,6 +21,7 @@ function CalendarIcon() {
 const AUTO_PLAY_MS = 8000;
 
 export default function MediaBriefings() {
+  const { t } = useTranslation();
   const { data, loading } = useDrupalFetch((lang) =>
     fetchMediaBriefings(lang).catch(() => MEDIA_BRIEFINGS_FALLBACK),
   );
@@ -47,7 +49,7 @@ export default function MediaBriefings() {
   return (
     <section className="media-briefings" aria-labelledby="media-briefings-title">
       <h2 id="media-briefings-title" className="media-briefings__heading">
-        إحاطات إعلامية
+        {t('pages.mediaBriefings')}
       </h2>
 
       <article className="media-briefings__card">
@@ -66,20 +68,20 @@ export default function MediaBriefings() {
 
           <Link to={item.link} className="media-briefings__cta hpc-icon-trailing">
             <ChevronLeft size={18} aria-hidden="true" />
-            <span>اقرأ المزيد</span>
+            <span>{t('common.readMore')}</span>
           </Link>
         </div>
       </article>
 
       {briefings.length > 1 ? (
-        <div className="media-briefings__dots" role="tablist" aria-label="إحاطات إعلامية">
+        <div className="media-briefings__dots" role="tablist" aria-label={t('pages.mediaBriefings')}>
           {briefings.map((briefing, index) => (
             <button
               key={briefing.id}
               type="button"
               role="tab"
               aria-selected={index === activeIndex}
-              aria-label={`الإحاطة ${index + 1}`}
+              aria-label={`${t('home.mediaBriefings.briefingTab')} ${index + 1}`}
               className={['media-briefings__dot', index === activeIndex ? 'is-active' : ''].join(' ')}
               onClick={() => setActiveIndex(index)}
             />

@@ -34,6 +34,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import Swal from 'sweetalert2';
+import { useLanguage } from '@/hooks/useLanguage.js';
 import { fetchWebformElements, submitWebform, submitWebformWithFile } from '../../services/api/drupalWebformApi';
 import './DrupalWebform.css';
 
@@ -376,6 +377,7 @@ const DrupalWebform = ({
     () => ({ ...DEFAULT_MESSAGES, ...messagesProp }),
     [messagesProp]
   );
+  const { language } = useLanguage();
 
   const [fields,     setFields]     = useState([]);
   const [formData,   setFormData]   = useState({});
@@ -399,7 +401,7 @@ const DrupalWebform = ({
 
       try {
         // ✅ No baseUrl — axios.config.js owns the base URL
-        const raw  = await fetchWebformElements(webformId);
+        const raw  = await fetchWebformElements(webformId, language);
         const list = buildFieldList(raw);
 
         if (!cancelled) {
@@ -419,7 +421,7 @@ const DrupalWebform = ({
 
     load();
     return () => { cancelled = true; };
-  }, [webformId]);
+  }, [webformId, language, messages.errorTitle, messages.loadError, messages.ok, swalProps]);
 
   // ── Derived display list ──────────────────────────────────────────────────
   const displayFields = useMemo(() => {
@@ -480,10 +482,10 @@ const DrupalWebform = ({
       let response;
       if (Object.keys(fileData).length > 0) {
         // ✅ No baseUrl
-        response = await submitWebformWithFile(webformId, payload, fileData);
+        response = await submitWebformWithFile(webformId, payload, fileData, language);
       } else {
         // ✅ No baseUrl
-        response = await submitWebform(webformId, payload);
+        response = await submitWebform(webformId, payload, language);
       }
 
       setFormData(getInitialFormData(fields));

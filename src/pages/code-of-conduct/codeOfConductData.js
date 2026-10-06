@@ -1,5 +1,6 @@
 export const CODE_OF_CONDUCT_PAGE = {
   title: 'مدونة السلوك الوظيفي',
+  titleKey: 'footer.codeOfConduct',
   shareUrl: '/code-of-conduct',
   breadcrumbs: [
     { label: 'الرئيسية', to: '/' },

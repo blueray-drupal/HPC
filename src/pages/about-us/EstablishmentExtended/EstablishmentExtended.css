@@ -21,14 +21,13 @@
   width: 100%;
   max-width: var(--about-content-max);
   margin-inline: auto;
-  direction: rtl;
-  text-align: right;
+  text-align: start;
 }
 
 .about-extended__html p {
   margin: 0 0 1.5rem;
   color: #3f484e;
-  text-align: right;
+  text-align: start;
   font-size: 0.9375rem;
   line-height: 1.75;
 }

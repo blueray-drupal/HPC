@@ -1,3 +1,4 @@
+import { translate } from '@/i18n/useTranslation.js';
 import { stripHtml } from '@/lib/drupal.js';
 import { getNode, getNodes, getTaxonomyTerms } from './drupalApi.js';
 import { resolveNodeImageUrl, resolveTaxonomyTerm } from './jsonApiHelpers.js';
@@ -31,11 +32,19 @@ const ARABIC_WEEKDAYS = [
   'السبت',
 ];
 
-function formatNewsDate(isoDate, { withWeekday = false } = {}) {
+function formatNewsDate(isoDate, language = 'ar', { withWeekday = false } = {}) {
   if (!isoDate) return '';
 
   const date = new Date(isoDate);
   if (Number.isNaN(date.getTime())) return isoDate;
+
+  if (language === 'en') {
+    const options = withWeekday
+      ? { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }
+      : { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
+
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+  }
 
   const day = date.getUTCDate();
   const monthLabel = ARABIC_MONTHS[date.getUTCMonth()] ?? '';
@@ -67,12 +76,14 @@ export function mapNewsCategoryTerm(term) {
   };
 }
 
-export function mapNewsNode(node, included = []) {
+export function mapNewsNode(node, included = [], language = 'ar') {
   const bodyHtml = node.attributes?.field_body?.processed || node.attributes?.field_body?.value || '';
   const fieldDate = node.attributes?.field_date || node.attributes?.created || '';
   const category = resolveTaxonomyTerm(node, 'field_news_category', included);
   const date = new Date(fieldDate);
   const year = Number.isNaN(date.getTime()) ? null : date.getUTCFullYear();
+  const defaultCategory = translate(language, 'news.defaultCategory');
+  const categoryName = category?.name || '';
 
   return {
     id: node.id,
@@ -81,11 +92,11 @@ export function mapNewsNode(node, included = []) {
     excerpt: getExcerpt(bodyHtml),
     body: splitBodyParagraphs(bodyHtml),
     bodyHtml,
-    category: category?.name || '',
+    category: categoryName,
     categoryId: category?.id || '',
-    categoryLabel: category?.name || 'أخبار المجلس',
-    date: formatNewsDate(fieldDate),
-    displayDate: formatNewsDate(fieldDate, { withWeekday: true }),
+    categoryLabel: categoryName || defaultCategory,
+    date: formatNewsDate(fieldDate, language),
+    displayDate: formatNewsDate(fieldDate, language, { withWeekday: true }),
     dateTime: fieldDate,
     year,
     image: resolveNodeImageUrl(node, 'field_image', included) || '/logo.png',
@@ -122,7 +133,7 @@ async function fetchNewsNodes(language) {
   const extractNodes = (response) => {
     const nodes = Array.isArray(response?.data) ? response.data : response?.data ? [response.data] : [];
     const included = response?.included || [];
-    return nodes.map((node) => mapNewsNode(node, included)).filter((item) => item.title);
+    return nodes.map((node) => mapNewsNode(node, included, language)).filter((item) => item.title);
   };
 
   if (language) {
@@ -161,7 +172,7 @@ export async function fetchNewsById(id, language) {
     });
 
     if (response?.data) {
-      return mapNewsNode(response.data, response.included || []);
+      return mapNewsNode(response.data, response.included || [], language);
     }
   } catch {
     // fall through to list lookup

@@ -1,5 +1,6 @@
 export const FAQ_PAGE = {
   title: 'الأسئلة الأكثر تكراراً',
+  titleKey: 'footer.faq',
   shareUrl: '/faq',
   breadcrumbs: [
     { label: 'الرئيسية', to: '/' },

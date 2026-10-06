@@ -1,15 +1,30 @@
+import { useMemo } from 'react';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { buildHeroBreadcrumbs, INNER_HERO_BACKGROUND } from '@/i18n/innerHero.js';
+import { translate } from '@/i18n/useTranslation.js';
 import { fetchInternationalDaysList } from '@/services/api/internationalDays.js';
 import AboutShareBar from '../../../about-us/AboutShareBar/AboutShareBar.jsx';
 import InnerHero from '../../../about-us/InnerHero/InnerHero.jsx';
-import { MEDIA_PAGE } from '../../mediaData.js';
 import InternationalDaysTable from '../InternationalDaysTable/InternationalDaysTable.jsx';
 import { INTERNATIONAL_DAYS_LIST_PAGE } from '../internationalDaysListData.js';
 import './InternationalDaysList.css';
 
 export default function InternationalDaysList() {
+  const { language } = useLanguage();
   const { data: drupalContent, loading } = useDrupalFetch((lang) =>
     fetchInternationalDaysList(lang).catch(() => null),
+  );
+
+  const heroTitle = translate(language, 'nav.mediaInternationalDays');
+  const heroBreadcrumbs = useMemo(
+    () =>
+      buildHeroBreadcrumbs(language, [
+        { key: 'common.home', to: '/' },
+        { key: 'nav.media', to: '/media/international-days' },
+        { key: 'nav.mediaInternationalDays' },
+      ]),
+    [language],
   );
 
   const description =
@@ -18,13 +33,9 @@ export default function InternationalDaysList() {
   return (
     <div className="international-days-list-page">
       <InnerHero
-        title={INTERNATIONAL_DAYS_LIST_PAGE.heroTitle}
-        breadcrumbs={[
-          { label: 'الرئيسية', to: '/' },
-          { label: MEDIA_PAGE.title, to: '/media/international-days' },
-          { label: INTERNATIONAL_DAYS_LIST_PAGE.heroTitle },
-        ]}
-        backgroundImage={MEDIA_PAGE.heroImage}
+        title={heroTitle}
+        breadcrumbs={heroBreadcrumbs}
+        backgroundImage={INNER_HERO_BACKGROUND}
       />
 
       {!loading ? (

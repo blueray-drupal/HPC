@@ -2,7 +2,6 @@
   width: 100%;
   padding-block: 3rem 4rem;
   padding-inline: var(--publications-inline-space);
-  direction: rtl;
   box-sizing: border-box;
 }
 
@@ -94,7 +93,7 @@
   z-index: 1;
   width: 100%;
   max-width: 34rem;
-  text-align: right;
+  text-align: start;
 }
 
 .publication-category__title {

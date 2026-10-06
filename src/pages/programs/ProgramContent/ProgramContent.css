@@ -11,7 +11,6 @@
 
 .program-content__inner {
   width: 100%;
-  direction: rtl;
 }
 
 .program-content__header {
@@ -34,7 +33,7 @@
   font-size: 22px;
   font-weight: 700;
   line-height: 52px;
-  text-align: right;
+  text-align: start;
 }
 
 .program-content__header-icon {
@@ -119,6 +118,6 @@
   .program-content__paragraph {
     font-size: 0.9375rem;
     line-height: 1.75;
-    text-align: right;
+    text-align: start;
   }
 }

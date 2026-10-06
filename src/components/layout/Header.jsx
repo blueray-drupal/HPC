@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Briefcase, ChevronDown, Menu, Search, X } from 'lucide-react';
 import { FaFacebookF, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { useLanguage } from '@/hooks/useLanguage.js';
-import { HEADER_NAV, SOCIAL_LINKS } from './headerNav.js';
+import { getHeaderNav } from '@/i18n/navigation.js';
+import { useTranslation } from '@/i18n/useTranslation.js';
+import { SOCIAL_LINKS } from './headerNav.js';
 import './Header.css';
 
 const SOCIAL_ICONS = {
@@ -21,6 +23,7 @@ const LANG_LABELS = {
 
 function TopBar() {
   const { language, setLanguage, supportedLanguages } = useLanguage();
+  const { t } = useTranslation();
   const [langOpen, setLangOpen] = useState(false);
 
   return (
@@ -47,14 +50,14 @@ function TopBar() {
         <div className="topbar-utils">
           <Link to="/search" className="topbar-link">
             <Search size={14} />
-            <span>بحث</span>
+            <span>{t('common.search')}</span>
           </Link>
 
           <span className="topbar-divider" aria-hidden="true" />
 
           <Link to="/jobs" className="topbar-link">
             <Briefcase size={14} />
-            <span>وظائف</span>
+            <span>{t('common.jobs')}</span>
           </Link>
 
           <span className="topbar-divider" aria-hidden="true" />
@@ -103,12 +106,14 @@ function TopBar() {
 }
 
 function Logo() {
+  const { t } = useTranslation();
+
   return (
-    <Link to="/" className="header-logo" aria-label="المجلس الأعلى للسكان">
+    <Link to="/" className="header-logo" aria-label={t('logo.ariaLabel')}>
       <img src="/logo.png" alt="" />
       <span className="header-logo-text">
-        <span className="header-logo-title">المجلس الأعلى للسكان</span>
-        <span className="header-logo-slogan">شركاء في صناعة المستقبل</span>
+        <span className="header-logo-title">{t('logo.title')}</span>
+        <span className="header-logo-slogan">{t('logo.slogan')}</span>
       </span>
     </Link>
   );
@@ -149,9 +154,13 @@ function DesktopDropdown({ item, active }) {
 }
 
 function DesktopNav({ pathname }) {
+  const { language } = useLanguage();
+  const { t } = useTranslation();
+  const headerNav = useMemo(() => getHeaderNav(language), [language]);
+
   return (
-    <nav className="header-nav" aria-label="القائمة الرئيسية">
-      {HEADER_NAV.map((item) => {
+    <nav className="header-nav" aria-label={t('common.mainNav')}>
+      {headerNav.map((item) => {
         const active = itemIsActive(item, pathname);
 
         if (item.children) {
@@ -174,6 +183,9 @@ function DesktopNav({ pathname }) {
 }
 
 function MobileMenu({ open, onClose, pathname }) {
+  const { language } = useLanguage();
+  const { t } = useTranslation();
+  const headerNav = useMemo(() => getHeaderNav(language), [language]);
   const [openSection, setOpenSection] = useState(null);
 
   useEffect(() => {
@@ -184,18 +196,18 @@ function MobileMenu({ open, onClose, pathname }) {
 
   return (
     <div className="mobile-menu">
-      <button type="button" className="mobile-menu-backdrop" aria-label="إغلاق القائمة" onClick={onClose} />
+      <button type="button" className="mobile-menu-backdrop" aria-label={t('common.closeMenu')} onClick={onClose} />
 
       <div className="mobile-menu-panel">
         <div className="mobile-menu-head">
-          <span className="mobile-menu-title">القائمة</span>
-          <button type="button" onClick={onClose} className="mobile-menu-close" aria-label="إغلاق القائمة">
+          <span className="mobile-menu-title">{t('common.menu')}</span>
+          <button type="button" onClick={onClose} className="mobile-menu-close" aria-label={t('common.closeMenu')}>
             <X size={22} />
           </button>
         </div>
 
-        <nav className="mobile-nav" aria-label="قائمة الجوال">
-          {HEADER_NAV.map((item) => {
+        <nav className="mobile-nav" aria-label={t('common.mobileNav')}>
+          {headerNav.map((item) => {
             const active = itemIsActive(item, pathname);
 
             if (!item.children) {
@@ -253,6 +265,7 @@ function MobileMenu({ open, onClose, pathname }) {
 
 export default function Header() {
   const { pathname } = useLocation();
+  const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -280,7 +293,7 @@ export default function Header() {
             type="button"
             onClick={() => setMenuOpen(true)}
             className="header-menu-btn"
-            aria-label="فتح القائمة"
+            aria-label={t('common.openMenu')}
           >
             <Menu size={24} />
           </button>
