@@ -76,7 +76,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.625rem;
-  color: #6b4a3d;
+  color: #ba1a1a;
   font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
   font-size: 0.9375rem;
   font-weight: 400;
@@ -86,8 +86,15 @@
   transition: opacity 0.2s ease;
 }
 
+.strategy-download__file-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
 .strategy-download__file:hover {
-  opacity: 0.85;
+  color: #9a1616;
+  opacity: 1;
 }
 
 .strategy-download__size {

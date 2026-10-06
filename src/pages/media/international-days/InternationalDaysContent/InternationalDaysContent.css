@@ -78,7 +78,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  align-self: flex-end;
+  align-self: auto;
+  margin-left: auto;
   padding: 0.625rem 1.25rem;
   border-radius: 8px;
   background: #1a9ba8;

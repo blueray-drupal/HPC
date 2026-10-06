@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 /** Pixels past top before header/topbar switch to “scrolled” layout. */
-const SCROLL_THRESHOLD = 48;
+const SCROLL_THRESHOLD = 8;
 
 export function useHeaderScroll() {
   const [scrolled, setScrolled] = useState(false);

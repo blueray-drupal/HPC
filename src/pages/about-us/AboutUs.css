@@ -1,5 +1,7 @@
 .about-us-page {
   width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
   background: #fff;
   --about-content-max: 1242px;
   --about-inline-space: max(1.25rem, calc((100vw - var(--about-content-max)) / 2));

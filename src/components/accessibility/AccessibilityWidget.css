@@ -1,0 +1,248 @@
+.a11y-widget {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  z-index: 100;
+  /* ثابت فيزيائياً أسفل اليسار — لا يتأثر بـ dir=rtl */
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+}
+
+.a11y-widget__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  filter: drop-shadow(0 4px 12px rgb(0 0 0 / 18%));
+}
+
+.a11y-widget__trigger-img {
+  display: block;
+  width: 4.0625rem;
+  height: 4.0625rem;
+  pointer-events: none;
+}
+
+.a11y-widget__trigger:hover .a11y-widget__trigger-img,
+.a11y-widget__trigger:focus-visible .a11y-widget__trigger-img {
+  filter: brightness(1.05);
+}
+
+.a11y-widget__panel {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 0.75rem);
+  width: min(22rem, calc(100vw - 2.5rem));
+  max-height: min(32rem, calc(100vh - 6rem));
+  overflow: auto;
+  border-radius: 0.75rem;
+  background: #fff;
+  box-shadow: 0 12px 40px rgb(0 0 0 / 18%);
+  text-align: start;
+}
+
+html[dir='rtl'] .a11y-widget__panel {
+  direction: rtl;
+}
+
+html[dir='ltr'] .a11y-widget__panel {
+  direction: ltr;
+}
+
+.a11y-widget__panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1rem 0.85rem;
+  background: #008aa9;
+  color: #fff;
+}
+
+.a11y-widget__panel-title {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.a11y-widget__panel-intro {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  opacity: 0.95;
+}
+
+.a11y-widget__close {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 0.35rem;
+  background: rgb(255 255 255 / 20%);
+  color: #fff;
+  cursor: pointer;
+}
+
+.a11y-widget__close:hover {
+  background: rgb(255 255 255 / 32%);
+}
+
+.a11y-widget__options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  padding: 1rem;
+}
+
+.a11y-widget__option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 5.5rem;
+  padding: 0.65rem 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.65rem;
+  background: #fff;
+  color: #374151;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.35;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.a11y-widget__option--wide {
+  grid-column: 1 / -1;
+  min-height: 3.25rem;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.a11y-widget__option:hover {
+  border-color: #008aa9;
+  color: #008aa9;
+}
+
+.a11y-widget__option.is-active {
+  border-color: #008aa9;
+  background: rgb(0 138 169 / 8%);
+  color: #006d85;
+}
+
+.a11y-widget__reset {
+  display: block;
+  width: calc(100% - 2rem);
+  margin: 0 1rem 1rem;
+  padding: 0.65rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background: #f9fafb;
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.a11y-widget__reset:hover {
+  background: #f3f4f6;
+}
+
+/* Applied site-wide via AccessibilityProvider */
+html.a11y-highlight-links :is(main, footer, .site-header) a:not(.a11y-widget__trigger):not(.topbar-social) {
+  outline: 2px solid #008aa9 !important;
+  outline-offset: 2px;
+  text-decoration: underline !important;
+  background-color: rgb(0 138 169 / 12%) !important;
+}
+
+html.a11y-high-contrast {
+  filter: contrast(1.22) saturate(1.08);
+}
+
+html.a11y-high-contrast .a11y-widget {
+  filter: none;
+}
+
+html.a11y-readable-font :where(body, main, footer) {
+  font-family: system-ui, Segoe UI, Arial, sans-serif !important;
+}
+
+html.a11y-font-size-0 {
+  font-size: 100%;
+}
+
+html.a11y-font-size-1 {
+  font-size: 106.25%;
+}
+
+html.a11y-font-size-2 {
+  font-size: 112.5%;
+}
+
+html.a11y-font-size-3 {
+  font-size: 120%;
+}
+
+html.a11y-letter-spacing-1 :where(main, footer) :where(p, li, a, span, h1, h2, h3, h4, h5, h6, label, td, th) {
+  letter-spacing: 0.05em !important;
+}
+
+html.a11y-letter-spacing-2 :where(main, footer) :where(p, li, a, span, h1, h2, h3, h4, h5, h6, label, td, th) {
+  letter-spacing: 0.1em !important;
+}
+
+html.a11y-line-height-1 :where(main, footer) :where(p, li, .hpc-paragraph) {
+  line-height: 1.75 !important;
+}
+
+html.a11y-line-height-2 :where(main, footer) :where(p, li, .hpc-paragraph) {
+  line-height: 2 !important;
+}
+
+html.a11y-reading-mode main {
+  max-width: 42rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+html.a11y-reading-mode :where(main) :where(p, li, .hpc-paragraph) {
+  line-height: 1.9 !important;
+  max-width: 100%;
+}
+
+html.a11y-text-align-start :where(main, footer) :where(p, li, h1, h2, h3, h4, .hpc-paragraph) {
+  text-align: start !important;
+}
+
+html.a11y-text-align-center :where(main, footer) :where(p, li, h1, h2, h3, h4, .hpc-paragraph) {
+  text-align: center !important;
+}
+
+html.a11y-text-align-justify :where(main, footer) :where(p, li, .hpc-paragraph) {
+  text-align: justify !important;
+}
+
+@media (max-width: 767px) {
+  .a11y-widget {
+    bottom: 1rem;
+    left: 1rem;
+  }
+
+  .a11y-widget__trigger-img {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}

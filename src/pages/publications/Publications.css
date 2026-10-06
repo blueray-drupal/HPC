@@ -9,14 +9,21 @@
 
 .publications-page__share-wrap {
   width: 100%;
-  max-width: var(--publications-content-max);
-  margin: 0 auto 4rem;
   padding-inline: var(--publications-inline-space);
+  padding-block: 0 4rem;
+  margin: 0;
   box-sizing: border-box;
+  background: #f7fafa;
+}
+
+.publications-page__share-wrap .about-extended__share {
+  width: 100%;
+  max-width: var(--publications-content-max);
+  margin-inline: auto;
 }
 
 @media (max-width: 767px) {
   .publications-page__share-wrap {
-    margin-bottom: 3rem;
+    padding-bottom: 3rem;
   }
 }

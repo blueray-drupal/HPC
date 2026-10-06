@@ -1,5 +1,7 @@
 .vision-section {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .vision-section__cards {
@@ -83,13 +85,39 @@ line-height: 26px; /* 162.5% */
 
   .vision-section__card {
     height: auto;
-    min-height: 350px;
+    min-height: 0;
+    flex: none;
+    width: 100%;
+    max-width: 100%;
   }
 }
 
 @media (max-width: 767px) {
+  .vision-section__cards {
+    gap: 1rem;
+  }
+
   .vision-section__card {
-    padding: 1.5rem;
+    padding: 1.25rem;
     min-height: 0;
+    width: 100%;
+  }
+
+  .vision-section__title {
+    font-size: 1.125rem;
+    line-height: 1.45;
+  }
+
+  .vision-section__text,
+  .vision-section__html p {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+  }
+
+  .vision-section__image,
+  .vision-section__icon {
+    width: 48px;
+    height: 48px;
   }
 }

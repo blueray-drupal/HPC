@@ -19,6 +19,22 @@ export const MESSAGES = {
       filterAll: '- الكل -',
       searchPlaceholder: '...اكتب للبحث',
     },
+    accessibility: {
+      title: 'إمكانية الوصول',
+      panelTitle: 'بحاجة إلى مساعدة؟',
+      panelIntro:
+        'لتعديل موقع الويب وفقاً لاحتياجات الوصول الخاصة بك، حدّد خياراً واحداً أو أكثر أدناه.',
+      close: 'إغلاق أداة إمكانية الوصول',
+      reset: 'إعادة الإعدادات الافتراضية',
+      highlightLinks: 'تحديد الروابط',
+      contrast: 'تباين',
+      letterSpacing: 'ضبط تباعد الحروف',
+      fontType: 'نوع الخط',
+      fontSize: 'حجم الخط',
+      readingMode: 'القراءة',
+      textAlign: 'محاذاة النص',
+      lineHeight: 'ارتفاع الخط',
+    },
     share: {
       pageAria: 'مشاركة الصفحة',
       newsArticle: 'مشاركة الخبر',
@@ -54,6 +70,7 @@ export const MESSAGES = {
     },
     media: {
       tabsAria: 'أقسام المركز الإعلامي',
+      backToInternationalDays: 'العودة إلى الأيام العالمية',
     },
     home: {
       newsSection: {
@@ -251,6 +268,22 @@ export const MESSAGES = {
       filterAll: 'All',
       searchPlaceholder: 'Type to search…',
     },
+    accessibility: {
+      title: 'Accessibility',
+      panelTitle: 'Need help?',
+      panelIntro:
+        'To adjust the website to your accessibility needs, select one or more options below.',
+      close: 'Close accessibility tools',
+      reset: 'Reset to defaults',
+      highlightLinks: 'Highlight links',
+      contrast: 'Contrast',
+      letterSpacing: 'Letter spacing',
+      fontType: 'Font type',
+      fontSize: 'Font size',
+      readingMode: 'Reading mode',
+      textAlign: 'Text alignment',
+      lineHeight: 'Line height',
+    },
     share: {
       pageAria: 'Share this page',
       newsArticle: 'Share this article',
@@ -286,6 +319,7 @@ export const MESSAGES = {
     },
     media: {
       tabsAria: 'Media Center sections',
+      backToInternationalDays: 'Back to International Days',
     },
     home: {
       newsSection: {
