@@ -3,6 +3,7 @@ import { useLanguage } from '@/hooks/useLanguage.js';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
 import { getMediaSectionTitle } from '@/i18n/navigation.js';
 import { fetchVideoGallery } from '@/services/api/photoVideoGallery.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 import PublicationsPagination from '../../../publications/PublicationsPagination/PublicationsPagination.jsx';
 import { MediaSectionHeaderIcon } from '../../MediaTabs/MediaTabIcons.jsx';
 import VideoGalleryGrid from '../VideoGalleryGrid/VideoGalleryGrid.jsx';
@@ -12,8 +13,10 @@ import './VideosContent.css';
 export default function VideosContent() {
   const { language } = useLanguage();
   const sectionTitle = getMediaSectionTitle(language, 'videos');
-  const { data, loading } = useDrupalFetch((lang) => fetchVideoGallery(lang, VIDEO_GALLERY_ITEMS));
-  const items = data ?? VIDEO_GALLERY_ITEMS;
+  const { data, loading } = useDrupalFetch((lang) =>
+    fetchVideoGallery(lang, localizedStaticFallback(lang, VIDEO_GALLERY_ITEMS) ?? []),
+  );
+  const items = data ?? localizedStaticFallback(language, VIDEO_GALLERY_ITEMS) ?? [];
   const [currentPage, setCurrentPage] = useState(1);
 
   const pagination = useMemo(

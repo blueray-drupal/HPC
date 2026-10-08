@@ -3,6 +3,7 @@ import { useLanguage } from '@/hooks/useLanguage.js';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
 import { getMediaSectionTitle } from '@/i18n/navigation.js';
 import { fetchNews, fetchNewsCategories } from '@/services/api/news.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 import PublicationsPagination from '../../../publications/PublicationsPagination/PublicationsPagination.jsx';
 import { MediaSectionHeaderIcon } from '../../MediaTabs/MediaTabIcons.jsx';
 import NewsFilters from '../NewsFilters/NewsFilters.jsx';
@@ -17,8 +18,12 @@ import {
 } from '../newsListData.js';
 import './NewsContent.css';
 
-function buildFallbackCategories() {
-  return [...new Set(NEWS_ITEMS_FALLBACK.map((item) => item.category).filter(Boolean))].map(
+function staticNewsItems(language) {
+  return localizedStaticFallback(language, NEWS_ITEMS_FALLBACK) ?? [];
+}
+
+function buildFallbackCategories(language) {
+  return [...new Set(staticNewsItems(language).map((item) => item.category).filter(Boolean))].map(
     (name) => ({ id: name, name }),
   );
 }
@@ -30,16 +35,18 @@ function extractYears(items) {
 }
 
 async function fetchNewsPageData(language) {
+  const fallbackItems = staticNewsItems(language);
+
   try {
     const [items, terms] = await Promise.all([fetchNews(language), fetchNewsCategories(language)]);
     return {
-      items: items.length ? items : NEWS_ITEMS_FALLBACK,
-      categories: terms.length ? terms : buildFallbackCategories(),
+      items: items.length ? items : fallbackItems,
+      categories: terms.length ? terms : buildFallbackCategories(language),
     };
   } catch {
     return {
-      items: NEWS_ITEMS_FALLBACK,
-      categories: buildFallbackCategories(),
+      items: fallbackItems,
+      categories: buildFallbackCategories(language),
     };
   }
 }
@@ -48,8 +55,8 @@ export default function NewsContent() {
   const { language } = useLanguage();
   const sectionTitle = getMediaSectionTitle(language, 'news');
   const { data, loading } = useDrupalFetch(fetchNewsPageData);
-  const newsItems = data?.items ?? NEWS_ITEMS_FALLBACK;
-  const categories = data?.categories ?? buildFallbackCategories();
+  const newsItems = data?.items ?? staticNewsItems(language);
+  const categories = data?.categories ?? buildFallbackCategories(language);
   const [category, setCategory] = useState('');
   const [year, setYear] = useState('');
   const [query, setQuery] = useState('');

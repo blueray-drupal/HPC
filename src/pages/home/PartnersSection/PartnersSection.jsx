@@ -5,6 +5,7 @@ import { useLanguage } from '@/hooks/useLanguage.js';
 import { getPartnerTabs } from '@/i18n/navigation.js';
 import { useTranslation } from '@/i18n/useTranslation.js';
 import { fetchPartnersSection } from '@/services/api/partnersSection.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 import { PARTNERS_BY_TAB_FALLBACK } from './partnersSectionData.js';
 import './PartnersSection.css';
 
@@ -16,7 +17,10 @@ async function fetchPartnersData(language) {
   try {
     return await fetchPartnersSection(language, tabs);
   } catch {
-    return { tabs, partnersByTab: PARTNERS_BY_TAB_FALLBACK };
+    return {
+      tabs,
+      partnersByTab: localizedStaticFallback(language, PARTNERS_BY_TAB_FALLBACK) ?? {},
+    };
   }
 }
 
@@ -28,7 +32,8 @@ export default function PartnersSection() {
     () => data?.tabs ?? getPartnerTabs(language),
     [data?.tabs, language],
   );
-  const partnersByTab = data?.partnersByTab ?? PARTNERS_BY_TAB_FALLBACK;
+  const partnersByTab =
+    data?.partnersByTab ?? localizedStaticFallback(language, PARTNERS_BY_TAB_FALLBACK) ?? {};
   const [activeTab, setActiveTab] = useState('institutions');
   const [slideIndex, setSlideIndex] = useState(0);
 

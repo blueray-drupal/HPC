@@ -109,9 +109,9 @@ function TenderCard({ item }) {
   );
 }
 
-export default function TendersGrid({ items }) {
+export default function TendersGrid({ items, emptyLabel = 'لا توجد عطاءات مطابقة لمعايير البحث.' }) {
   if (!items.length) {
-    return <p className="tenders-grid__empty">لا توجد عطاءات مطابقة لمعايير البحث.</p>;
+    return <p className="tenders-grid__empty">{emptyLabel}</p>;
   }
 
   return (

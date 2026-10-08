@@ -155,6 +155,39 @@ export function resolveNodeFileField(node, fieldName, included = []) {
   };
 }
 
+function resolveFileFromRef(fileRef, included = []) {
+  if (!fileRef) return null;
+  const file = findIncludedItem(included, fileRef.type, fileRef.id);
+  if (!file?.attributes?.uri?.url) return null;
+
+  return {
+    url: resolveDrupalFileUrl(file.attributes.uri.url),
+    filesize: file.attributes?.filesize ?? 0,
+    filename: file.attributes?.filename ?? '',
+    mime: file.attributes?.filemime ?? '',
+  };
+}
+
+/** Direct file reference or media entity (document/file/pdf). */
+export function resolveNodeDocumentOrFile(node, fieldName, included = []) {
+  const ref = node?.relationships?.[fieldName]?.data;
+  if (!ref || Array.isArray(ref)) return null;
+
+  if (ref.type?.startsWith('file--')) {
+    return resolveNodeFileField(node, fieldName, included);
+  }
+
+  const media = findIncludedItem(included, ref.type, ref.id);
+  if (!media) return null;
+
+  const nestedRef =
+    media.relationships?.field_media_document?.data ||
+    media.relationships?.field_media_file?.data ||
+    media.relationships?.field_media_pdf?.data;
+
+  return resolveFileFromRef(nestedRef, included);
+}
+
 export function getRelationshipData(relationship) {
   const data = relationship?.data;
   if (!data) return [];

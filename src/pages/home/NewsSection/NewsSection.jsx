@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
 import { useTranslation } from '@/i18n/useTranslation.js';
 import { fetchNews } from '@/services/api/news.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 import { NEWS_ITEMS as NEWS_ITEMS_FALLBACK } from './newsSectionData.js';
 import './NewsSection.css';
 
@@ -21,11 +23,16 @@ const LATEST_NEWS_COUNT = 4;
 const NEWS_LIST_PATH = '/media/news';
 
 export default function NewsSection() {
+  const { language } = useLanguage();
   const { t } = useTranslation();
   const { data, loading } = useDrupalFetch((lang) =>
-    fetchNews(lang).catch(() => NEWS_ITEMS_FALLBACK),
+    fetchNews(lang).catch(() => localizedStaticFallback(lang, NEWS_ITEMS_FALLBACK) ?? []),
   );
-  const newsItems = data?.length ? data : loading ? [] : NEWS_ITEMS_FALLBACK;
+  const newsItems = data?.length
+    ? data
+    : loading
+      ? []
+      : localizedStaticFallback(language, NEWS_ITEMS_FALLBACK) ?? [];
 
   const latestNews = [...newsItems]
     .sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime))

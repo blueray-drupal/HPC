@@ -40,31 +40,15 @@ async function requestSliders(language, options = {}) {
 }
 
 export async function fetchSliders(language) {
-  const baseOptions = {
+  const response = await requestSliders(language, {
     include: SLIDER_INCLUDE,
     sort: '-changed',
     limit: 20,
-  };
-
-  const mapResponse = (response) => {
-    const nodes = Array.isArray(response?.data) ? response.data : response?.data ? [response.data] : [];
-    const included = response?.included || [];
-    return nodes.map((node) => mapSliderNode(node, included)).filter((slide) => slide.title);
-  };
-
-  if (language) {
-    const localized = await requestSliders(language, {
-      ...baseOptions,
-      filters: { 'filter[langcode]': language },
-    });
-    const localizedSlides = mapResponse(localized);
-    if (localizedSlides.length) return localizedSlides;
-  }
-
-  const withoutLangFilter = await requestSliders(language, {
-    ...baseOptions,
-    skipLangcodeFilter: true,
+    filters: language ? { 'filter[langcode]': language } : {},
   });
 
-  return mapResponse(withoutLangFilter);
+  const nodes = Array.isArray(response?.data) ? response.data : response?.data ? [response.data] : [];
+  const included = response?.included || [];
+
+  return nodes.map((node) => mapSliderNode(node, included)).filter((slide) => slide.title);
 }

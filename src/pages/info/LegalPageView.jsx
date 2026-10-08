@@ -4,6 +4,7 @@ import { useLanguage } from '@/hooks/useLanguage.js';
 import { getInfoPageHeroMeta } from '@/i18n/innerHero.js';
 
 import { fetchLegalPageContent } from '@/services/api/legalPages.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 
 import InfoPageLayout from './InfoPageLayout.jsx';
 
@@ -19,14 +20,11 @@ export default function LegalPageView({ pageKey, pageMeta, fallback }) {
   );
 
   const { data, loading } = useDrupalFetch(
-
-    (lang) => fetchLegalPageContent(lang, pageKey, fallback),
-
-    [pageKey],
-
+    (lang) => fetchLegalPageContent(lang, pageKey, localizedStaticFallback(lang, fallback) ?? {}),
+    [pageKey, fallback],
   );
 
-  const content = data ?? fallback;
+  const content = data ?? localizedStaticFallback(language, fallback) ?? {};
 
 
 

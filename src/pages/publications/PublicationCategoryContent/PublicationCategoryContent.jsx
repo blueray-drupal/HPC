@@ -1,30 +1,28 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
-import { fetchPublicationsByCategory } from '@/services/api/publications.js';
+import { useTranslation } from '@/i18n/useTranslation.js';
+import { useCategoryPublications } from '../useCategoryPublications.js';
 import PublicationFilters from '../PublicationFilters/PublicationFilters.jsx';
 import { PublicationSectionHeaderIcon } from '../PublicationTabs/PublicationTabIcons.jsx';
 import PublicationsGrid from '../PublicationsGrid/PublicationsGrid.jsx';
 import PublicationsPagination from '../PublicationsPagination/PublicationsPagination.jsx';
 import {
   filterPublications,
-  getPublicationsByCategory,
+  getPublicationYearOptions,
   paginatePublications,
   PUBLICATIONS_PER_PAGE,
 } from '../publicationsListData.js';
 import './PublicationCategoryContent.css';
 
 export default function PublicationCategoryContent({ category }) {
+  const { t } = useTranslation();
   const { categorySlug } = useParams();
-  const fallbackPublications = useMemo(
-    () => getPublicationsByCategory(category.id),
-    [category.id],
+  const { publications: categoryPublications, loading } = useCategoryPublications(category.id);
+
+  const yearOptions = useMemo(
+    () => getPublicationYearOptions(categoryPublications),
+    [categoryPublications],
   );
-  const { data, loading } = useDrupalFetch(
-    (lang) => fetchPublicationsByCategory(lang, category.id, fallbackPublications),
-    [category.id],
-  );
-  const categoryPublications = data ?? fallbackPublications;
   const [classification, setClassification] = useState('');
   const [year, setYear] = useState('');
   const [query, setQuery] = useState('');
@@ -81,13 +79,18 @@ export default function PublicationCategoryContent({ category }) {
           classification={classification}
           year={year}
           query={query}
+          yearOptions={yearOptions}
           onClassificationChange={setClassification}
           onYearChange={setYear}
           onQueryChange={setQuery}
           onSubmit={handleSubmit}
         />
 
-        {!loading ? (
+        {loading ? (
+          <p className="publication-category-content__loading" role="status">
+            {t('publications.loading')}
+          </p>
+        ) : (
           <>
             <PublicationsGrid items={pagination.items} />
 
@@ -97,7 +100,7 @@ export default function PublicationCategoryContent({ category }) {
               onPageChange={setCurrentPage}
             />
           </>
-        ) : null}
+        )}
       </div>
     </section>
   );

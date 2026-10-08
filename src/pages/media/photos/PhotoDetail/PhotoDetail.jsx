@@ -5,6 +5,7 @@ import { useLanguage } from '@/hooks/useLanguage.js';
 import { buildHeroBreadcrumbs, INNER_HERO_BACKGROUND } from '@/i18n/innerHero.js';
 import { translate } from '@/i18n/useTranslation.js';
 import { fetchPhotoGalleryItem } from '@/services/api/photoVideoGallery.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 import AboutShareBar from '../../../about-us/AboutShareBar/AboutShareBar.jsx';
 import InnerHero from '../../../about-us/InnerHero/InnerHero.jsx';
 import PhotoGalleryViewer from '../PhotoGalleryViewer/PhotoGalleryViewer.jsx';
@@ -25,10 +26,13 @@ function BackArrowIcon() {
 export default function PhotoDetail() {
   const { id } = useParams();
   const { language } = useLanguage();
-  const fallbackAlbum = useMemo(() => getPhotoById(id), [id]);
+  const fallbackAlbum = useMemo(
+    () => localizedStaticFallback(language, getPhotoById(id)),
+    [id, language],
+  );
   const { data: album, loading } = useDrupalFetch(
     (lang) => fetchPhotoGalleryItem(lang, id, fallbackAlbum),
-    [id],
+    [id, fallbackAlbum],
   );
 
   const resolvedAlbum = album ?? fallbackAlbum;

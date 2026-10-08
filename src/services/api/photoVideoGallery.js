@@ -1,4 +1,5 @@
 import { getNode, getNodes } from './drupalApi.js';
+import { localizedStaticFallback } from './languageContent.js';
 import {
   resolveNodeImageUrl,
   resolveNodeMediaAsset,
@@ -50,6 +51,14 @@ function mapCategoryToMediaType(category) {
   return null;
 }
 
+function resolveVideoSourceType(videoUrl, mediaAssetType) {
+  if (!videoUrl) return 'unknown';
+  if (/youtube\.com|youtu\.be/i.test(String(videoUrl))) return 'youtube';
+  if (mediaAssetType === 'video' || /\.mp4(\?|$)/i.test(String(videoUrl))) return 'file';
+  if (mediaAssetType === 'remote_video') return 'remote';
+  return 'remote';
+}
+
 export function mapPhotoGalleryNode(node, included = []) {
   const galleryImages = resolveNodeMediaImageUrls(node, 'field_images', included);
   const mediaAsset = resolveNodeMediaAsset(node, 'field_media_file', included);
@@ -79,7 +88,7 @@ export function mapPhotoGalleryNode(node, included = []) {
 }
 
 export function mapVideoGalleryNode(node, included = []) {
-  const coverImage = resolveNodeImageUrl(node, 'field_cover_image_for_video', included);
+  const coverImage = resolveNodeImageUrl(node, 'field_cover_image_for_video', included) || '';
   const mediaAsset = resolveNodeMediaAsset(node, 'field_media_file', included);
   const title = node.attributes?.title || '';
 
@@ -88,12 +97,16 @@ export function mapVideoGalleryNode(node, included = []) {
 
   if (!videoUrl && !title) return null;
 
+  const videoSourceType = resolveVideoSourceType(videoUrl, mediaAsset?.type);
+
   return {
     id: node.id,
     nid: node.attributes?.drupal_internal__nid,
     title,
-    image: coverImage || mediaAsset?.thumbnail || '',
+    coverImage,
+    image: coverImage,
     videoUrl: videoUrl || '#',
+    videoSourceType,
   };
 }
 
@@ -172,27 +185,32 @@ function splitGalleryItems(nodes, included) {
 }
 
 export async function fetchPhotoGallery(language, fallbackItems = []) {
+  const fallback = localizedStaticFallback(language, fallbackItems) ?? [];
+
   try {
     const { nodes, included } = await fetchGalleryNodes(language);
     const { photos } = splitGalleryItems(nodes, included);
-    return photos.length ? photos : fallbackItems;
+    return photos.length ? photos : fallback;
   } catch {
-    return fallbackItems;
+    return fallback;
   }
 }
 
 export async function fetchVideoGallery(language, fallbackItems = []) {
+  const fallback = localizedStaticFallback(language, fallbackItems) ?? [];
+
   try {
     const { nodes, included } = await fetchGalleryNodes(language);
     const { videos } = splitGalleryItems(nodes, included);
-    return videos.length ? videos : fallbackItems;
+    return videos.length ? videos : fallback;
   } catch {
-    return fallbackItems;
+    return fallback;
   }
 }
 
 export async function fetchPhotoGalleryItem(language, id, fallbackItem = null) {
-  if (!id) return fallbackItem;
+  const fallback = localizedStaticFallback(language, fallbackItem);
+  if (!id) return fallback;
 
   try {
     const response = await getNode(CONTENT_TYPE, id, {
@@ -200,11 +218,11 @@ export async function fetchPhotoGalleryItem(language, id, fallbackItem = null) {
       include: INCLUDE,
     });
     const node = response?.data;
-    if (!node) return fallbackItem;
+    if (!node) return fallback;
 
     const item = mapPhotoGalleryNode(node, response?.included || []);
-    return item?.images?.length || item?.image ? item : fallbackItem;
+    return item?.images?.length || item?.image ? item : fallback;
   } catch {
-    return fallbackItem;
+    return fallback;
   }
 }

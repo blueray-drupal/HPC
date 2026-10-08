@@ -59,7 +59,7 @@ export const MESSAGES = {
       programs: 'البرامج',
       programPopulation: 'برنامج السكان والتنمية',
       programReproductiveHealth: 'برنامج الصحة الإنجابية',
-      programAdvocacy: 'حشد التأييد',
+      programAdvocacy: 'كسب التأييد',
       media: 'المركز الإعلامي',
       mediaNews: 'الأخبار',
       mediaInternationalDays: 'قائمة الأيام العالمية',
@@ -71,6 +71,10 @@ export const MESSAGES = {
     media: {
       tabsAria: 'أقسام المركز الإعلامي',
       backToInternationalDays: 'العودة إلى الأيام العالمية',
+      videos: {
+        empty: 'لا توجد مقاطع فيديو متاحة حالياً.',
+        playAria: 'تشغيل {title}',
+      },
     },
     home: {
       newsSection: {
@@ -111,6 +115,9 @@ export const MESSAGES = {
       mediaBriefings: {
         briefingTab: 'الإحاطة',
       },
+      secretaryMessage: {
+        cta: 'اقرأ المزيد عن المجلس',
+      },
       knowledgePlatforms: {
         title: 'منصات معرفية',
       },
@@ -139,6 +146,8 @@ export const MESSAGES = {
       filtersAria: 'تصفية العطاءات',
       filterName: 'اسم العطاء',
       filterNumber: 'رقم العطاء',
+      loading: 'جاري تحميل العطاءات…',
+      emptyResults: 'لا توجد عطاءات مطابقة لمعايير البحث.',
     },
     about: {
       pageTitle: 'عن المجلس',
@@ -160,6 +169,7 @@ export const MESSAGES = {
       filterYear: 'سنة الإصدار',
       filterSearchTitle: 'البحث عن عنوان',
       emptyResults: 'لا توجد إصدارات مطابقة لمعايير البحث.',
+      loading: 'جاري تحميل الإصدارات…',
       editionLabel: 'إصدار',
       downloadFile: 'تحميل الملف',
       categories: {
@@ -320,6 +330,10 @@ export const MESSAGES = {
     media: {
       tabsAria: 'Media Center sections',
       backToInternationalDays: 'Back to International Days',
+      videos: {
+        empty: 'No videos are available at the moment.',
+        playAria: 'Play {title}',
+      },
     },
     home: {
       newsSection: {
@@ -360,6 +374,9 @@ export const MESSAGES = {
       mediaBriefings: {
         briefingTab: 'Briefing',
       },
+      secretaryMessage: {
+        cta: 'Read more about the Council',
+      },
       knowledgePlatforms: {
         title: 'Knowledge platforms',
       },
@@ -386,6 +403,8 @@ export const MESSAGES = {
     },
     tenders: {
       filtersAria: 'Filter tenders',
+      loading: 'Loading tenders…',
+      emptyResults: 'No tenders match your search criteria.',
       filterName: 'Tender name',
       filterNumber: 'Tender number',
     },
@@ -409,6 +428,7 @@ export const MESSAGES = {
       filterYear: 'Publication year',
       filterSearchTitle: 'Search by title',
       emptyResults: 'No publications match your search criteria.',
+      loading: 'Loading publications…',
       editionLabel: 'Edition',
       downloadFile: 'Download file',
       categories: {

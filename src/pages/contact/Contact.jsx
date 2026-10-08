@@ -131,18 +131,23 @@ export default function Contact() {
               <div className="contact-page__info">
               {contactInfoItems.map((item) => (
                 <article key={item.id} className="contact-info-card">
-                  <div className="contact-info-card__content">
-                    <h3 className="contact-info-card__title">{item.title}</h3>
-                    {item.href ? (
-                      <a href={item.href} className={contactValueClassName(item.icon)}>
-                        {item.value}
-                      </a>
-                    ) : (
-                      <p className={contactValueClassName(item.icon)}>{item.value}</p>
-                    )}
-                  </div>
-                  <div className="contact-info-card__icon-wrap">
-                    <ContactInfoIcon type={item.icon} />
+                  <span className="contact-info-card__accent" aria-hidden="true" />
+                  <div className="contact-info-card__inner">
+                    <div className="contact-info-card__row">
+                      <div className="contact-info-card__content">
+                        <h3 className="contact-info-card__title">{item.title}</h3>
+                        {item.href ? (
+                          <a href={item.href} className={contactValueClassName(item.icon)}>
+                            {item.value}
+                          </a>
+                        ) : (
+                          <p className={contactValueClassName(item.icon)}>{item.value}</p>
+                        )}
+                      </div>
+                      <div className="contact-info-card__icon-wrap">
+                        <ContactInfoIcon type={item.icon} />
+                      </div>
+                    </div>
                   </div>
                 </article>
               ))}

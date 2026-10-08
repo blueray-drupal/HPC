@@ -1,34 +1,46 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { useTranslation } from '@/i18n/useTranslation.js';
 import { fetchSecretaryMessage } from '@/services/api/secretaryMessage.js';
+import { isDefaultSiteLanguage } from '@/services/api/languageContent.js';
 import { SECRETARY_MESSAGE } from './secretaryMessageData.js';
 import './SecretaryMessage.css';
 
-function mergeSecretaryMessage(message) {
-  if (!message) return SECRETARY_MESSAGE;
+function mergeSecretaryMessage(message, language) {
+  const useStatic = isDefaultSiteLanguage(language);
+
+  if (!message) {
+    return useStatic ? SECRETARY_MESSAGE : null;
+  }
+
+  const base = useStatic ? SECRETARY_MESSAGE : {};
 
   return {
-    eyebrow: message.eyebrow || SECRETARY_MESSAGE.eyebrow,
-    titleLine1: message.titleLine1 || SECRETARY_MESSAGE.titleLine1,
-    titleLine2: message.titleLine2 || SECRETARY_MESSAGE.titleLine2,
-    body: message.body || SECRETARY_MESSAGE.body,
-    name: message.name || SECRETARY_MESSAGE.name,
-    ctaLabel: SECRETARY_MESSAGE.ctaLabel,
-    ctaLink: SECRETARY_MESSAGE.ctaLink,
-    image: message.image || SECRETARY_MESSAGE.image,
-    imageAlt: message.imageAlt || SECRETARY_MESSAGE.imageAlt,
+    eyebrow: message.eyebrow || base.eyebrow || '',
+    titleLine1: message.titleLine1 || base.titleLine1 || '',
+    titleLine2: message.titleLine2 || base.titleLine2 || '',
+    body: message.body || base.body || '',
+    name: message.name || base.name || '',
+    ctaLabel: base.ctaLabel || SECRETARY_MESSAGE.ctaLabel,
+    ctaLink: base.ctaLink || SECRETARY_MESSAGE.ctaLink,
+    image: message.image || base.image || '',
+    imageAlt: message.imageAlt || base.imageAlt || '',
   };
 }
 
 export default function SecretaryMessage() {
+  const { language } = useLanguage();
+  const { t } = useTranslation();
+  const isRtl = language === 'ar';
   const { data, loading } = useDrupalFetch((lang) =>
     fetchSecretaryMessage(lang).catch(() => null),
   );
-  const content = useMemo(() => mergeSecretaryMessage(data), [data]);
+  const content = useMemo(() => mergeSecretaryMessage(data, language), [data, language]);
 
-  if (loading) return null;
+  if (loading || !content) return null;
 
   return (
     <section className="secretary-message" aria-labelledby="secretary-message-title">
@@ -49,8 +61,17 @@ export default function SecretaryMessage() {
             {content.name ? <p className="secretary-message__name">{content.name}</p> : null}
 
             <Link to={content.ctaLink} className="secretary-message__cta hpc-icon-trailing">
-              <ChevronLeft size={18} aria-hidden="true" />
-              <span>{content.ctaLabel}</span>
+              {isRtl ? (
+                <>
+                  <ChevronLeft size={18} aria-hidden="true" />
+                  <span>{t('home.secretaryMessage.cta')}</span>
+                </>
+              ) : (
+                <>
+                  <span>{t('home.secretaryMessage.cta')}</span>
+                  <ChevronRight size={18} aria-hidden="true" />
+                </>
+              )}
             </Link>
           </div>
 

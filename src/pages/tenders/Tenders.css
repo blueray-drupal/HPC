@@ -14,6 +14,14 @@
   box-sizing: border-box;
 }
 
+.tenders-page__loading {
+  margin: 0;
+  padding: 2rem 0;
+  color: #414754;
+  text-align: center;
+  font-size: 1rem;
+}
+
 .tenders-page__inner {
   display: flex;
   flex-direction: column;

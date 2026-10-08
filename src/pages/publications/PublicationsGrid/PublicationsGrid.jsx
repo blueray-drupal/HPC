@@ -41,19 +41,23 @@ export default function PublicationsGrid({ items }) {
             </div>
 
             <div className="publication-card__body">
-              <p
-                className="publication-card__year"
-                style={YEAR_BADGE_STYLES[item.year] ?? undefined}
-              >
-                {t('publications.editionLabel')} {item.year}
-              </p>
+              {item.year != null ? (
+                <p
+                  className="publication-card__year"
+                  style={YEAR_BADGE_STYLES[item.year] ?? undefined}
+                >
+                  {t('publications.editionLabel')} {item.year}
+                </p>
+              ) : null}
 
               <h3 className="publication-card__title">{item.title}</h3>
 
-              <a href={item.downloadUrl} className="publication-card__download" download>
-                <span>{t('publications.downloadFile')}</span>
-                <DownloadIcon />
-              </a>
+              {item.hasDownload !== false && item.downloadUrl ? (
+                <a href={item.downloadUrl} className="publication-card__download" download>
+                  <span>{t('publications.downloadFile')}</span>
+                  <DownloadIcon />
+                </a>
+              ) : null}
             </div>
           </article>
         </li>

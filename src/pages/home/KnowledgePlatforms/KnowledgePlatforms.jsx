@@ -1,16 +1,25 @@
 import { ExternalLink } from 'lucide-react';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
 import { useTranslation } from '@/i18n/useTranslation.js';
 import { fetchKnowledgePlatforms } from '@/services/api/knowledgePlatforms.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 import { KNOWLEDGE_PLATFORMS_FALLBACK } from './knowledgePlatformsData.js';
 import './KnowledgePlatforms.css';
 
 export default function KnowledgePlatforms() {
+  const { language } = useLanguage();
   const { t } = useTranslation();
   const { data, loading } = useDrupalFetch((lang) =>
-    fetchKnowledgePlatforms(lang).catch(() => KNOWLEDGE_PLATFORMS_FALLBACK),
+    fetchKnowledgePlatforms(lang).catch(
+      () => localizedStaticFallback(lang, KNOWLEDGE_PLATFORMS_FALLBACK) ?? [],
+    ),
   );
-  const platforms = data?.length ? data : loading ? [] : KNOWLEDGE_PLATFORMS_FALLBACK;
+  const platforms = data?.length
+    ? data
+    : loading
+      ? []
+      : localizedStaticFallback(language, KNOWLEDGE_PLATFORMS_FALLBACK) ?? [];
 
   if (loading || !platforms.length) return null;
 

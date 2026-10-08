@@ -26,7 +26,7 @@ export const HEADER_NAV = [
     children: [
       { to: '/programs/population-development', label: 'برنامج السكان والتنمية' },
       { to: '/programs/reproductive-health', label: 'برنامج الصحة الإنجابية' },
-      { to: '/programs/advocacy', label: 'حشد التأييد' },
+      { to: '/programs/advocacy', label: 'كسب التأييد' },
     ],
   },
   {

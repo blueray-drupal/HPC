@@ -5,6 +5,7 @@ import { useLanguage } from '@/hooks/useLanguage.js';
 import { getSimpleInnerHeroMeta } from '@/i18n/innerHero.js';
 import { getProgramTabs } from '@/i18n/navigation.js';
 import { fetchProgramSections } from '@/services/api/programs.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 import AboutShareBar from '../about-us/AboutShareBar/AboutShareBar.jsx';
 import InnerHero from '../about-us/InnerHero/InnerHero.jsx';
 import ProgramContent from './ProgramContent/ProgramContent.jsx';
@@ -20,8 +21,10 @@ export default function Programs() {
   const hero = useMemo(() => getSimpleInnerHeroMeta(language, 'nav.programs'), [language]);
   const programTabs = useMemo(() => getProgramTabs(language), [language]);
   const { section = DEFAULT_PROGRAM_SECTION } = useParams();
-  const { data, loading } = useDrupalFetch((lang) => fetchProgramSections(lang, PROGRAM_SECTIONS));
-  const sections = data ?? PROGRAM_SECTIONS;
+  const { data, loading } = useDrupalFetch((lang) =>
+    fetchProgramSections(lang, localizedStaticFallback(lang, PROGRAM_SECTIONS) ?? {}),
+  );
+  const sections = data ?? localizedStaticFallback(language, PROGRAM_SECTIONS) ?? {};
   const isValidSection = programTabs.some((tab) => tab.id === section);
 
   if (!isValidSection) {

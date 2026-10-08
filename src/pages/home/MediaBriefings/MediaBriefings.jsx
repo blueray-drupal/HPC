@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
 import { useTranslation } from '@/i18n/useTranslation.js';
 import { fetchMediaBriefings } from '@/services/api/mediaBriefings.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 import { MEDIA_BRIEFINGS_FALLBACK } from '@/pages/media/briefings/briefingsData.js';
 import './MediaBriefings.css';
 
@@ -21,11 +23,16 @@ function CalendarIcon() {
 const AUTO_PLAY_MS = 8000;
 
 export default function MediaBriefings() {
+  const { language } = useLanguage();
   const { t } = useTranslation();
   const { data, loading } = useDrupalFetch((lang) =>
-    fetchMediaBriefings(lang).catch(() => MEDIA_BRIEFINGS_FALLBACK),
+    fetchMediaBriefings(lang).catch(() => localizedStaticFallback(lang, MEDIA_BRIEFINGS_FALLBACK) ?? []),
   );
-  const briefings = data?.length ? data : loading ? [] : MEDIA_BRIEFINGS_FALLBACK;
+  const briefings = data?.length
+    ? data
+    : loading
+      ? []
+      : localizedStaticFallback(language, MEDIA_BRIEFINGS_FALLBACK) ?? [];
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {

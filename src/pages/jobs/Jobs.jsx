@@ -5,6 +5,7 @@ import { useLanguage } from '@/hooks/useLanguage.js';
 import { getSimpleInnerHeroMeta } from '@/i18n/innerHero.js';
 
 import { fetchCareers } from '@/services/api/careers.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 
 import AboutShareBar from '../about-us/AboutShareBar/AboutShareBar.jsx';
 
@@ -24,9 +25,11 @@ export default function Jobs() {
   const { language } = useLanguage();
   const hero = useMemo(() => getSimpleInnerHeroMeta(language, 'common.jobs'), [language]);
 
-  const { data, loading } = useDrupalFetch((lang) => fetchCareers(lang, JOBS_ITEMS));
+  const { data, loading } = useDrupalFetch((lang) =>
+    fetchCareers(lang, localizedStaticFallback(lang, JOBS_ITEMS) ?? []),
+  );
 
-  const items = data ?? JOBS_ITEMS;
+  const items = data ?? localizedStaticFallback(language, JOBS_ITEMS) ?? [];
 
   const [title, setTitle] = useState('');
 

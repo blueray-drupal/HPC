@@ -5,6 +5,7 @@ import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
 import { useLanguage } from '@/hooks/useLanguage.js';
 import { getSimpleInnerHeroMeta } from '@/i18n/innerHero.js';
 import { fetchDemographicIndicators } from '@/services/api/demographicIndicators.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 import DemographicPdfList from './DemographicPdfList/DemographicPdfList.jsx';
 import { DEMOGRAPHIC_PDF_ITEMS_FALLBACK } from './demographicIndicatorsData.js';
 import './DemographicIndicators.css';
@@ -18,9 +19,10 @@ export default function DemographicIndicators() {
 
   const { data, loading } = useDrupalFetch(async (lang) => {
     const results = await fetchDemographicIndicators(lang);
-    return results.length ? results : DEMOGRAPHIC_PDF_ITEMS_FALLBACK;
+    if (results.length) return results;
+    return localizedStaticFallback(lang, DEMOGRAPHIC_PDF_ITEMS_FALLBACK) ?? [];
   });
-  const items = data ?? DEMOGRAPHIC_PDF_ITEMS_FALLBACK;
+  const items = data ?? localizedStaticFallback(language, DEMOGRAPHIC_PDF_ITEMS_FALLBACK) ?? [];
 
   return (
     <div className="demographic-indicators-page">

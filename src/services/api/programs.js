@@ -1,5 +1,6 @@
 import { stripHtml } from '@/lib/drupal.js';
 import { getNodes } from './drupalApi.js';
+import { isDefaultSiteLanguage } from './languageContent.js';
 import { resolveNodeImageUrl } from './jsonApiHelpers.js';
 
 const CONTENT_TYPE = 'programs';
@@ -88,45 +89,27 @@ function mergeProgramSection(fallbackSection = {}, partial = {}) {
 }
 
 async function fetchProgramNodes(language) {
-  const baseOptions = {
+  const response = await getNodes(CONTENT_TYPE, {
     include: INCLUDE,
     sort: 'created',
     limit: 100,
-  };
-
-  const extractNodes = (response) => ({
-    nodes: Array.isArray(response?.data) ? response.data : response?.data ? [response.data] : [],
-    included: response?.included || [],
-  });
-
-  if (language) {
-    try {
-      const localized = await getNodes(CONTENT_TYPE, {
-        ...baseOptions,
-        lang: language,
-        filters: { 'filter[langcode]': language },
-      });
-      const localizedResult = extractNodes(localized);
-      if (localizedResult.nodes.length) return localizedResult;
-    } catch {
-      // fall through to default language fetch
-    }
-  }
-
-  const response = await getNodes(CONTENT_TYPE, {
-    ...baseOptions,
     lang: language,
   });
 
-  return extractNodes(response);
+  return {
+    nodes: Array.isArray(response?.data) ? response.data : response?.data ? [response.data] : [],
+    included: response?.included || [],
+  };
 }
 
 export async function fetchProgramSections(language, fallbackSections = {}) {
+  const useStaticFallback = isDefaultSiteLanguage(language);
+
   try {
     const { nodes, included } = await fetchProgramNodes(language);
-    if (!nodes.length) return fallbackSections;
+    if (!nodes.length) return useStaticFallback ? fallbackSections : {};
 
-    const nextSections = { ...fallbackSections };
+    const nextSections = useStaticFallback ? { ...fallbackSections } : {};
 
     nodes.forEach((node) => {
       const mapped = mapProgramNode(node, included);
@@ -134,13 +117,13 @@ export async function fetchProgramSections(language, fallbackSections = {}) {
 
       const { sectionId, partial } = mapped;
       nextSections[sectionId] = mergeProgramSection(
-        nextSections[sectionId] || fallbackSections[sectionId] || {},
+        nextSections[sectionId] || (useStaticFallback ? fallbackSections[sectionId] : {}) || {},
         partial,
       );
     });
 
     return nextSections;
   } catch {
-    return fallbackSections;
+    return useStaticFallback ? fallbackSections : {};
   }
 }
