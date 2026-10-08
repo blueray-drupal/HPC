@@ -1,5 +1,6 @@
 import { stripHtml } from '@/lib/drupal.js';
 import { getNode, getNodes } from './drupalApi.js';
+import { localizedStaticFallback } from './languageContent.js';
 import { resolveTaxonomyTermsWithIcons } from './jsonApiHelpers.js';
 
 const CONTENT_TYPE = 'careers';
@@ -150,16 +151,19 @@ async function fetchCareerNodes(language) {
 }
 
 export async function fetchCareers(language, fallbackItems = []) {
+  const fallback = localizedStaticFallback(language, fallbackItems) ?? [];
+
   try {
     const items = await fetchCareerNodes(language);
-    return items.length ? items : fallbackItems;
+    return items.length ? items : fallback;
   } catch {
-    return fallbackItems;
+    return fallback;
   }
 }
 
 export async function fetchCareerItem(language, id, fallbackItem = null) {
-  if (!id) return fallbackItem;
+  const fallback = localizedStaticFallback(language, fallbackItem);
+  if (!id) return fallback;
 
   try {
     const response = await getNode(CONTENT_TYPE, id, {
@@ -167,11 +171,11 @@ export async function fetchCareerItem(language, id, fallbackItem = null) {
       include: INCLUDE,
     });
     const node = response?.data;
-    if (!node) return fallbackItem;
+    if (!node) return fallback;
 
     const item = mapCareerNode(node, response?.included || []);
-    return item || fallbackItem;
+    return item || fallback;
   } catch {
-    return fallbackItem;
+    return fallback;
   }
 }

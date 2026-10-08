@@ -1,5 +1,6 @@
 import { stripHtml } from '@/lib/drupal.js';
 import { getNodes } from './drupalApi.js';
+import { localizedStaticFallback } from './languageContent.js';
 
 const CONTENT_TYPE = 'faq';
 
@@ -56,10 +57,12 @@ async function fetchFaqNodes(language) {
 }
 
 export async function fetchFaqItems(language, fallbackItems = []) {
+  const fallback = localizedStaticFallback(language, fallbackItems) ?? [];
+
   try {
     const items = await fetchFaqNodes(language);
-    return items.length ? items : fallbackItems;
+    return items.length ? items : fallback;
   } catch {
-    return fallbackItems;
+    return fallback;
   }
 }

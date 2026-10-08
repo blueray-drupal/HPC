@@ -1,4 +1,5 @@
 import { getNodes } from './drupalApi.js';
+import { localizedStaticFallback } from './languageContent.js';
 import {
   normalizeDrupalLink,
   resolveNodeImageUrl,
@@ -76,9 +77,12 @@ async function fetchUsefulLinkNodes(language) {
 }
 
 export async function fetchUsefulLinks(language, fallbackItems = []) {
+  const fallback = localizedStaticFallback(language, fallbackItems) ?? [];
+
   try {
-    return await fetchUsefulLinkNodes(language);
+    const items = await fetchUsefulLinkNodes(language);
+    return items.length ? items : fallback;
   } catch {
-    return fallbackItems;
+    return fallback;
   }
 }

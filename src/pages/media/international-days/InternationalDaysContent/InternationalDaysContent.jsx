@@ -1,9 +1,11 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
 import { useLanguage } from '@/hooks/useLanguage.js';
 import { getMediaSectionTitle } from '@/i18n/navigation.js';
+import { useTranslation } from '@/i18n/useTranslation.js';
+import { fetchInternationalDaysList } from '@/services/api/internationalDays.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 import { MediaSectionHeaderIcon } from '../../MediaTabs/MediaTabIcons.jsx';
-import NewsFilters from '../../news/NewsFilters/NewsFilters.jsx';
 import { INTERNATIONAL_DAYS_INTRO } from '../internationalDaysData.js';
 import './InternationalDaysContent.css';
 
@@ -17,14 +19,16 @@ function ReadMoreArrow() {
 
 export default function InternationalDaysContent() {
   const { language } = useLanguage();
+  const { t } = useTranslation();
   const sectionTitle = getMediaSectionTitle(language, 'international-days');
-  const [category, setCategory] = useState('');
-  const [year, setYear] = useState('');
-  const [query, setQuery] = useState('');
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
+  const { data: drupalIntro } = useDrupalFetch((lang) =>
+    fetchInternationalDaysList(lang).catch(() => null),
+  );
+  const staticIntro = localizedStaticFallback(language, INTERNATIONAL_DAYS_INTRO);
+  const paragraphs = drupalIntro?.description
+    ? [drupalIntro.description]
+    : staticIntro?.paragraphs ?? [];
+  const readMoreLink = staticIntro?.readMoreLink ?? '/media/international-days/list';
 
   return (
     <section className="international-days-content" aria-labelledby="international-days-title">
@@ -39,28 +43,20 @@ export default function InternationalDaysContent() {
           <span className="international-days-content__header-line" aria-hidden="true" />
         </header>
 
-        <NewsFilters
-          category={category}
-          year={year}
-          query={query}
-          onCategoryChange={setCategory}
-          onYearChange={setYear}
-          onQueryChange={setQuery}
-          onSubmit={handleSubmit}
-        />
-
         <div className="international-days-content__panel">
-          <div className="international-days-content__text">
-            {INTERNATIONAL_DAYS_INTRO.paragraphs.map((paragraph) => (
-              <p key={paragraph} className="international-days-content__paragraph">
-                {paragraph}
-              </p>
-            ))}
-          </div>
+          {paragraphs.length ? (
+            <div className="international-days-content__text">
+              {paragraphs.map((paragraph) => (
+                <p key={paragraph} className="international-days-content__paragraph">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          ) : null}
 
-          <Link to={INTERNATIONAL_DAYS_INTRO.readMoreLink} className="international-days-content__read-more">
+          <Link to={readMoreLink} className="international-days-content__read-more">
             <ReadMoreArrow />
-            <span>{INTERNATIONAL_DAYS_INTRO.readMoreLabel}</span>
+            <span>{t('common.readMore')}</span>
           </Link>
         </div>
       </div>

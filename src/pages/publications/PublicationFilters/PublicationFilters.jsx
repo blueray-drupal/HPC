@@ -1,12 +1,11 @@
 import { Search } from 'lucide-react';
 import { useTranslation } from '@/i18n/useTranslation.js';
 import '../../../components/PageFilters/PageFilters.css';
-import { PUBLICATION_YEARS } from '../publicationsListData.js';
-
 export default function PublicationFilters({
   classification,
   year,
   query,
+  yearOptions = [],
   onClassificationChange,
   onYearChange,
   onQueryChange,
@@ -41,7 +40,7 @@ export default function PublicationFilters({
           onChange={(event) => onYearChange(event.target.value)}
         >
           <option value="">{t('common.filterAll')}</option>
-          {PUBLICATION_YEARS.map((item) => (
+          {yearOptions.map((item) => (
             <option key={item} value={item}>
               {item}
             </option>

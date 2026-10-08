@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
 import { fetchAboutUsSections } from '@/services/api/aboutUs.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 import { useLanguage } from '@/hooks/useLanguage.js';
 import { getAboutTabs } from '@/i18n/navigation.js';
 import { getSimpleInnerHeroMeta } from '@/i18n/innerHero.js';
@@ -19,8 +20,10 @@ export default function AboutUs() {
   const { language } = useLanguage();
   const hero = useMemo(() => getSimpleInnerHeroMeta(language, 'about.pageTitle'), [language]);
   const aboutTabs = getAboutTabs(language);
-  const { data, loading } = useDrupalFetch((lang) => fetchAboutUsSections(lang, ABOUT_SECTIONS));
-  const sections = data ?? ABOUT_SECTIONS;
+  const { data, loading } = useDrupalFetch((lang) =>
+    fetchAboutUsSections(lang, localizedStaticFallback(lang, ABOUT_SECTIONS) ?? {}),
+  );
+  const sections = data ?? localizedStaticFallback(language, ABOUT_SECTIONS) ?? {};
   const isValidSection = aboutTabs.some((tab) => tab.id === section);
 
   if (!isValidSection) {

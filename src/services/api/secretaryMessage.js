@@ -51,19 +51,10 @@ export async function fetchSecretaryMessage(language) {
     return mapSecretaryMessageNode(nodes[0], response?.included || []);
   };
 
-  if (language) {
-    const localized = await getNodes(CONTENT_TYPE, {
-      ...baseOptions,
-      lang: language,
-      filters: { 'filter[langcode]': language },
-    });
-    const localizedMessage = pickFirst(localized);
-    if (localizedMessage) return localizedMessage;
-  }
-
   const response = await getNodes(CONTENT_TYPE, {
     ...baseOptions,
     lang: language,
+    filters: language ? { 'filter[langcode]': language } : undefined,
   });
 
   return pickFirst(response);

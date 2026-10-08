@@ -4,6 +4,7 @@ import AboutShareBar from '../../about-us/AboutShareBar/AboutShareBar.jsx';
 import InnerHero from '../../about-us/InnerHero/InnerHero.jsx';
 import { useLanguage } from '@/hooks/useLanguage.js';
 import { fetchMediaBriefingById } from '@/services/api/mediaBriefings.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 import { buildHeroBreadcrumbs, INNER_HERO_BACKGROUND } from '@/i18n/innerHero.js';
 import { getBriefingBody, getBriefingById } from './briefingsData.js';
 import '../news/NewsDetail/NewsDetail.css';
@@ -30,13 +31,15 @@ export default function MediaBriefingDetail() {
 
     setLoading(true);
 
+    const staticBriefing = localizedStaticFallback(language, getBriefingById(id));
+
     fetchMediaBriefingById(id, language)
       .then((item) => {
         if (cancelled) return;
-        setBriefing(item || getBriefingById(id));
+        setBriefing(item || staticBriefing);
       })
       .catch(() => {
-        if (!cancelled) setBriefing(getBriefingById(id));
+        if (!cancelled) setBriefing(staticBriefing);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);

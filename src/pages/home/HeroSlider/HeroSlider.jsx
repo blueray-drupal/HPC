@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
+import { useLanguage } from '@/hooks/useLanguage.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 import { useTranslation } from '@/i18n/useTranslation.js';
 import { fetchSliders } from '@/services/api/slider.js';
 import { HERO_SLIDES } from './heroSlides.js';
@@ -32,12 +34,12 @@ function SlideCta({ slide }) {
   );
 }
 
-function mapSlides(items, readMoreLabel) {
-  if (!items?.length) return HERO_SLIDES;
+function mapSlides(items, readMoreLabel, fallbackSlides = HERO_SLIDES) {
+  if (!items?.length) return [];
 
   return items.map((slide, index) => ({
     id: slide.id || index + 1,
-    image: slide.image || HERO_SLIDES[index % HERO_SLIDES.length]?.image || HERO_SLIDES[0].image,
+    image: slide.image || fallbackSlides[index % fallbackSlides.length]?.image || fallbackSlides[0]?.image,
     badge: slide.badge || '',
     title: slide.title,
     description: slide.description,
@@ -49,12 +51,16 @@ function mapSlides(items, readMoreLabel) {
 
 export default function HeroSlider() {
   const { t } = useTranslation();
+  const { language } = useLanguage();
   const { data, loading } = useDrupalFetch((lang) => fetchSliders(lang));
   const slides = useMemo(() => {
-    if (data?.length) return mapSlides(data, t('common.readMore'));
-    if (!loading) return HERO_SLIDES;
+    const staticSlides = localizedStaticFallback(language, HERO_SLIDES) ?? [];
+    if (data?.length) return mapSlides(data, t('common.readMore'), staticSlides.length ? staticSlides : HERO_SLIDES);
+    if (!loading && staticSlides.length) {
+      return mapSlides(staticSlides, t('common.readMore'), staticSlides);
+    }
     return [];
-  }, [data, loading, t]);
+  }, [data, loading, t, language]);
   const [activeIndex, setActiveIndex] = useState(0);
   const totalSlides = slides.length;
 

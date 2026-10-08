@@ -1,12 +1,14 @@
 .video-gallery-grid {
   display: grid;
   grid-template-columns: repeat(4, 293.75px);
+  align-items: stretch;
   gap: 1.375rem;
   justify-content: space-between;
   width: 100%;
 }
 
 .video-gallery-grid__card {
+  display: flex;
   width: 293.75px;
   overflow: hidden;
   border: 1px solid #bec8cf;
@@ -18,8 +20,9 @@
 .video-gallery-grid__link {
   display: flex;
   width: 100%;
+  height: 100%;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   padding: 0;
   border: none;
   background: none;
@@ -42,6 +45,32 @@
   object-fit: cover;
 }
 
+.video-gallery-grid__placeholder {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+  background: linear-gradient(145deg, #e8e2d8 0%, #d4cdc4 100%);
+}
+
+.video-gallery-grid__placeholder-title {
+  margin: 0;
+  max-width: 100%;
+  color: #6b4a3d;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .video-gallery-grid__play {
   position: absolute;
   inset: 0;
@@ -54,9 +83,11 @@
 .video-gallery-grid__body {
   display: flex;
   width: 100%;
+  flex: 0 0 128px;
   align-items: center;
   justify-content: center;
-  min-height: 72px;
+  min-height: 128px;
+  height: 128px;
   padding: 1rem;
   box-sizing: border-box;
   background: #f3f4f6;
@@ -64,6 +95,7 @@
 
 .video-gallery-grid__title {
   margin: 0;
+  max-width: 100%;
   color: #6b4a3d;
   font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
   font-size: 18px;
@@ -71,6 +103,10 @@
   font-weight: 700;
   line-height: 32px;
   text-align: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
 .video-gallery-grid__empty {
@@ -99,5 +135,17 @@
 
   .video-gallery-grid__card {
     width: 100%;
+  }
+
+  .video-gallery-grid__body {
+    flex: 0 0 112px;
+    min-height: 112px;
+    height: 112px;
+  }
+
+  .video-gallery-grid__title {
+    font-size: 1rem;
+    line-height: 1.5;
+    -webkit-line-clamp: 3;
   }
 }

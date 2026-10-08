@@ -4,6 +4,7 @@ import AboutShareBar from '../../../about-us/AboutShareBar/AboutShareBar.jsx';
 import InnerHero from '../../../about-us/InnerHero/InnerHero.jsx';
 import { useLanguage } from '@/hooks/useLanguage.js';
 import { fetchNewsById } from '@/services/api/news.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 import { buildHeroBreadcrumbs, INNER_HERO_BACKGROUND } from '@/i18n/innerHero.js';
 import { translate, useTranslation } from '@/i18n/useTranslation.js';
 import { getNewsBody, getNewsById } from '../newsListData.js';
@@ -32,13 +33,15 @@ export default function NewsDetail() {
 
     setLoading(true);
 
+    const staticArticle = localizedStaticFallback(language, getNewsById(id));
+
     fetchNewsById(id, language)
       .then((item) => {
         if (cancelled) return;
-        setArticle(item || getNewsById(id));
+        setArticle(item || staticArticle);
       })
       .catch(() => {
-        if (!cancelled) setArticle(getNewsById(id));
+        if (!cancelled) setArticle(staticArticle);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);

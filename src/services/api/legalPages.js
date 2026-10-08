@@ -1,4 +1,5 @@
 import { getNodes } from './drupalApi.js';
+import { isDefaultSiteLanguage } from './languageContent.js';
 
 const CONTENT_TYPE = 'legal_pages';
 
@@ -75,19 +76,21 @@ async function fetchLegalPageNodes(language) {
 }
 
 export async function fetchLegalPageContent(language, pageKey, fallback = {}) {
+  const staticFallback = isDefaultSiteLanguage(language) ? fallback : {};
+
   try {
     const pages = await fetchLegalPageNodes(language);
     const match = pages.find((page) => page.pageKey === pageKey);
 
     if (match?.bodyHtml) {
       return {
-        ...fallback,
+        ...staticFallback,
         bodyHtml: match.bodyHtml,
       };
     }
   } catch {
-    // use fallback content
+    // use language-appropriate fallback only
   }
 
-  return fallback;
+  return staticFallback;
 }

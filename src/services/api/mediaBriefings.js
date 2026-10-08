@@ -20,8 +20,25 @@ const ARABIC_MONTHS = [
   'كانون الأول',
 ];
 
-function formatBriefingDate(isoDate, { withYear = false } = {}) {
+function formatBriefingDate(isoDate, language = 'ar', { withYear = false } = {}) {
   if (!isoDate) return '';
+
+  const date = new Date(isoDate);
+  if (!Number.isNaN(date.getTime())) {
+    if (language === 'en') {
+      const options = withYear
+        ? { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }
+        : { day: 'numeric', month: 'long', timeZone: 'UTC' };
+
+      return new Intl.DateTimeFormat('en-US', options).format(date);
+    }
+
+    const day = date.getUTCDate();
+    const monthLabel = ARABIC_MONTHS[date.getUTCMonth()] ?? '';
+    const year = date.getUTCFullYear();
+
+    return withYear ? `${day} ${monthLabel} ${year}` : `${day} ${monthLabel}`;
+  }
 
   const [year, month, day] = String(isoDate).split('-').map(Number);
   if (!year || !month || !day) return isoDate;
@@ -36,15 +53,15 @@ function getExcerpt(html, maxLength = 180) {
   return `${text.slice(0, maxLength).trim()}...`;
 }
 
-export function mapMediaBriefingNode(node, included = []) {
+export function mapMediaBriefingNode(node, included = [], language = 'ar') {
   const bodyHtml = node.attributes?.field_body?.processed || node.attributes?.field_body?.value || '';
   const fieldDate = node.attributes?.field_date || '';
 
   return {
     id: node.id,
     nid: node.attributes?.drupal_internal__nid,
-    date: formatBriefingDate(fieldDate),
-    displayDate: formatBriefingDate(fieldDate, { withYear: true }),
+    date: formatBriefingDate(fieldDate, language),
+    displayDate: formatBriefingDate(fieldDate, language, { withYear: true }),
     dateTime: fieldDate,
     title: node.attributes?.title || '',
     categoryLabel: 'أخبار المجلس',
@@ -66,7 +83,9 @@ async function fetchBriefingNodes(language) {
   const extractNodes = (response) => {
     const nodes = Array.isArray(response?.data) ? response.data : response?.data ? [response.data] : [];
     const included = response?.included || [];
-    return nodes.map((node) => mapMediaBriefingNode(node, included)).filter((item) => item.title);
+    return nodes
+      .map((node) => mapMediaBriefingNode(node, included, language))
+      .filter((item) => item.title);
   };
 
   if (language) {
@@ -101,7 +120,7 @@ export async function fetchMediaBriefingById(id, language) {
     });
 
     if (response?.data) {
-      return mapMediaBriefingNode(response.data, response.included || []);
+      return mapMediaBriefingNode(response.data, response.included || [], language);
     }
   } catch {
     // fall through to list lookup for legacy ids

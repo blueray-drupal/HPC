@@ -5,6 +5,7 @@ import { useLanguage } from '@/hooks/useLanguage.js';
 import { buildHeroBreadcrumbs, INNER_HERO_BACKGROUND } from '@/i18n/innerHero.js';
 import { translate, useTranslation } from '@/i18n/useTranslation.js';
 import { fetchInternationalDaysList } from '@/services/api/internationalDays.js';
+import { isDefaultSiteLanguage, localizedStaticFallback } from '@/services/api/languageContent.js';
 import AboutShareBar from '../../../about-us/AboutShareBar/AboutShareBar.jsx';
 import InnerHero from '../../../about-us/InnerHero/InnerHero.jsx';
 import InternationalDaysTable from '../InternationalDaysTable/InternationalDaysTable.jsx';
@@ -42,8 +43,9 @@ export default function InternationalDaysList() {
     [language],
   );
 
-  const description =
-    drupalContent?.description || INTERNATIONAL_DAYS_LIST_PAGE.description;
+  const staticPage = localizedStaticFallback(language, INTERNATIONAL_DAYS_LIST_PAGE);
+  const sectionTitle = staticPage?.sectionTitle ?? t('nav.mediaInternationalDays');
+  const description = drupalContent?.description || staticPage?.description || '';
 
   return (
     <div className="international-days-list-page">
@@ -56,17 +58,15 @@ export default function InternationalDaysList() {
       {!loading ? (
         <div className="international-days-list-page__content">
           <div className="international-days-list-page__intro">
-            <h2 className="international-days-list-page__section-title">
-              {INTERNATIONAL_DAYS_LIST_PAGE.sectionTitle}
-            </h2>
+            <h2 className="international-days-list-page__section-title">{sectionTitle}</h2>
             {drupalContent?.bodyHtml ? (
               <div
                 className="international-days-list-page__description international-days-list-page__description--html"
                 dangerouslySetInnerHTML={{ __html: drupalContent.bodyHtml }}
               />
-            ) : (
+            ) : description ? (
               <p className="international-days-list-page__description">{description}</p>
-            )}
+            ) : null}
           </div>
 
           {drupalContent?.items?.some((item) => item.image) ? (
@@ -77,16 +77,16 @@ export default function InternationalDaysList() {
                   <figure key={item.id} className="international-days-list-page__figure">
                     <img
                       src={item.image}
-                      alt={item.title || INTERNATIONAL_DAYS_LIST_PAGE.sectionTitle}
+                      alt={item.title || sectionTitle}
                       className="international-days-list-page__image"
                       loading="lazy"
                     />
                   </figure>
                 ))}
             </div>
-          ) : (
+          ) : isDefaultSiteLanguage(language) ? (
             <InternationalDaysTable />
-          )}
+          ) : null}
 
           <Link
             to={INTERNATIONAL_DAYS_SECTION_PATH}

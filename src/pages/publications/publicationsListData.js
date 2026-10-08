@@ -11,7 +11,24 @@ export const PUBLICATION_YEARS = [
   '2017',
   '2016',
   '2015',
+  '2014',
+  '2013',
+  '2012',
+  '2011',
+  '2010',
 ];
+
+export function getPublicationYearOptions(publications = []) {
+  const years = new Set();
+
+  for (const item of publications) {
+    if (item?.year != null) {
+      years.add(String(item.year));
+    }
+  }
+
+  return [...years].sort((a, b) => Number(b) - Number(a));
+}
 
 export const PUBLICATIONS_PER_PAGE = 12;
 

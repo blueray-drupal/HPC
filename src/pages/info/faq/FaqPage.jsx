@@ -4,6 +4,7 @@ import { useLanguage } from '@/hooks/useLanguage.js';
 import { getInfoPageHeroMeta } from '@/i18n/innerHero.js';
 
 import { fetchFaqItems } from '@/services/api/faq.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 
 import InfoPageLayout from '../InfoPageLayout.jsx';
 
@@ -17,9 +18,11 @@ export default function FaqPage() {
   const { language } = useLanguage();
   const hero = useMemo(() => getInfoPageHeroMeta(language, FAQ_PAGE), [language]);
 
-  const { data, loading } = useDrupalFetch((lang) => fetchFaqItems(lang, FAQ_PAGE.items));
+  const { data, loading } = useDrupalFetch((lang) =>
+    fetchFaqItems(lang, localizedStaticFallback(lang, FAQ_PAGE.items) ?? []),
+  );
 
-  const items = data ?? FAQ_PAGE.items;
+  const items = data ?? localizedStaticFallback(language, FAQ_PAGE.items) ?? [];
 
 
 

@@ -5,6 +5,7 @@ import { useLanguage } from '@/hooks/useLanguage.js';
 import { getInfoPageHeroMeta } from '@/i18n/innerHero.js';
 
 import { fetchUsefulLinks } from '@/services/api/usefulLinks.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 
 import PublicationsPagination from '../publications/PublicationsPagination/PublicationsPagination.jsx';
 
@@ -30,9 +31,11 @@ export default function UsefulLinks() {
   const { language } = useLanguage();
   const hero = useMemo(() => getInfoPageHeroMeta(language, USEFUL_LINKS_PAGE), [language]);
 
-  const { data, loading } = useDrupalFetch((lang) => fetchUsefulLinks(lang, USEFUL_LINKS_ITEMS));
+  const { data, loading } = useDrupalFetch((lang) =>
+    fetchUsefulLinks(lang, localizedStaticFallback(lang, USEFUL_LINKS_ITEMS) ?? []),
+  );
 
-  const items = data ?? USEFUL_LINKS_ITEMS;
+  const items = data ?? localizedStaticFallback(language, USEFUL_LINKS_ITEMS) ?? [];
 
   const [currentPage, setCurrentPage] = useState(1);
 

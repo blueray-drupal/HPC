@@ -16,6 +16,15 @@
   margin-inline: auto;
 }
 
+.publication-category-content__loading {
+  margin: 2rem 0 3rem;
+  color: #64748b;
+  font-family: Al-Jazeera-Arabic, system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.75;
+  text-align: center;
+}
+
 .publication-category-content__header {
   display: flex;
   flex-direction: column;

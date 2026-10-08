@@ -5,6 +5,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
 
 import { fetchCareerItem } from '@/services/api/careers.js';
+import { localizedStaticFallback } from '@/services/api/languageContent.js';
 import { useLanguage } from '@/hooks/useLanguage.js';
 import { buildHeroBreadcrumbs, INNER_HERO_BACKGROUND } from '@/i18n/innerHero.js';
 import { translate } from '@/i18n/useTranslation.js';
@@ -250,10 +251,13 @@ function DetailFact({ icon, label, value }) {
 export default function JobDetail() {
   const { id } = useParams();
   const { language } = useLanguage();
-  const fallbackJob = useMemo(() => getJobById(id), [id]);
+  const fallbackJob = useMemo(
+    () => localizedStaticFallback(language, getJobById(id)),
+    [id, language],
+  );
   const { data: drupalJob, loading } = useDrupalFetch(
     (lang) => fetchCareerItem(lang, id, fallbackJob),
-    [id],
+    [id, fallbackJob],
   );
 
   const resolvedJob = drupalJob ?? fallbackJob;

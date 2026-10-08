@@ -1,5 +1,6 @@
 import { stripHtml } from '@/lib/drupal.js';
 import { getNodes } from './drupalApi.js';
+import { isDefaultSiteLanguage } from './languageContent.js';
 import {
   resolveNodeFileField,
   resolveNodeImageUrl,
@@ -596,61 +597,44 @@ function mergeAboutSection(sectionId, fallbackSection = {}, partial = {}, fallba
 }
 
 async function fetchAboutUsNodes(language) {
-  const baseOptions = {
+  const response = await getNodes(CONTENT_TYPE, {
     include: INCLUDE,
     sort: 'created',
     limit: 100,
-  };
-
-  const extractNodes = (response) => ({
-    nodes: Array.isArray(response?.data) ? response.data : response?.data ? [response.data] : [],
-    included: response?.included || [],
-  });
-
-  if (language) {
-    try {
-      const localized = await getNodes(CONTENT_TYPE, {
-        ...baseOptions,
-        lang: language,
-        filters: { 'filter[langcode]': language },
-      });
-      const localizedResult = extractNodes(localized);
-      if (localizedResult.nodes.length) return localizedResult;
-    } catch {
-      // fall through to default language fetch
-    }
-  }
-
-  const response = await getNodes(CONTENT_TYPE, {
-    ...baseOptions,
     lang: language,
   });
 
-  return extractNodes(response);
+  return {
+    nodes: Array.isArray(response?.data) ? response.data : response?.data ? [response.data] : [],
+    included: response?.included || [],
+  };
 }
 
 export async function fetchAboutUsSections(language, fallbackSections = {}) {
+  const useStaticFallback = isDefaultSiteLanguage(language);
+
   try {
     const { nodes, included } = await fetchAboutUsNodes(language);
-    if (!nodes.length) return fallbackSections;
+    if (!nodes.length) return useStaticFallback ? fallbackSections : {};
 
-    const nextSections = { ...fallbackSections };
+    const nextSections = useStaticFallback ? { ...fallbackSections } : {};
 
     nodes.forEach((node) => {
       const mapped = mapNodeToPartialSection(node, included);
       if (!mapped) return;
 
       const { sectionId, partial } = mapped;
+      const sectionFallback = useStaticFallback ? fallbackSections[sectionId] || {} : {};
       nextSections[sectionId] = mergeAboutSection(
         sectionId,
-        nextSections[sectionId] || fallbackSections[sectionId] || {},
+        nextSections[sectionId] || sectionFallback,
         partial,
-        fallbackSections,
+        useStaticFallback ? fallbackSections : {},
       );
     });
 
     return nextSections;
   } catch {
-    return fallbackSections;
+    return useStaticFallback ? fallbackSections : {};
   }
 }

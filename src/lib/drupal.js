@@ -24,6 +24,9 @@ export function resolveDrupalFileUrl(relativeOrAbsoluteUrl) {
   }
 
   if (useDrupalApiProxy()) {
+    if (url.startsWith('/api/')) {
+      return url;
+    }
     return toProxiedDrupalPath(url);
   }
 
