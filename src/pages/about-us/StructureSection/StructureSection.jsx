@@ -6,14 +6,9 @@ function StructureCard({ member }) {
     <article className="structure-card">
       <div className="structure-card__flipper">
         <div className="structure-card__face structure-card__face--front">
-          <div className="structure-card__media">
-            {member.image ? (
-              <img src={member.image} alt={member.name} className="structure-card__image" loading="lazy" />
-            ) : (
-              <div className="structure-card__placeholder" aria-hidden="true" />
-            )}
+          <div className="structure-card__front-panel">
+            <p className="structure-card__name structure-card__name--front">{member.name}</p>
           </div>
-          <p className="structure-card__name">{member.name}</p>
         </div>
 
         <div className="structure-card__face structure-card__face--back">
