@@ -7,7 +7,7 @@ function StructureCard({ member }) {
       <div className="structure-card__flipper">
         <div className="structure-card__face structure-card__face--front">
           <div className="structure-card__front-panel">
-            <p className="structure-card__name structure-card__name--front">{member.name}</p>
+            <p className="structure-card__name">{member.name}</p>
           </div>
         </div>
 

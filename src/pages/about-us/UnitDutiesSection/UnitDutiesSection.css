@@ -112,7 +112,7 @@
 }
 
 .unit-duties__paragraph,
-.unit-duties__html p {
+.unit-duties__html :is(p, li) {
   margin: 0;
   color: #4a5565;
   text-align: start;
@@ -122,6 +122,11 @@
 
 .unit-duties__html p + p {
   margin-top: 1.25rem;
+}
+
+.unit-duties__html ul li + li,
+.unit-duties__html ol li + li {
+  margin-top: 0;
 }
 
 .unit-duties__share {
