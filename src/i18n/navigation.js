@@ -109,6 +109,12 @@ export function getMediaTabs(lang) {
 export function getAboutTabs(lang) {
   return [
     { id: 'establishment', to: '/about/establishment', label: translate(lang, 'about.tabEstablishment'), icon: 'history' },
+    {
+      id: 'secretary-message',
+      to: '/about/secretary-message',
+      label: translate(lang, 'about.tabSecretaryMessage'),
+      icon: 'message',
+    },
     { id: 'vision', to: '/about/vision', label: translate(lang, 'about.tabVision'), icon: 'eye' },
     { id: 'strategy', to: '/about/strategy', label: translate(lang, 'about.tabStrategy'), icon: 'strategy' },
     { id: 'structure', to: '/about/structure', label: translate(lang, 'about.tabStructure'), icon: 'structure' },

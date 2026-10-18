@@ -26,12 +26,15 @@ export function mapSecretaryMessageNode(node, included = []) {
   const { attributes } = node;
   const { line1, line2 } = splitTitle(attributes?.title || '');
 
+  const bodyRaw = attributes?.field_body?.processed || attributes?.field_body?.value || '';
+
   return {
     id: node.id,
     eyebrow: attributes?.field_label || '',
     titleLine1: line1,
     titleLine2: line2,
-    body: stripHtml(attributes?.field_body?.processed || attributes?.field_body?.value || ''),
+    body: stripHtml(bodyRaw),
+    bodyHtml: bodyRaw,
     name: attributes?.field_position || '',
     image: resolveNodeImageUrl(node, 'field_image', included),
     imageAlt: attributes?.title || 'كلمة الأمين العام للمجلس الأعلى للسكان',

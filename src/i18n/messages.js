@@ -116,7 +116,7 @@ export const MESSAGES = {
         briefingTab: 'الإحاطة',
       },
       secretaryMessage: {
-        cta: 'اقرأ المزيد عن المجلس',
+        cta: 'اقرأ كلمة الأمين العام',
       },
       knowledgePlatforms: {
         title: 'منصات معرفية',
@@ -153,9 +153,10 @@ export const MESSAGES = {
       pageTitle: 'عن المجلس',
       tabsAria: 'أقسام عن المجلس',
       tabEstablishment: 'النشأة والتأسيس',
+      tabSecretaryMessage: 'كلمة الأمين العام',
       tabVision: 'الرؤية، الرسالة، القيم',
       tabStrategy: 'الخطة والأهداف الإستراتيجية للمجلس',
-      tabStructure: 'الهيكل التنظيمي للأمانة العامة للمجلس الأعلى للسكان',
+      tabStructure: 'الهيكل التنظيمي للأمانة العامة   ',
       tabCouncilDuties: 'مهام المجلس',
       tabUnitDuties: 'مهام الوحدات',
       subGoalsLabel: 'الأهداف الفرعية:',
@@ -375,7 +376,7 @@ export const MESSAGES = {
         briefingTab: 'Briefing',
       },
       secretaryMessage: {
-        cta: 'Read more about the Council',
+        cta: "Read the Secretary-General's message",
       },
       knowledgePlatforms: {
         title: 'Knowledge platforms',
@@ -412,6 +413,7 @@ export const MESSAGES = {
       pageTitle: 'About the Council',
       tabsAria: 'About the Council sections',
       tabEstablishment: 'Establishment',
+      tabSecretaryMessage: "Secretary-General's Message",
       tabVision: 'Vision, Mission & Values',
       tabStrategy: 'Strategic Plan & Objectives',
       tabStructure: 'Secretariat Organizational Structure',

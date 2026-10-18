@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useDrupalFetch } from '@/hooks/useDrupalFetch.js';
 import { fetchAboutUsSections } from '@/services/api/aboutUs.js';
+import { fetchSecretaryMessage } from '@/services/api/secretaryMessage.js';
+import { mergeSecretaryAboutSection } from '@/services/api/secretaryMessageContent.js';
 import { localizedStaticFallback } from '@/services/api/languageContent.js';
 import { useLanguage } from '@/hooks/useLanguage.js';
 import { getAboutTabs } from '@/i18n/navigation.js';
@@ -20,9 +22,14 @@ export default function AboutUs() {
   const { language } = useLanguage();
   const hero = useMemo(() => getSimpleInnerHeroMeta(language, 'about.pageTitle'), [language]);
   const aboutTabs = getAboutTabs(language);
-  const { data, loading } = useDrupalFetch((lang) =>
-    fetchAboutUsSections(lang, localizedStaticFallback(lang, ABOUT_SECTIONS) ?? {}),
-  );
+  const { data, loading } = useDrupalFetch(async (lang) => {
+    const fallback = localizedStaticFallback(lang, ABOUT_SECTIONS) ?? {};
+    const [sections, secretary] = await Promise.all([
+      fetchAboutUsSections(lang, fallback),
+      fetchSecretaryMessage(lang).catch(() => null),
+    ]);
+    return mergeSecretaryAboutSection(sections, secretary, lang);
+  });
   const sections = data ?? localizedStaticFallback(language, ABOUT_SECTIONS) ?? {};
   const isValidSection = aboutTabs.some((tab) => tab.id === section);
 

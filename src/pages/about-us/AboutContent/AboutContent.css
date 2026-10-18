@@ -118,6 +118,15 @@
   margin-bottom: 0;
 }
 
+.about-content__signature {
+  margin: 1.5rem 0 0;
+  color: var(--hpc-figma-site-deep-cerulean, #008aa9);
+  text-align: start;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
 .about-content__media {
   display: flex;
   align-items: center;
