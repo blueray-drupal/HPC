@@ -255,24 +255,64 @@ function mapStrategySection(node, included) {
   return section;
 }
 
+function parseStructureLevelWeight(attributes = {}) {
+  const candidates = [
+    attributes.field_weight,
+    attributes.field_level,
+    attributes.field_hierarchy_level,
+    attributes.field_org_level,
+    attributes.field_structure_level,
+  ];
+
+  for (const value of candidates) {
+    if (value === null || value === undefined || value === '') continue;
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) return parsed;
+  }
+
+  return null;
+}
+
+function stripStructureMemberMeta(member) {
+  const { sortIndex, weight, nodeCreated, levelWeight, ...cleanMember } = member;
+  return cleanMember;
+}
+
+function sortStructureMembers(members) {
+  return [...members].sort((a, b) => {
+    const wa = a.levelWeight ?? parseStructureLevelWeight({ field_weight: a.weight });
+    const wb = b.levelWeight ?? parseStructureLevelWeight({ field_weight: b.weight });
+
+    if (wa != null && wb != null && wa !== wb) return wa - wb;
+    if (wa != null && wb == null) return -1;
+    if (wa == null && wb != null) return 1;
+    if (a.sortIndex !== b.sortIndex) return a.sortIndex - b.sortIndex;
+    return String(a.nodeCreated).localeCompare(String(b.nodeCreated));
+  });
+}
+
 function toStructureMember(paragraph, included, node, index) {
+  const levelWeight = parseStructureLevelWeight(paragraph.attributes);
+
   return {
     id: paragraph.id,
     name: paragraph.attributes?.field_title || '',
     position: paragraph.attributes?.field_position || '',
     email: paragraph.attributes?.field_email || '',
     image: resolveParagraphImage(paragraph, included),
-    weight: paragraph.attributes?.field_weight,
+    weight: levelWeight,
+    levelWeight,
     sortIndex: index,
     nodeCreated: node.attributes?.created || '',
   };
 }
 
 function buildOrgChartFromMembers(members) {
-  const hasLevelWeights = members.some((member) => Number.isFinite(Number(member.weight)));
+  const sortedMembers = sortStructureMembers(members);
+  const hasLevelWeights = sortedMembers.some((member) => member.levelWeight != null);
 
   if (!hasLevelWeights) {
-    const cleaned = members.map(({ sortIndex, weight, nodeCreated, ...member }) => member);
+    const cleaned = sortedMembers.map(stripStructureMemberMeta);
 
     return {
       levels: cleaned.length === 1 ? [[cleaned[0]]] : [[cleaned[0]], cleaned.slice(1)],
@@ -281,33 +321,49 @@ function buildOrgChartFromMembers(members) {
   }
 
   const levelsMap = new Map();
+  const unassigned = [];
 
-  members.forEach((member) => {
-    const level = Number.isFinite(Number(member.weight)) ? Number(member.weight) : 999;
-
-    if (!levelsMap.has(level)) {
-      levelsMap.set(level, []);
+  sortedMembers.forEach((member) => {
+    if (member.levelWeight == null) {
+      unassigned.push(member);
+      return;
     }
 
-    levelsMap.get(level).push(member);
+    if (!levelsMap.has(member.levelWeight)) {
+      levelsMap.set(member.levelWeight, []);
+    }
+
+    levelsMap.get(member.levelWeight).push(member);
   });
 
-  const levels = Array.from(levelsMap.entries())
-    .sort(([levelA], [levelB]) => levelA - levelB)
-    .map(([, levelMembers]) =>
-      levelMembers
-        .sort((a, b) => {
-          if (a.sortIndex !== b.sortIndex) return a.sortIndex - b.sortIndex;
-          return String(a.nodeCreated).localeCompare(String(b.nodeCreated));
-        })
-        .map(({ sortIndex, weight, nodeCreated, ...member }) => member),
-    );
+  const weightKeys = Array.from(levelsMap.keys()).sort((a, b) => a - b);
+  const levels = weightKeys.map((weight) => ({
+    weight,
+    members: levelsMap
+      .get(weight)
+      .map(stripStructureMemberMeta),
+  }));
+
+  if (unassigned.length) {
+    const fallbackWeight = weightKeys.length ? weightKeys[weightKeys.length - 1] + 1 : 999;
+    levels.push({
+      weight: fallbackWeight,
+      members: unassigned.map(stripStructureMemberMeta),
+    });
+  }
 
   return { levels, drupalSourced: true };
 }
 
 function mapStructureSection(node, included) {
-  const members = resolveParagraphs(node, 'field_organizational_structure', included)
+  const paragraphs = resolveParagraphs(node, 'field_organizational_structure', included).slice().sort((a, b) => {
+    const wa = parseStructureLevelWeight(a.attributes);
+    const wb = parseStructureLevelWeight(b.attributes);
+    if (wa != null && wb != null && wa !== wb) return wa - wb;
+    return 0;
+  });
+
+  const members = paragraphs
     .map((paragraph, index) => toStructureMember(paragraph, included, node, index))
     .filter((member) => member.name);
 
@@ -325,7 +381,7 @@ function mergeStructureSection(baseSection = {}, partial = {}) {
     membersById.set(member.id, member);
   });
 
-  const members = Array.from(membersById.values());
+  const members = sortStructureMembers(Array.from(membersById.values()));
   if (!members.length) return baseSection;
 
   return {

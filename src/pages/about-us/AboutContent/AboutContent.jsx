@@ -11,6 +11,7 @@ import './AboutContent.css';
 
 const SECTION_TITLE_KEYS = {
   establishment: 'about.tabEstablishment',
+  'secretary-message': 'about.tabSecretaryMessage',
   vision: 'about.tabVision',
   strategy: 'about.tabStrategy',
   structure: 'about.tabStructure',
@@ -24,7 +25,7 @@ function EstablishmentSection({ section }) {
       <div className="about-content__text">
         {section.bodyHtml ? (
           <div
-            className="about-content__html"
+            className="about-content__html hpc-paragraph"
             dangerouslySetInnerHTML={{ __html: section.bodyHtml }}
           />
         ) : (
@@ -34,6 +35,9 @@ function EstablishmentSection({ section }) {
             </p>
           ))
         )}
+        {section.secretaryName ? (
+          <p className="about-content__signature">{section.secretaryName}</p>
+        ) : null}
       </div>
 
       <div className="about-content__media">
@@ -73,6 +77,15 @@ export default function AboutContent({ section, sectionId }) {
   const titleKey = sectionId ? SECTION_TITLE_KEYS[sectionId] : null;
   const sectionTitle = titleKey ? t(titleKey) : section.title;
 
+  const hasTextMediaLayout =
+    section.image !== undefined &&
+    (section.bodyHtml || (section.paragraphs && section.paragraphs.length > 0)) &&
+    !section.cards &&
+    !section.goals &&
+    !section.orgChart &&
+    !section.councilDuties &&
+    !section.unitDuties;
+
   return (
     <>
       <section className="about-content" aria-labelledby="about-section-title">
@@ -87,9 +100,7 @@ export default function AboutContent({ section, sectionId }) {
             <span className="about-content__header-line" aria-hidden="true" />
           </header>
 
-          {section.paragraphs && section.image !== undefined ? (
-            <EstablishmentSection section={section} />
-          ) : null}
+          {hasTextMediaLayout ? <EstablishmentSection section={section} /> : null}
 
           {section.cards ? <VisionSection cards={section.cards} /> : null}
 

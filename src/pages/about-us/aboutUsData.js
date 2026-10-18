@@ -1,3 +1,5 @@
+import { SECRETARY_MESSAGE } from '../home/SecretaryMessage/secretaryMessageData.js';
+
 export const ABOUT_PAGE = {
   title: 'عن المجلس',
   heroImage: '/inner-hero-image.png',
@@ -13,6 +15,12 @@ export const ABOUT_TABS = [
     to: '/about/establishment',
     label: 'النشأة والتأسيس',
     icon: 'history',
+  },
+  {
+    id: 'secretary-message',
+    to: '/about/secretary-message',
+    label: 'كلمة الأمين العام',
+    icon: 'message',
   },
   {
     id: 'vision',
@@ -91,6 +99,15 @@ export const ABOUT_SECTIONS = {
         'عضين من القطاع الخاص',
       ],
     },
+  },
+  'secretary-message': {
+    title: 'كلمة الأمين العام',
+    icon: 'message',
+    image: SECRETARY_MESSAGE.image,
+    imageAlt: SECRETARY_MESSAGE.imageAlt,
+    paragraphs: [SECRETARY_MESSAGE.body],
+    secretaryName: SECRETARY_MESSAGE.name,
+    showShareBar: true,
   },
   vision: {
     title: 'الرؤية، الرسالة، القيم',

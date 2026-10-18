@@ -4,5 +4,71 @@
   overflow-x: clip;
   background: #fff;
   --about-content-max: 1242px;
-  --about-inline-space: max(1.25rem, calc((100vw - var(--about-content-max)) / 2));
+  --about-inline-space: max(0.75rem, calc((100vw - var(--about-content-max)) / 2));
+}
+
+/* تبويبات عن المجلس: تظهر كلها بدون سكرول */
+.about-us-page .about-tabs__tabs-row {
+  overflow: visible;
+}
+
+.about-us-page .about-tabs__inner {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 0.25rem;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: 0;
+}
+
+.about-us-page .about-tabs__tab {
+  flex: 1 1 0;
+  min-width: 0;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.35rem;
+  white-space: normal;
+}
+
+.about-us-page .about-tabs__label {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.about-us-page .about-tab-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.about-us-page .about-tab-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 1023px) {
+  .about-us-page .about-tabs__inner {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.35rem;
+  }
+
+  .about-us-page .about-tabs__tab {
+    flex: 1 1 calc(33.333% - 0.35rem);
+    max-width: calc(33.333% - 0.35rem);
+  }
+}
+
+@media (max-width: 767px) {
+  .about-us-page .about-tabs__tab {
+    flex: 1 1 calc(50% - 0.35rem);
+    max-width: calc(50% - 0.35rem);
+  }
 }

@@ -55,6 +55,80 @@
   line-height: var(--font-size-32, 32px);
 }
 
+/* CMS HTML lists (Tailwind preflight removes default bullets). */
+.hpc-paragraph :is(ul, ol),
+.about-content__html :is(ul, ol) {
+  margin: 0 0 1.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.hpc-paragraph :is(ul, ol):last-child,
+.about-content__html :is(ul, ol):last-child {
+  margin-bottom: 0;
+}
+
+.hpc-paragraph ul li,
+.about-content__html ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  margin-bottom: 1rem;
+  padding-inline-start: 0;
+}
+
+.hpc-paragraph ul li::before,
+.about-content__html ul li::before {
+  content: '';
+  flex-shrink: 0;
+  width: 0.45rem;
+  height: 0.45rem;
+  min-width: 0.45rem;
+  min-height: 0.45rem;
+  margin-top: calc((1lh - 0.45rem) / 2);
+  border-radius: 999px;
+  background: var(--color-cyan-33, #008aa9);
+}
+
+.hpc-paragraph li > :is(p, div) {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
+.hpc-paragraph ol,
+.about-content__html ol {
+  counter-reset: hpc-ordered-list;
+}
+
+.hpc-paragraph ol li,
+.about-content__html ol li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-inline-start: 0;
+  counter-increment: hpc-ordered-list;
+}
+
+.hpc-paragraph ol li::before,
+.about-content__html ol li::before {
+  content: counter(hpc-ordered-list) '.';
+  flex-shrink: 0;
+  min-width: 1.25rem;
+  margin-top: calc((1lh - 1em) / 2);
+  color: #6b4a3d;
+  font-weight: 700;
+  text-align: end;
+}
+
+.hpc-paragraph ul li:last-child,
+.hpc-paragraph ol li:last-child,
+.about-content__html ul li:last-child,
+.about-content__html ol li:last-child {
+  margin-bottom: 0;
+}
+
 html {
   font-family: var(--font-family);
 }
